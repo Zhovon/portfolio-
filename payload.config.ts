@@ -6,12 +6,12 @@ import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
 // Collections
-import { Users } from './collections/Users.js'
-import { Projects } from './collections/Projects.js'
-import { Skills } from './collections/Skills.js'
-import { Experience } from './collections/Experience.js'
-import { Media } from './collections/Media.js'
-import { Pages } from './collections/Pages.js'
+import { Users } from './collections/Users'
+import { Projects } from './collections/Projects'
+import { Skills } from './collections/Skills'
+import { Experience } from './collections/Experience'
+import { Media } from './collections/Media'
+import { Pages } from './collections/Pages'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -30,6 +30,7 @@ export default buildConfig({
         pool: {
             connectionString: process.env.DATABASE_URL || '',
         },
+        migrationDir: './migrations',
     }),
     sharp,
     plugins: [],
