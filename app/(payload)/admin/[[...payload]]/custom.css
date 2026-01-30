@@ -1,0 +1,5 @@
+/* Custom styles for Payload Admin */
+.payload-admin {
+    /* Ensure the admin panel doesn't inherit background-black from the root layout if needed, 
+       though RootLayout usually handles its own styling. */
+}

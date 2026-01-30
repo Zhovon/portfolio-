@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+@theme {
+    --font-sans: var(--font-geist-sans);
+    --font-mono: var(--font-geist-mono);
+
+    --color-space-black: #020202;
+    --color-space-dark: #0a0a0b;
+    --color-stellar-purple: #7c3aed;
+    --color-stellar-blue: #2563eb;
+}
+
+:root {
+    --background: #020202;
+    --foreground: #ffffff;
+}
+
+body {
+    background: var(--background);
+    background-image: url('/grid.svg');
+    background-size: 50px 50px;
+    color: var(--foreground);
+    overflow-x: hidden;
+    font-family: var(--font-sans);
+}
+
+/* Cosmic Animations */
+@keyframes star-twinkle {
+
+    0%,
+    100% {
+        opacity: 0.3;
+        transform: scale(1);
+        filter: blur(0px);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.1);
+        filter: blur(1px);
+    }
+}
+
+.animate-star {
+    animation: star-twinkle var(--duration, 4s) ease-in-out infinite;
+    animation-delay: var(--delay, 0s);
+}
+
+.glass-panel {
+    background: rgba(255, 255, 255, 0.01);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+}
+
+.text-glow {
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+}
+
+.cosmic-gradient {
+    background: radial-gradient(circle at center, rgba(124, 58, 237, 0.1) 0%, transparent 70%);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #020202;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #1a1a1a;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #252525;
+}
+
+html {
+    scroll-behavior: smooth;
+}
