@@ -3,8 +3,7 @@ import type { CollectionConfig } from 'payload'
 export const Media: CollectionConfig = {
     slug: 'media',
     upload: {
-        // Use local storage in development, Vercel Blob in production
-        staticDir: process.env.BLOB_READ_WRITE_TOKEN ? undefined : 'public/media',
+        staticDir: 'public/media',
         imageSizes: [
             {
                 name: 'thumbnail',
