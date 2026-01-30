@@ -37,15 +37,14 @@ export default buildConfig({
             },
         },
     }),
-    // Vercel Blob Storage disabled - causing importMap errors
-    // plugins: [
-    //     vercelBlobStorage({
-    //         enabled: !!process.env.BLOB_READ_WRITE_TOKEN,
-    //         collections: {
-    //             media: true,
-    //         },
-    //         token: process.env.BLOB_READ_WRITE_TOKEN || '',
-    //     }),
-    // ],
+    plugins: [
+        vercelBlobStorage({
+            enabled: !!process.env.BLOB_READ_WRITE_TOKEN,
+            collections: {
+                media: true,
+            },
+            token: process.env.BLOB_READ_WRITE_TOKEN || '',
+        }),
+    ],
     sharp,
 })
