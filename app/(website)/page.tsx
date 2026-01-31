@@ -2,6 +2,9 @@ import { getPayload } from 'payload'
 import config from '@/payload.config'
 import HomeClient from './HomeClient'
 
+// Force dynamic rendering to avoid database connection during build
+export const dynamic = 'force-dynamic'
+
 export default async function Home() {
     let projects: any[] = []
 

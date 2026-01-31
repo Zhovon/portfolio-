@@ -2,15 +2,26 @@ import { getPayload } from 'payload'
 import config from '@/payload.config'
 import { ProjectsClient } from './ProjectsClient'
 
+// Force dynamic rendering to avoid database connection during build
+export const dynamic = 'force-dynamic'
+
 export default async function ProjectsPage() {
-    const payload = await getPayload({ config })
+    let projects: any[] = []
 
-    // Fetch all projects from Payload
-    const projects = await payload.find({
-        collection: 'projects',
-        limit: 100,
-        sort: '-createdAt',
-    })
+    try {
+        const payload = await getPayload({ config })
 
-    return <ProjectsClient projects={projects.docs} />
+        // Fetch all projects from Payload
+        const result = await payload.find({
+            collection: 'projects',
+            limit: 100,
+            sort: '-createdAt',
+        })
+        projects = result.docs
+    } catch (error) {
+        console.error('Failed to fetch projects:', error)
+        // projects remains empty array, ProjectsClient will handle it
+    }
+
+    return <ProjectsClient projects={projects} />
 }
