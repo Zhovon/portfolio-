@@ -5,13 +5,20 @@ export const dynamic = 'force-dynamic'
 export default async function DiagnosticPage() {
     // Check all possible Vercel Postgres variable names
     const envVars = {
+        // Postgres variables
         blob_POSTGRES_URL: process.env.blob_POSTGRES_URL,
         blob_PRISMA_DATABASE_URL: process.env.blob_PRISMA_DATABASE_URL,
         blob_DATABASE_URL: process.env.blob_DATABASE_URL,
+        STORAGE_POSTGRES_URL: process.env.STORAGE_POSTGRES_URL,
+        STORAGE_PRISMA_DATABASE_URL: process.env.STORAGE_PRISMA_DATABASE_URL,
+        STORAGE_DATABASE_URL: process.env.STORAGE_DATABASE_URL,
         POSTGRES_URL: process.env.POSTGRES_URL,
         POSTGRES_PRISMA_URL: process.env.POSTGRES_PRISMA_URL,
         POSTGRES_URL_NON_POOLING: process.env.POSTGRES_URL_NON_POOLING,
         DATABASE_URL: process.env.DATABASE_URL,
+        // Blob Storage variables
+        BLOB_READ_WRITE_TOKEN: process.env.BLOB_READ_WRITE_TOKEN,
+        // Payload variables
         PAYLOAD_SECRET: process.env.PAYLOAD_SECRET,
         NEXT_PUBLIC_SERVER_URL: process.env.NEXT_PUBLIC_SERVER_URL,
     }
