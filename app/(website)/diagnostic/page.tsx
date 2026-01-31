@@ -3,14 +3,23 @@ import { headers } from 'next/headers'
 export const dynamic = 'force-dynamic'
 
 export default async function DiagnosticPage() {
+    // Check all possible Vercel Postgres variable names
+    const envVars = {
+        blob_POSTGRES_URL: process.env.blob_POSTGRES_URL,
+        blob_PRISMA_DATABASE_URL: process.env.blob_PRISMA_DATABASE_URL,
+        blob_DATABASE_URL: process.env.blob_DATABASE_URL,
+        POSTGRES_URL: process.env.POSTGRES_URL,
+        POSTGRES_PRISMA_URL: process.env.POSTGRES_PRISMA_URL,
+        POSTGRES_URL_NON_POOLING: process.env.POSTGRES_URL_NON_POOLING,
+        DATABASE_URL: process.env.DATABASE_URL,
+        PAYLOAD_SECRET: process.env.PAYLOAD_SECRET,
+        NEXT_PUBLIC_SERVER_URL: process.env.NEXT_PUBLIC_SERVER_URL,
+    }
+
     const diagnostics = {
         timestamp: new Date().toISOString(),
         environment: process.env.NODE_ENV,
-        hasPostgresPrismaUrl: !!process.env.blob_PRISMA_DATABASE_URL,
-        hasPostgresUrl: !!process.env.blob_DATABASE_URL,
-        hasDatabaseUrl: !!process.env.DATABASE_URL,
-        payloadSecret: !!process.env.PAYLOAD_SECRET,
-        serverUrl: process.env.NEXT_PUBLIC_SERVER_URL,
+        envVars,
     }
 
     // Try to get database host without exposing credentials
@@ -28,37 +37,30 @@ export default async function DiagnosticPage() {
 
             <h2>Environment Variables</h2>
             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                <thead>
+                    <tr style={{ borderBottom: '2px solid #333', background: '#f5f5f5' }}>
+                        <th style={{ padding: '8px', textAlign: 'left' }}>Variable Name</th>
+                        <th style={{ padding: '8px', textAlign: 'left' }}>Status</th>
+                        <th style={{ padding: '8px', textAlign: 'left' }}>Value (masked)</th>
+                    </tr>
+                </thead>
                 <tbody>
-                    <tr style={{ borderBottom: '1px solid #ddd' }}>
-                        <td style={{ padding: '8px' }}><strong>NODE_ENV</strong></td>
-                        <td style={{ padding: '8px' }}>{diagnostics.environment}</td>
-                    </tr>
-                    <tr style={{ borderBottom: '1px solid #ddd' }}>
-                        <td style={{ padding: '8px' }}><strong>blob_PRISMA_DATABASE_URL</strong></td>
-                        <td style={{ padding: '8px' }}>{diagnostics.hasPostgresPrismaUrl ? '✅ Set' : '❌ Not set'}</td>
-                    </tr>
-                    <tr style={{ borderBottom: '1px solid #ddd' }}>
-                        <td style={{ padding: '8px' }}><strong>blob_DATABASE_URL</strong></td>
-                        <td style={{ padding: '8px' }}>{diagnostics.hasPostgresUrl ? '✅ Set' : '❌ Not set'}</td>
-                    </tr>
-                    <tr style={{ borderBottom: '1px solid #ddd' }}>
-                        <td style={{ padding: '8px' }}><strong>DATABASE_URL</strong></td>
-                        <td style={{ padding: '8px' }}>{diagnostics.hasDatabaseUrl ? '✅ Set' : '❌ Not set'}</td>
-                    </tr>
-                    <tr style={{ borderBottom: '1px solid #ddd' }}>
-                        <td style={{ padding: '8px' }}><strong>PAYLOAD_SECRET</strong></td>
-                        <td style={{ padding: '8px' }}>{diagnostics.payloadSecret ? '✅ Set' : '❌ Not set'}</td>
-                    </tr>
-                    <tr style={{ borderBottom: '1px solid #ddd' }}>
-                        <td style={{ padding: '8px' }}><strong>NEXT_PUBLIC_SERVER_URL</strong></td>
-                        <td style={{ padding: '8px' }}>{diagnostics.serverUrl || '❌ Not set'}</td>
-                    </tr>
-                    <tr style={{ borderBottom: '1px solid #ddd' }}>
-                        <td style={{ padding: '8px' }}><strong>Database Host</strong></td>
-                        <td style={{ padding: '8px' }}>{dbHost}</td>
-                    </tr>
+                    {Object.entries(envVars).map(([key, value]) => (
+                        <tr key={key} style={{ borderBottom: '1px solid #ddd' }}>
+                            <td style={{ padding: '8px', fontWeight: 'bold' }}>{key}</td>
+                            <td style={{ padding: '8px' }}>
+                                {value ? '✅ Set' : '❌ Not set'}
+                            </td>
+                            <td style={{ padding: '8px', fontFamily: 'monospace', fontSize: '12px' }}>
+                                {value ? `${String(value).substring(0, 20)}...` : '-'}
+                            </td>
+                        </tr>
+                    ))}
                 </tbody>
             </table>
+
+            <h2>Database Connection</h2>
+            <p><strong>Using:</strong> {dbHost}</p>
 
             <h2>Next Steps</h2>
             <ul>
