@@ -3,7 +3,7 @@ import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
-import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
+// import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob' // Disabled until BLOB_READ_WRITE_TOKEN is configured
 
 import { Users } from './collections/Users'
 import { Projects } from './collections/Projects'
