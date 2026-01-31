@@ -24,17 +24,28 @@ export default buildConfig({
     editor: lexicalEditor(),
     secret: process.env.PAYLOAD_SECRET || 'zhovon_secure_uplink',
     onInit: async (payload) => {
-        payload.logger.info('Payload Initialized')
+        payload.logger.info('Payload CMS Initializing...')
+
+        // Log which database URL is being used (without exposing the full connection string)
+        const dbUrl = process.env.POSTGRES_PRISMA_URL || process.env.POSTGRES_URL || process.env.DATABASE_URL
+        if (dbUrl) {
+            const urlParts = dbUrl.match(/postgresql:\/\/.*@([^\/]+)/)
+            const host = urlParts ? urlParts[1] : 'unknown'
+            payload.logger.info(`Database host: ${host}`)
+        } else {
+            payload.logger.error('No database URL found! Check environment variables.')
+        }
+
+        payload.logger.info('Payload CMS Initialized Successfully')
     },
     // typescript: {
     //     outputFile: path.resolve(dirname, 'payload-types.ts'),
     // },
     db: postgresAdapter({
         pool: {
-            connectionString: process.env.DATABASE_URL || '',
-            ssl: {
-                rejectUnauthorized: false, // Required for Supabase/Neon/etc if not using proper CA
-            },
+            // Vercel Postgres provides POSTGRES_PRISMA_URL (optimized for Prisma/Payload)
+            // Falls back to POSTGRES_URL or DATABASE_URL for local development
+            connectionString: process.env.POSTGRES_PRISMA_URL || process.env.POSTGRES_URL || process.env.DATABASE_URL || '',
         },
     }),
     plugins: [
