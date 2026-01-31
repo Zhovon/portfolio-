@@ -43,14 +43,20 @@ export default buildConfig({
     // },
     db: postgresAdapter({
         pool: {
-            // Vercel Postgres with blob_ prefix (from Vercel Blob Storage integration)
-            // Falls back to standard POSTGRES_ variables or DATABASE_URL for local development
+            // Comprehensive fallback chain for Vercel Postgres
+            // Vercel can provide these with different prefixes depending on how it's configured
             connectionString:
+                // Try blob-prefixed variables first (from Vercel Blob Storage integration)
                 process.env.blob_PRISMA_DATABASE_URL ||
-                process.env.POSTGRES_PRISMA_URL ||
                 process.env.blob_DATABASE_URL ||
+                process.env.blob_POSTGRES_URL ||
+                // Try standard Vercel Postgres variables
+                process.env.POSTGRES_PRISMA_URL ||
                 process.env.POSTGRES_URL ||
-                process.env.DATABASE_URL || '',
+                process.env.POSTGRES_URL_NON_POOLING ||
+                // Fallback to generic DATABASE_URL for local development
+                process.env.DATABASE_URL ||
+                '',
         },
     }),
     plugins: [
