@@ -27,7 +27,7 @@ export default buildConfig({
         payload.logger.info('Payload CMS Initializing...')
 
         // Log which database URL is being used (without exposing the full connection string)
-        const dbUrl = process.env.POSTGRES_PRISMA_URL || process.env.POSTGRES_URL || process.env.DATABASE_URL
+        const dbUrl = process.env.blob_PRISMA_DATABASE_URL || process.env.POSTGRES_PRISMA_URL || process.env.blob_DATABASE_URL || process.env.POSTGRES_URL || process.env.DATABASE_URL
         if (dbUrl) {
             const urlParts = dbUrl.match(/postgresql:\/\/.*@([^\/]+)/)
             const host = urlParts ? urlParts[1] : 'unknown'
@@ -43,9 +43,14 @@ export default buildConfig({
     // },
     db: postgresAdapter({
         pool: {
-            // Vercel Postgres provides POSTGRES_PRISMA_URL (optimized for Prisma/Payload)
-            // Falls back to POSTGRES_URL or DATABASE_URL for local development
-            connectionString: process.env.POSTGRES_PRISMA_URL || process.env.POSTGRES_URL || process.env.DATABASE_URL || '',
+            // Vercel Postgres with blob_ prefix (from Vercel Blob Storage integration)
+            // Falls back to standard POSTGRES_ variables or DATABASE_URL for local development
+            connectionString:
+                process.env.blob_PRISMA_DATABASE_URL ||
+                process.env.POSTGRES_PRISMA_URL ||
+                process.env.blob_DATABASE_URL ||
+                process.env.POSTGRES_URL ||
+                process.env.DATABASE_URL || '',
         },
     }),
     plugins: [
