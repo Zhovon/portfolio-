@@ -27,7 +27,7 @@ export default buildConfig({
         payload.logger.info('Payload CMS Initializing...')
 
         // Log which database URL is being used (without exposing the full connection string)
-        const dbUrl = process.env.blob_PRISMA_DATABASE_URL || process.env.POSTGRES_PRISMA_URL || process.env.blob_DATABASE_URL || process.env.POSTGRES_URL || process.env.DATABASE_URL
+        const dbUrl = process.env.blob_PRISMA_DATABASE_URL || process.env.blob_DATABASE_URL || process.env.blob_POSTGRES_URL || process.env.POSTGRES_PRISMA_URL || process.env.POSTGRES_URL || process.env.POSTGRES_URL_NON_POOLING || process.env.DATABASE_URL
         if (dbUrl) {
             const urlParts = dbUrl.match(/postgresql:\/\/.*@([^\/]+)/)
             const host = urlParts ? urlParts[1] : 'unknown'
