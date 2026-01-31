@@ -65,6 +65,9 @@ export default buildConfig({
                 process.env.POSTGRES_PRISMA_URL ||
                 '',
         },
+        // Automatically push schema changes to database
+        // This creates tables on first connection
+        push: true,
     }),
     plugins: [
         vercelBlobStorage({
