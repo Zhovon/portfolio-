@@ -27,7 +27,7 @@ export default buildConfig({
         payload.logger.info('Payload CMS Initializing...')
 
         // Log which database URL is being used (without exposing the full connection string)
-        const dbUrl = process.env.STORAGE_PRISMA_DATABASE_URL || process.env.STORAGE_POSTGRES_URL || process.env.STORAGE_DATABASE_URL || process.env.blob_PRISMA_DATABASE_URL || process.env.blob_DATABASE_URL || process.env.blob_POSTGRES_URL || process.env.POSTGRES_PRISMA_URL || process.env.POSTGRES_URL || process.env.POSTGRES_URL_NON_POOLING || process.env.DATABASE_URL
+        const dbUrl = process.env.STORAGE_POSTGRES_URL || process.env.STORAGE_POSTGRES_URL_NON_POOLING || process.env.STORAGE_DATABASE_URL || process.env.blob_POSTGRES_URL || process.env.blob_DATABASE_URL || process.env.POSTGRES_URL || process.env.POSTGRES_URL_NON_POOLING || process.env.DATABASE_URL || process.env.STORAGE_PRISMA_DATABASE_URL || process.env.blob_PRISMA_DATABASE_URL || process.env.POSTGRES_PRISMA_URL
         if (dbUrl) {
             const urlParts = dbUrl.match(/postgresql:\/\/.*@([^\/]+)/)
             const host = urlParts ? urlParts[1] : 'unknown'
@@ -44,22 +44,25 @@ export default buildConfig({
     db: postgresAdapter({
         pool: {
             // Comprehensive fallback chain for Vercel Postgres
-            // Vercel can provide these with different prefixes depending on how it's configured
+            // IMPORTANT: Payload CMS doesn't support Prisma Accelerate URLs (prisma+postgres://)
+            // We must use direct PostgreSQL connection strings
             connectionString:
-                // Try STORAGE-prefixed variables (from Vercel Postgres with custom prefix)
-                process.env.STORAGE_PRISMA_DATABASE_URL ||
+                // Try direct STORAGE-prefixed Postgres URLs first (from Vercel Postgres with custom prefix)
                 process.env.STORAGE_POSTGRES_URL ||
+                process.env.STORAGE_POSTGRES_URL_NON_POOLING ||
                 process.env.STORAGE_DATABASE_URL ||
-                // Try blob-prefixed variables (from Vercel Blob Storage integration)
-                process.env.blob_PRISMA_DATABASE_URL ||
-                process.env.blob_DATABASE_URL ||
+                // Try direct blob-prefixed Postgres URLs
                 process.env.blob_POSTGRES_URL ||
-                // Try standard Vercel Postgres variables
-                process.env.POSTGRES_PRISMA_URL ||
+                process.env.blob_DATABASE_URL ||
+                // Try standard Vercel Postgres direct URLs
                 process.env.POSTGRES_URL ||
                 process.env.POSTGRES_URL_NON_POOLING ||
                 // Fallback to generic DATABASE_URL for local development
                 process.env.DATABASE_URL ||
+                // Last resort: try Prisma URLs (might not work, but worth trying)
+                process.env.STORAGE_PRISMA_DATABASE_URL ||
+                process.env.blob_PRISMA_DATABASE_URL ||
+                process.env.POSTGRES_PRISMA_URL ||
                 '',
         },
     }),
