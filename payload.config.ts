@@ -70,6 +70,9 @@ export default buildConfig({
         push: true,
     }),
     plugins: [
+        // Vercel Blob Storage - DISABLED until BLOB_READ_WRITE_TOKEN is configured
+        // Uncomment this when you add Vercel Blob Storage to your project
+        /*
         vercelBlobStorage({
             enabled: !!process.env.BLOB_READ_WRITE_TOKEN,
             collections: {
@@ -77,6 +80,7 @@ export default buildConfig({
             },
             token: process.env.BLOB_READ_WRITE_TOKEN || '',
         }),
+        */
     ],
     sharp,
 })
