@@ -20,6 +20,14 @@ export const metadata: Metadata = {
     description: "Shahadat Hossain (Zhovon) - Senior SaaS architect specializing in Next.js, React, TypeScript, and Payload CMS. Building high-performance digital experiences with 99+ Lighthouse scores.",
     keywords: ["Zhovon", "Shahadat Hossain", "SaaS Architect", "Full Stack Developer", "Next.js Expert", "React Developer", "TypeScript Pro", "Payload CMS", "Web Development", "Dhaka Bangladesh"],
     authors: [{ name: "Shahadat Hossain (Zhovon)", url: "https://zhovon.com" }],
+    icons: {
+        icon: '/globe.svg',
+        shortcut: '/globe.svg',
+        apple: '/globe.svg',
+    },
+    verification: {
+        google: 'your-google-verification-code', // User needs to replace this
+    },
     openGraph: {
         type: "website",
         locale: "en_US",
@@ -27,15 +35,31 @@ export const metadata: Metadata = {
         title: "ZHOVON | Lead SaaS Architect & Full-Stack Engineer",
         description: "Senior SaaS architect specializing in Next.js, React, TypeScript, and Payload CMS. Building high-performance digital experiences.",
         siteName: "Zhovon Portfolio",
+        images: [
+            {
+                url: "/og-image.jpg", // Needs to be created or added
+                width: 1200,
+                height: 630,
+                alt: "Zhovon Portfolio",
+            },
+        ],
     },
     twitter: {
         card: "summary_large_image",
         title: "ZHOVON | Lead SaaS Architect & Full-Stack Engineer",
         description: "Senior SaaS architect specializing in Next.js, React, TypeScript, and Payload CMS.",
+        images: ["/og-image.jpg"],
     },
     robots: {
         index: true,
         follow: true,
+        googleBot: {
+            index: true,
+            follow: true,
+            'max-video-preview': -1,
+            'max-image-preview': 'large',
+            'max-snippet': -1,
+        },
     },
 };
 
