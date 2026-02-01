@@ -36,9 +36,9 @@ function ProjectCard({ project, i }: { project: any, i: number }) {
                 <div className="aspect-[16/10] rounded-[2rem] overflow-hidden relative glass-panel mb-8 border border-white/5 group-hover:border-purple-500/50 transition-colors duration-700">
                     <div className="absolute inset-0 bg-gradient-to-t from-[#020202] to-transparent opacity-60 group-hover:opacity-20 transition-opacity duration-700" />
 
-                    {project.thumbnail?.url ? (
+                    {project.image ? (
                         <img
-                            src={project.thumbnail.url}
+                            src={project.image}
                             alt={project.title}
                             className="w-full h-full object-cover opacity-50 group-hover:opacity-80 transition-opacity duration-700 group-hover:scale-105"
                         />
@@ -55,7 +55,7 @@ function ProjectCard({ project, i }: { project: any, i: number }) {
 
                     <div className="absolute top-6 left-6 flex gap-2">
                         <div className="px-3 py-1 rounded-full border border-white/10 bg-black/50 backdrop-blur-md text-[8px] uppercase tracking-widest text-gray-400">
-                            {project.techStack?.[0]?.name || 'NEXUS_V.01'}
+                            {project.technologies?.[0] || 'NEXUS_V.01'}
                         </div>
                     </div>
                 </div>

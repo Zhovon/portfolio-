@@ -50,9 +50,9 @@ export function ProjectsClient({ projects }: { projects: any[] }) {
                                 <div className="aspect-[16/10] rounded-3xl overflow-hidden glass-panel relative mb-8 border border-white/5 group-hover:border-purple-500/50 transition-all duration-500 hover:translate-y-[-10px]">
                                     <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60" />
 
-                                    {project.thumbnail?.url ? (
+                                    {project.image ? (
                                         <img
-                                            src={project.thumbnail.url}
+                                            src={project.image}
                                             alt={project.title}
                                             className="w-full h-full object-cover opacity-50 group-hover:opacity-80 transition-opacity duration-700 group-hover:scale-105"
                                         />
@@ -65,7 +65,7 @@ export function ProjectsClient({ projects }: { projects: any[] }) {
                                     {/* Floating Tag */}
                                     <div className="absolute top-8 left-8">
                                         <div className="glass-panel px-4 py-1.5 rounded-full text-[8px] font-black uppercase tracking-[0.2em] text-purple-400">
-                                            {project.techStack?.[0]?.name || 'Artifact'}
+                                            {project.technologies?.[0] || 'Artifact'}
                                         </div>
                                     </div>
                                 </div>
