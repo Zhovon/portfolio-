@@ -1,5 +1,6 @@
 import { Resend } from 'resend'
 import { NextRequest, NextResponse } from 'next/server'
+import { saveContactMessage } from '@/lib/supabase'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -28,6 +29,15 @@ export async function POST(request: NextRequest) {
         console.log('📧 Attempting to send emails...')
         console.log('From:', name, email)
         console.log('Message:', message.substring(0, 100))
+
+        // Save message to Supabase
+        try {
+            await saveContactMessage({ name, email, subject, message })
+            console.log('✅ Message saved to database')
+        } catch (dbError) {
+            console.error('⚠️ Failed to save to database:', dbError)
+            // Continue with email sending even if database save fails
+        }
 
         // Send notification email to admin
         const adminEmail = await resend.emails.send({
