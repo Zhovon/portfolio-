@@ -1,8 +1,7 @@
-import { withPayload } from '@payloadcms/next/withPayload'
+import type { NextConfig } from 'next'
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  serverExternalPackages: ['@payloadcms/db-postgres', 'payload'],
+const nextConfig: NextConfig = {
+  // Add any custom Next.js config here
 }
 
-export default withPayload(nextConfig)
+export default nextConfig

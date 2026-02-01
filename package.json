@@ -11,10 +11,6 @@
     "migrate": "tsx scripts/migrate.ts"
   },
   "dependencies": {
-    "@payloadcms/db-postgres": "^3.74.0",
-    "@payloadcms/next": "^3.74.0",
-    "@payloadcms/richtext-lexical": "^3.74.0",
-    "@payloadcms/storage-vercel-blob": "^3.74.0",
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.5.0",
     "@supabase/supabase-js": "^2.93.3",
@@ -27,7 +23,6 @@
     "lucide-react": "^0.563.0",
     "maath": "^0.10.8",
     "next": "16.1.6",
-    "payload": "^3.74.0",
     "pg": "^8.18.0",
     "react": "19.2.3",
     "react-dom": "19.2.3",
