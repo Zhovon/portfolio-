@@ -349,6 +349,5 @@ export function CaseStudyClient({ project }: { project: Project }) {
                 </ScrollReveal>
             </footer>
         </main>
-        </SmoothScrollProvider >
     )
 }
