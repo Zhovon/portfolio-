@@ -4,8 +4,9 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { ArrowLeft, Zap, Cpu, Globe, Target, Box, Github } from 'lucide-react'
 import Link from 'next/link'
 import { useRef } from 'react'
+import { Project } from '@/data/projects'
 
-export function CaseStudyClient({ project }: { project: any }) {
+export function CaseStudyClient({ project }: { project: Project }) {
     const containerRef = useRef(null)
 
     const { scrollYProgress } = useScroll({
@@ -32,9 +33,9 @@ export function CaseStudyClient({ project }: { project: any }) {
             <section className="relative h-screen flex flex-col items-center justify-center overflow-hidden">
                 <motion.div style={{ scale: heroScale, opacity: heroOpacity }} className="absolute inset-0 z-0">
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-black z-10" />
-                    {project.thumbnail?.url ? (
+                    {project.image ? (
                         <img
-                            src={project.thumbnail.url}
+                            src={project.image}
                             alt={project.title}
                             className="w-full h-full object-cover grayscale opacity-30"
                         />
@@ -49,10 +50,10 @@ export function CaseStudyClient({ project }: { project: any }) {
                         animate={{ opacity: 1, scale: 1 }}
                         className="mb-6 inline-block glass-panel px-6 py-2 rounded-full border-purple-500/20 text-purple-400 text-[10px] font-black uppercase tracking-[0.4em]"
                     >
-                        MISSION: {project.title.toUpperCase()}
+                        {project.category.toUpperCase()}
                     </motion.div>
                     <h1 className="text-[12vw] font-black leading-none text-white tracking-tighter italic mb-10">
-                        {project.title.split(' ')[0]}_<span className="text-gray-800">{project.title.split(' ')[1] || 'STUDY'}</span>
+                        {project.title.split(' ')[0]}_<span className="text-gray-800">{project.title.split(' ').slice(1).join(' ') || 'STUDY'}</span>
                     </h1>
 
                     <div className="flex justify-center gap-6">
@@ -62,10 +63,12 @@ export function CaseStudyClient({ project }: { project: any }) {
                                 <span className="text-xs font-bold uppercase tracking-widest">Live System</span>
                             </Link>
                         )}
-                        <button className="glass-panel px-8 py-4 rounded-full flex items-center gap-3 text-white hover:bg-white/5 transition-all">
-                            <Github className="w-4 h-4 text-purple-400" />
-                            <span className="text-xs font-bold uppercase tracking-widest">Repository</span>
-                        </button>
+                        {project.githubUrl && (
+                            <Link href={project.githubUrl} target="_blank" className="glass-panel px-8 py-4 rounded-full flex items-center gap-3 text-white hover:bg-white/5 transition-all">
+                                <Github className="w-4 h-4 text-purple-400" />
+                                <span className="text-xs font-bold uppercase tracking-widest">Repository</span>
+                            </Link>
+                        )}
                     </div>
                 </div>
             </section>
@@ -79,14 +82,16 @@ export function CaseStudyClient({ project }: { project: any }) {
                         <span className="text-gray-700">{project.description.split(' ').slice(3, 6).join(' ')}</span>
                     </p>
                     <p className="text-gray-500 text-xl font-medium leading-relaxed">
-                        {project.description}
+                        {project.longDescription}
                     </p>
                 </div>
                 <div className="flex flex-col justify-end">
                     <div className="glass-panel p-10 rounded-[2.5rem] border-white/5">
                         <Target className="w-10 h-10 text-blue-500 mb-6" />
                         <h3 className="text-2xl font-black text-white mb-4 italic">Core Milestone</h3>
-                        <p className="text-gray-500 font-medium">Archived optimal performance metrics and seamless integration within the {project.techStack?.[0]?.name || 'target'} ecosystem.</p>
+                        <p className="text-gray-500 font-medium">
+                            {project.results?.[0] || `Achieved optimal performance metrics with ${project.technologies[0]} ecosystem.`}
+                        </p>
                     </div>
                 </div>
             </section>
@@ -95,17 +100,32 @@ export function CaseStudyClient({ project }: { project: any }) {
             <section className="relative py-40 px-6 lg:px-20 max-w-7xl mx-auto">
                 <h2 className="text-xs font-black uppercase tracking-[0.5em] text-purple-500 mb-20 text-center">02 — The Matrix</h2>
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                    {project.techStack?.map((tech: any, i: number) => (
+                    {project.technologies?.map((tech: string, i: number) => (
                         <div key={i} className={`glass-panel p-10 rounded-[2rem] border-white/5 ${i === 0 ? 'md:col-span-2 bg-purple-500/5' : ''}`}>
                             {i % 3 === 0 ? <Zap className="w-8 h-8 text-purple-500 mb-6" /> :
                                 i % 3 === 1 ? <Cpu className="w-8 h-8 text-blue-400 mb-6" /> :
                                     <Box className="w-8 h-8 text-cyan-400 mb-6" />}
-                            <h4 className="text-xl font-black text-white italic mb-2 uppercase">{tech.name}</h4>
+                            <h4 className="text-xl font-black text-white italic mb-2 uppercase">{tech}</h4>
                             <p className="text-gray-500 text-sm font-medium">Industrial-grade protocol for high-scale digital operations.</p>
                         </div>
                     ))}
                 </div>
             </section>
+
+            {/* Metrics Section */}
+            {project.metrics && project.metrics.length > 0 && (
+                <section className="relative py-40 px-6 lg:px-20 max-w-7xl mx-auto border-t border-white/5">
+                    <h2 className="text-xs font-black uppercase tracking-[0.5em] text-purple-500 mb-20 text-center">03 — Performance Metrics</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+                        {project.metrics.map((metric, i) => (
+                            <div key={i} className="glass-panel p-10 rounded-[2rem] border-white/5 text-center">
+                                <div className="text-5xl font-black text-white mb-4 italic">{metric.value}</div>
+                                <div className="text-gray-500 uppercase text-xs font-bold tracking-widest">{metric.label}</div>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            )}
 
             {/* Results / Next Project */}
             <footer className="py-60 px-6 text-center border-t border-white/5">
