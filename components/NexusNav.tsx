@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import { Rocket, Zap, Layers, Cpu, Command, Terminal } from 'lucide-react'
+import { usePathname } from 'next/navigation'
 
 const NAV_ITEMS = [
     { id: 'hero', label: 'Launch', icon: Rocket },
@@ -17,8 +18,16 @@ const NAV_ITEMS = [
 export function NexusNav() {
     const [activeSegment, setActiveSegment] = useState('hero')
     const [isHovered, setIsHovered] = useState<string | null>(null)
+    const pathname = usePathname()
+    const [isVisible, setIsVisible] = useState(false)
 
     useEffect(() => {
+        setIsVisible(pathname === '/')
+    }, [pathname])
+
+    useEffect(() => {
+        if (!isVisible) return
+
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
@@ -27,16 +36,35 @@ export function NexusNav() {
                     }
                 })
             },
-            { threshold: 0.5 }
+            { threshold: 0, rootMargin: "-45% 0px -45% 0px" }
         )
 
-        NAV_ITEMS.forEach((item) => {
-            const el = document.getElementById(item.id)
-            if (el) observer.observe(el)
-        })
+        const observeElements = () => {
+            const elements = NAV_ITEMS.map(item => document.getElementById(item.id))
+            const allFound = elements.every(el => el !== null)
+
+            if (allFound) {
+                elements.forEach(el => observer.observe(el!))
+                return true
+            }
+            return false
+        }
+
+        // Try immediately
+        if (!observeElements()) {
+            // Retry a few times if not found immediately (race condition fix)
+            const interval = setInterval(() => {
+                if (observeElements()) {
+                    clearInterval(interval)
+                }
+            }, 100)
+
+            // Stop trying after 2 seconds to prevent infinite loop
+            setTimeout(() => clearInterval(interval), 2000)
+        }
 
         return () => observer.disconnect()
-    }, [])
+    }, [isVisible])
 
     const scrollTo = (id: string) => {
         const el = document.getElementById(id)
@@ -44,6 +72,8 @@ export function NexusNav() {
             el.scrollIntoView({ behavior: 'smooth' })
         }
     }
+
+    if (!isVisible) return null
 
     return (
         <div className="fixed right-8 top-1/2 -translate-y-1/2 z-[100] hidden lg:flex flex-col gap-4">
@@ -74,7 +104,7 @@ export function NexusNav() {
                         <button
                             onClick={() => scrollTo(item.id)}
                             className={`relative w-10 h-10 rounded-full flex items-center justify-center transition-all duration-500 border ${isActive
-                                ? 'bg-white border-white scale-110 shadow-[0_0_20px_rgba(255,255,255,0.3)]'
+                                ? 'bg-white border-white scale-110 shadow-[0_0_20px_rgba(168,85,247,0.5)]'
                                 : 'bg-black/20 backdrop-blur-md border-white/10 hover:border-white/40'
                                 }`}
                         >

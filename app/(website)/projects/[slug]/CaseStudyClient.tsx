@@ -1,14 +1,15 @@
 'use client'
 
-import { motion, useScroll, useTransform, useSpring, MotionValue } from 'framer-motion'
-import { ArrowLeft, Github, Globe, Zap, Target, CheckCircle2, TrendingUp, Layers } from 'lucide-react'
+import { motion, useScroll, useTransform, useSpring, MotionValue, AnimatePresence } from 'framer-motion'
+import { ArrowLeft, Github, Globe, Zap, Target, CheckCircle2, TrendingUp, Layers, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
-import { useRef } from 'react'
+import { useRef, useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { Project } from '@/data/projects'
 import { MagneticButton } from '@/components/animations/MagneticButton'
 
-function Section({ children, index, progress, range }: { children: React.ReactNode, index: number, progress: MotionValue<number>, range: [number, number] }) {
-    const opacity = useTransform(progress, [range[0], range[0] + 0.1, range[1] - 0.1, range[1]], [0, 1, 1, 0])
+function Section({ children, index, progress, range, stayVisible = false }: { children: React.ReactNode, index: number, progress: MotionValue<number>, range: [number, number], stayVisible?: boolean }) {
+    const opacity = useTransform(progress, [range[0], range[0] + 0.1, range[1] - 0.1, range[1]], [0, 1, stayVisible ? 1 : 1, stayVisible ? 1 : 0])
     const scale = useTransform(progress, [range[0], range[0] + 0.1, range[1] - 0.1, range[1]], [0.5, 1, 1, 1.5])
     const zIndex = useTransform(progress, (v) => (v >= range[0] && v <= range[1] ? 10 : 0))
     const filter = useTransform(progress, [range[0], range[0] + 0.1, range[1] - 0.1, range[1]], ["blur(10px)", "blur(0px)", "blur(0px)", "blur(10px)"])
@@ -25,12 +26,72 @@ function Section({ children, index, progress, range }: { children: React.ReactNo
     )
 }
 
-export function CaseStudyClient({ project }: { project: Project }) {
+export function CaseStudyClient({ project, nextProject }: { project: Project, nextProject?: Project }) {
     const containerRef = useRef<HTMLDivElement>(null)
     const { scrollYProgress } = useScroll({
         target: containerRef,
         offset: ["start start", "end end"]
     })
+
+
+
+    const router = useRouter()
+    const [warpTimer, setWarpTimer] = useState(0)
+    const [isNavigating, setIsNavigating] = useState(false)
+    const [canWarp, setCanWarp] = useState(false)
+
+    // Scroll to top on mount && Cooldown
+    useEffect(() => {
+        // Force scroll to top immediately
+        window.scrollTo(0, 0)
+
+        // Safety lock: Disable warp for 2 seconds after page load
+        const timer = setTimeout(() => {
+            setCanWarp(true)
+        }, 2000)
+
+        return () => clearTimeout(timer)
+    }, [])
+
+    useEffect(() => {
+        let interval: NodeJS.Timeout
+
+        const unsubscribe = scrollYProgress.on("change", (latest) => {
+            // Only trigger if:
+            // 1. At bottom (>0.99)
+            // 2. Not already navigating
+            // 3. Next project exists
+            // 4. Safety lock (canWarp) is released
+            if (latest > 0.99 && !isNavigating && nextProject && canWarp) {
+                // User is at bottom
+                if (interval) return // Already counting
+
+                let progress = 0
+                interval = setInterval(() => {
+                    progress += 10
+                    setWarpTimer(progress)
+
+                    if (progress >= 100) {
+                        clearInterval(interval)
+                        setIsNavigating(true)
+                        router.push(`/projects/${nextProject.slug}`)
+                    }
+                }, 150) // 1.5s total duration
+            } else {
+                // User scrolled up or not at bottom
+                if (interval) {
+                    clearInterval(interval)
+                    setWarpTimer(0)
+                }
+                setWarpTimer(0)
+            }
+        })
+
+        return () => {
+            unsubscribe()
+            if (interval) clearInterval(interval)
+        }
+    }, [scrollYProgress, nextProject, router, isNavigating, canWarp])
 
     const smoothProgress = useSpring(scrollYProgress, { damping: 20, stiffness: 100 })
 
@@ -174,7 +235,7 @@ export function CaseStudyClient({ project }: { project: Project }) {
                 </div>
             </Section>
 
-            {/* Section 6: Closing Success */}
+            {/* Section 6: Closing Success & Warp */}
             <Section index={6} progress={smoothProgress} range={[0.70, 1.0]}>
                 <div className="text-center relative">
                     <motion.div
@@ -182,16 +243,42 @@ export function CaseStudyClient({ project }: { project: Project }) {
                         transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 rounded-full blur-[100px] -z-10"
                     />
-                    <h2 className="text-[12vw] font-black text-white leading-none tracking-tighter mix-blend-overlay">
+                    <h2 className="text-[12vw] font-black text-white leading-none tracking-tighter mix-blend-overlay opacity-50">
                         MISSION<br />COMPLETE
                     </h2>
-                    <div className="mt-12">
-                        <MagneticButton href="/projects">
-                            <div className="px-10 py-5 bg-white text-black font-black uppercase tracking-widest rounded-full hover:scale-110 transition-transform">
-                                Next Mission
-                            </div>
-                        </MagneticButton>
-                    </div>
+
+                    {nextProject && (
+                        <motion.div
+                            initial={{ opacity: 0, y: 50 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            className="mt-20"
+                        >
+                            {warpTimer > 0 && (
+                                <div className="mb-6 flex flex-col items-center">
+                                    <p className="text-emerald-500 font-mono text-sm uppercase tracking-[0.3em] mb-2 animate-pulse">
+                                        INITIATING WARP...
+                                    </p>
+                                    <div className="w-40 h-1 bg-white/10 rounded-full overflow-hidden">
+                                        <motion.div
+                                            className="h-full bg-emerald-500"
+                                            initial={{ width: 0 }}
+                                            animate={{ width: `${warpTimer}%` }}
+                                            transition={{ ease: "linear", duration: 0.15 }}
+                                        />
+                                    </div>
+                                </div>
+                            )}
+
+                            <Link
+                                href={`/projects/${nextProject.slug}`}
+                                className="glass-panel inline-flex items-center gap-6 p-8 rounded-full border border-white/20 hover:border-emerald-500/50 hover:bg-emerald-500/10 transition-all cursor-alias group"
+                            >
+                                <span className="text-gray-400 uppercase text-xs font-bold tracking-widest group-hover:text-emerald-400 transition-colors">NEXT MISSION:</span>
+                                <span className="text-2xl font-black text-white">{nextProject.title}</span>
+                                <ArrowRight className="w-6 h-6 text-emerald-500 group-hover:translate-x-2 transition-transform" />
+                            </Link>
+                        </motion.div>
+                    )}
                 </div>
             </Section>
         </div>

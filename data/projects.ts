@@ -213,3 +213,10 @@ export function getProjectBySlug(slug: string): Project | undefined {
 export function getProjectsByCategory(category: Project['category']): Project[] {
     return projects.filter(p => p.category === category)
 }
+
+export function getNextProject(currentSlug: string): Project {
+    const currentIndex = projects.findIndex(p => p.slug === currentSlug)
+    const nextIndex = (currentIndex + 1) % projects.length
+    return projects[nextIndex]
+}
+

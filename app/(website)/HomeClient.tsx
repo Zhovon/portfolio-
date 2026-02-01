@@ -80,7 +80,6 @@ export default function HomeClient({ initialProjects }: { initialProjects: any[]
     const [mounted, setMounted] = useState(false)
     const [stats, setStats] = useState({ core: 80, missions: 3, latency: 15 })
     const targetRef = useRef(null)
-
     useEffect(() => {
         setMounted(true)
         setStats({
@@ -89,24 +88,35 @@ export default function HomeClient({ initialProjects }: { initialProjects: any[]
             latency: Math.floor(Math.random() * 9) + 10
         })
     }, [])
+
     const { scrollYProgress } = useScroll()
     const { scrollYProgress: scrollYProgressHorizontal } = useScroll({
         target: targetRef,
         offset: ["start start", "end end"]
     })
 
+
+
     const projectsToRender = initialProjects && initialProjects.length > 0 ? initialProjects : FALLBACK_PROJECTS
     const x = useTransform(scrollYProgressHorizontal, [0, 1], ["0%", `-${Math.max(0, (projectsToRender.length - 1) * 60)}%`])
 
+
+
+
     return (
         <main className="relative w-full">
+
+
             <nav className="fixed top-0 left-0 right-0 z-[100] p-6 lg:p-10 pointer-events-none">
                 <div className="max-w-screen-2xl mx-auto flex justify-between items-center">
                     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="pointer-events-auto">
                         <Link href="/" className="mix-blend-difference text-xl font-black tracking-tighter text-white">ZHOVON</Link>
                     </motion.div>
                     <div className="flex gap-4 pointer-events-auto">
-                        <Link href="/admin" className="glass-panel px-4 py-2 rounded-full text-[10px] uppercase tracking-widest text-gray-400 hover:text-white transition-colors">Access Terminal</Link>
+                        <Link href="/contact" className="glass-panel px-6 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest text-white hover:bg-white/10 transition-colors flex items-center gap-2">
+                            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                            Contact Protocol
+                        </Link>
                     </div>
                 </div>
             </nav>
@@ -432,10 +442,20 @@ export default function HomeClient({ initialProjects }: { initialProjects: any[]
 
                     <motion.h2
                         whileInView={{ scale: [0.9, 1.05, 1], opacity: [0, 1] }}
-                        className="text-7xl md:text-[10vw] font-black tracking-tighter text-white mb-20"
+                        className="text-7xl md:text-[10vw] font-black tracking-tighter text-white mb-12"
                     >
                         ACCESS <span className="bg-gradient-to-r from-teal-500 to-emerald-500 bg-clip-text text-transparent italic">TERMINAL.</span>
                     </motion.h2>
+
+                    <div className="mb-20">
+                        <Link
+                            href="/contact"
+                            className="inline-flex items-center gap-4 px-12 py-6 bg-white text-black text-sm font-black uppercase tracking-[0.2em] rounded-full hover:scale-105 hover:bg-emerald-400 transition-all duration-300"
+                        >
+                            <span>Initialize Connection</span>
+                            <ArrowDownRight className="w-5 h-5 -rotate-90" />
+                        </Link>
+                    </div>
 
                     <div className="flex flex-wrap justify-center gap-10">
                         <Link href="https://github.com/Zhovon" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2">
