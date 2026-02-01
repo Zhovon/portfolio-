@@ -290,7 +290,7 @@ export function CaseStudyClient({ project }: { project: Project }) {
                                                         </div>
                                                         <h3 className="text-lg font-bold text-white">Solution</h3>
                                                     </div>
-                                                    <p className="text-gray-400">{project.solutions[i]}</p>
+                                                    <p className="text-gray-400">{project.solutions?.[i] || 'Solution implemented successfully'}</p>
                                                 </div>
                                             </div>
                                         </ScrollReveal>
