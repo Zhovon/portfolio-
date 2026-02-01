@@ -9,8 +9,8 @@ export function generateStaticParams() {
     }))
 }
 
-export default function CaseStudyPage({ params }: { params: { slug: string } }) {
-    const { slug } = params
+export default async function CaseStudyPage({ params }: { params: Promise<{ slug: string }> }) {
+    const { slug } = await params
     const project = getProjectBySlug(slug)
 
     if (!project) {
