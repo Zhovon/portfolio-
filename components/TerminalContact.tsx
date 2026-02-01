@@ -13,7 +13,7 @@ interface Message {
 export function TerminalContact() {
     const [messages, setMessages] = useState<Message[]>([
         { role: 'system', content: 'Initializing Secure Uplink...', timestamp: new Date().toLocaleTimeString() },
-        { role: 'assistant', content: 'Connection established. Welcome to the Nexus Terminal. State your mission parameters.', timestamp: new Date().toLocaleTimeString() }
+        { role: 'assistant', content: 'Connection established. Welcome to the Nexus Terminal. Please provide your NAME and EMAIL, then state your mission parameters.', timestamp: new Date().toLocaleTimeString() }
     ])
     const [inputValue, setInputValue] = useState('')
     const [isTyping, setIsTyping] = useState(false)
@@ -38,16 +38,33 @@ export function TerminalContact() {
         // Simulate system response logic
         setTimeout(() => {
             let response = ''
-            if (userMsg.toLowerCase().includes('hello') || userMsg.toLowerCase().includes('hi')) {
-                response = 'Greetings, operator. I am the Cosmic Architect. How can I assist your next build?'
-            } else if (userMsg.toLowerCase().includes('project') || userMsg.toLowerCase().includes('build')) {
-                response = 'Mission acknowledged. Please provide details regarding your tech stack and timeline.'
-            } else if (userMsg.toLowerCase().includes('clear')) {
+            const msg = userMsg.toLowerCase()
+
+            if (msg.includes('hello') || msg.includes('hi') || msg.includes('hey')) {
+                response = 'Greetings, operator. I am Zhovon\'s digital interface. Please provide your NAME and EMAIL to initiate secure communication.'
+            } else if (msg.includes('pricing') || msg.includes('price') || msg.includes('cost') || msg.includes('rate')) {
+                response = 'Project pricing varies based on scope, timeline, and complexity. Typical ranges: Small projects ($2K-5K), Medium ($5K-15K), Large ($15K+). Share your requirements and I\'ll provide a detailed quote.'
+            } else if (msg.includes('service') || msg.includes('what do you do') || msg.includes('expertise')) {
+                response = 'Core services: SaaS Development, Next.js/React Applications, Payload CMS Integration, Full-Stack Solutions, API Development, UI/UX Implementation. Specialized in high-performance, scalable architectures.'
+            } else if (msg.includes('available') || msg.includes('availability') || msg.includes('timeline')) {
+                response = 'Currently accepting new projects. Typical turnaround: 2-8 weeks depending on scope. Rush projects available with premium rates. Share your deadline requirements.'
+            } else if (msg.includes('project') || msg.includes('build') || msg.includes('develop')) {
+                response = 'Excellent! Please describe your project: tech stack preferences, key features, timeline, and budget range. Don\'t forget to provide your NAME and EMAIL for follow-up.'
+            } else if (msg.includes('help') || msg.includes('?')) {
+                response = 'Available commands: Type your NAME → Type your EMAIL → Describe your project → Click "Transmit Mission". Or ask about: pricing, services, availability, portfolio.'
+            } else if (msg.includes('portfolio') || msg.includes('work') || msg.includes('examples')) {
+                response = 'Check out my recent projects in the Projects section above. Highlights: Next.js 15 + Payload CMS integrations, React 19 applications, TypeScript-first architectures, 99+ Lighthouse scores.'
+            } else if (msg.includes('clear')) {
                 setMessages([{ role: 'system', content: 'Buffer cleared. Connection stable.', timestamp: new Date().toLocaleTimeString() }])
                 setIsTyping(false)
                 return
+            } else if (msg.includes('@')) {
+                response = 'Email received. Now provide your NAME and describe your project requirements. When ready, click "Transmit Mission" to send.'
+            } else if (!messages.some(m => m.role === 'user' && m.content.includes('@'))) {
+                // If no email provided yet
+                response = 'Message logged. Please provide your EMAIL address (e.g., you@example.com) so I can respond to your inquiry.'
             } else {
-                response = 'Command processed. Data logged to primary buffer. Continue transmission.'
+                response = 'Information logged. Add any additional details, then click "Transmit Mission" to send your inquiry. I\'ll respond within 24-48 hours.'
             }
 
             setMessages(prev => [...prev, { role: 'assistant', content: response, timestamp: new Date().toLocaleTimeString() }])
@@ -56,31 +73,68 @@ export function TerminalContact() {
     }
 
     const launchMission = async () => {
+        // Check if we have enough information
+        const userMessages = messages.filter(m => m.role === 'user').map(m => m.content)
+        const hasEmail = userMessages.some(msg => msg.includes('@'))
+        const hasName = userMessages.some(msg => !msg.includes('@') && msg.trim().length > 2)
+
+        if (!hasName || !hasEmail) {
+            setMessages(prev => [...prev, {
+                role: 'system',
+                content: 'ERROR: Insufficient data. Please provide your NAME and EMAIL before transmission.',
+                timestamp: new Date().toLocaleTimeString()
+            }])
+            return
+        }
+
         setStatus('sending')
 
-        // Final message to system
-        const finalContent = messages.map(m => `[${m.role.toUpperCase()}] ${m.content}`).join('\n')
+        // Extract email from messages (userMessages already defined above)
+        const emailMatch = userMessages.join(' ').match(/[\w.-]+@[\w.-]+\.\w+/)
+        const email = emailMatch ? emailMatch[0] : ''
+
+        // Try to extract name (first user message that's not an email)
+        const nameMessage = userMessages.find(msg => !msg.includes('@') && msg.length > 2)
+        const name = nameMessage || 'Terminal User'
+
+        // Compile all messages into the message body
+        const finalContent = messages
+            .filter(m => m.role === 'user' || m.role === 'assistant')
+            .map(m => `[${m.role.toUpperCase()}] ${m.content}`)
+            .join('\n')
 
         try {
-            const response = await fetch('/api/messages', {
+            const response = await fetch('/api/contact', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    name: 'Terminal User', // We could ask for this in chat
-                    email: 'terminal@zhovon.com', // Placeholder if not provided
-                    subject: `Mission Briefing from ${new Date().toLocaleDateString()}`,
+                    name: name,
+                    email: email,
+                    subject: `Terminal Mission Briefing - ${new Date().toLocaleDateString()}`,
                     message: finalContent
                 })
             })
 
-            if (!response.ok) throw new Error('Transmission interrupted')
+            const data = await response.json()
 
-            setMessages(prev => [...prev, { role: 'system', content: 'MISSION DATA TRANSMITTED. STORAGE SEALED.', timestamp: new Date().toLocaleTimeString() }])
+            if (!response.ok) {
+                throw new Error(data.error || 'Transmission interrupted')
+            }
+
+            setMessages(prev => [...prev, {
+                role: 'system',
+                content: '✓ MISSION DATA TRANSMITTED. AUTO-REPLY SENT TO YOUR EMAIL. STORAGE SEALED.',
+                timestamp: new Date().toLocaleTimeString()
+            }])
             setStatus('success')
-        } catch (err) {
-            setMessages(prev => [...prev, { role: 'system', content: 'SIGNAL LOST. ATTEMPT RE-TRANSMISSION.', timestamp: new Date().toLocaleTimeString() }])
+        } catch (err: any) {
+            setMessages(prev => [...prev, {
+                role: 'system',
+                content: `✗ SIGNAL LOST: ${err.message}. ATTEMPT RE-TRANSMISSION.`,
+                timestamp: new Date().toLocaleTimeString()
+            }])
             setStatus('idle')
         }
     }

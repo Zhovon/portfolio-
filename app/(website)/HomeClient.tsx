@@ -128,7 +128,7 @@ export default function HomeClient({ initialProjects }: { initialProjects: any[]
                     </motion.div>
                     <h1 className="text-[15vw] leading-[0.75] font-black tracking-tighter text-white mb-8">
                         <span className="block">FUTURE</span>
-                        <span className="block bg-gradient-to-r from-purple-500 via-blue-500 to-cyan-400 bg-clip-text text-transparent italic">BUILT.</span>
+                        <span className="block bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-400 bg-clip-text text-transparent italic">BUILT.</span>
                     </h1>
                     <p className="text-gray-500 text-xl font-medium tracking-[0.2em] uppercase mb-12">SaaS Architect — Est. 2019</p>
 
@@ -168,7 +168,7 @@ export default function HomeClient({ initialProjects }: { initialProjects: any[]
                         transition={{ duration: 1, ease: "circOut" }}
                         className="text-5xl md:text-7xl font-black text-white mb-10 tracking-tighter"
                     >
-                        MOVING AT THE VELOCITY OF <span className="text-purple-500">INNOVATION.</span>
+                        MOVING AT THE VELOCITY OF <span className="text-emerald-500">INNOVATION.</span>
                     </motion.h2>
                     <p className="text-gray-400 text-xl font-medium leading-relaxed">
                         I don't just build websites. I engineer digital engines that drive growth, speed, and interstellar user experiences. WordPress was the launchpad. Next.js is the rocket.
@@ -176,18 +176,56 @@ export default function HomeClient({ initialProjects }: { initialProjects: any[]
                 </div>
             </section>
 
-            <div className="py-20 bg-purple-600 overflow-hidden -rotate-2 scale-105 shadow-[0_0_50px_rgba(147,51,234,0.5)] z-20 relative">
+            <div className="relative py-24 overflow-hidden z-20">
+                {/* Gradient Background - Emerald Nebula */}
+                <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 via-teal-500 to-cyan-500 opacity-95" />
+                <div className="absolute inset-0 backdrop-blur-sm bg-black/20" />
+
+                {/* Animated Glow Effects - Cosmic Green */}
+                <div className="absolute top-0 left-1/4 w-96 h-96 bg-emerald-500/40 rounded-full blur-[120px] animate-pulse" />
+                <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-teal-500/40 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '1s' }} />
+
+                {/* Top Marquee - Faster */}
                 <motion.div
-                    animate={{ x: [0, -1000] }}
-                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                    className="flex whitespace-nowrap gap-10"
+                    animate={{ x: [0, -1200] }}
+                    transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                    className="flex whitespace-nowrap gap-12 mb-8 relative"
                 >
-                    {[...Array(10)].map((_, i) => (
-                        <span key={i} className="text-7xl md:text-9xl font-black text-white uppercase tracking-tighter">
-                            FAST_SAAS <span className="text-black/20">★</span> 100_LPS_CORE <span className="text-black/20">★</span> INTERSTELLAR_UX <span className="text-black/20">★</span>
+                    {[...Array(12)].map((_, i) => (
+                        <span key={i} className="text-6xl md:text-8xl font-black text-white uppercase tracking-tight flex items-center gap-8">
+                            NEXT.JS EXPERT
+                            <span className="text-emerald-200 text-5xl">◆</span>
+                            PAYLOAD CMS
+                            <span className="text-teal-200 text-5xl">◆</span>
+                            99+ LIGHTHOUSE
+                            <span className="text-cyan-200 text-5xl">◆</span>
                         </span>
                     ))}
                 </motion.div>
+
+                {/* Bottom Marquee - Slower, Opposite Direction */}
+                <motion.div
+                    animate={{ x: [-1200, 0] }}
+                    transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+                    className="flex whitespace-nowrap gap-12 relative"
+                >
+                    {[...Array(12)].map((_, i) => (
+                        <span key={i} className="text-5xl md:text-7xl font-black text-white/90 uppercase tracking-tight flex items-center gap-8">
+                            SAAS ARCHITECT
+                            <span className="text-emerald-300 text-4xl">✦</span>
+                            TYPESCRIPT PRO
+                            <span className="text-teal-300 text-4xl">✦</span>
+                            REACT 19
+                            <span className="text-cyan-300 text-4xl">✦</span>
+                            TAILWIND 4
+                            <span className="text-emerald-200 text-4xl">✦</span>
+                        </span>
+                    ))}
+                </motion.div>
+
+                {/* Subtle Border Glow - Emerald */}
+                <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-emerald-400/60 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-teal-400/60 to-transparent" />
             </div>
 
             <section className="relative h-[300vh]" id="dive">
@@ -243,7 +281,7 @@ export default function HomeClient({ initialProjects }: { initialProjects: any[]
                             className="absolute text-5xl md:text-8xl font-black text-center text-white px-4"
                         >
                             CRAFTING <br />
-                            <span className="bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent">REALITIES.</span>
+                            <span className="bg-gradient-to-r from-teal-500 to-cyan-400 bg-clip-text text-transparent">REALITIES.</span>
                         </motion.div>
                     </div>
                 </div>
@@ -265,7 +303,7 @@ export default function HomeClient({ initialProjects }: { initialProjects: any[]
                                 initial={{ opacity: 0, x: 50 }}
                                 whileInView={{ opacity: 1, x: 0 }}
                                 transition={{ duration: 1, delay: 0.5 }}
-                                className="text-xs font-mono text-purple-500 animate-pulse hidden md:block"
+                                className="text-xs font-mono text-emerald-500 animate-pulse hidden md:block"
                             >
                                 [ SCANNING_DATA... ]
                             </motion.span>
@@ -284,7 +322,7 @@ export default function HomeClient({ initialProjects }: { initialProjects: any[]
                     <div className="absolute bottom-20 left-6 lg:left-20 right-6 lg:right-20 h-[1px] bg-white/5">
                         <motion.div
                             style={{ scaleX: scrollYProgressHorizontal }}
-                            className="h-full bg-purple-500 origin-left"
+                            className="h-full bg-emerald-500 origin-left"
                         />
                     </div>
                 </div>
@@ -293,7 +331,7 @@ export default function HomeClient({ initialProjects }: { initialProjects: any[]
             <section id="meta" className="relative py-40 px-6 lg:px-20 overflow-hidden">
                 <div className="max-w-7xl mx-auto">
                     <div className="mb-32">
-                        <h2 className="text-xs font-black uppercase tracking-[0.5em] text-purple-500 mb-6">03 — Universal Competencies</h2>
+                        <h2 className="text-xs font-black uppercase tracking-[0.5em] text-emerald-500 mb-6">03 — Universal Competencies</h2>
                         <h3 className="text-6xl md:text-9xl font-black text-white italic tracking-tighter uppercase leading-none">
                             Tech <br /> <span className="text-gray-800">Meta</span>
                         </h3>
@@ -301,10 +339,10 @@ export default function HomeClient({ initialProjects }: { initialProjects: any[]
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
                         {[
-                            { name: 'Architecture', level: '95%', tech: 'Next.js, Payload, Microservices', color: 'from-purple-500 to-blue-500' },
-                            { name: 'Core Logic', level: '90%', tech: 'TypeScript, React, Node.js', color: 'from-blue-500 to-cyan-500' },
-                            { name: '3D Mechanics', level: '85%', tech: 'Three.js, GLSL, R3F', color: 'from-cyan-500 to-green-500' },
-                            { name: 'Growth Systems', level: '92%', tech: 'SEO, Conversion, SaaS Pipelines', color: 'from-green-500 to-yellow-500' }
+                            { name: 'Architecture', level: '95%', tech: 'Next.js, Payload, Microservices', color: 'from-emerald-500 to-teal-500' },
+                            { name: 'Core Logic', level: '90%', tech: 'TypeScript, React, Node.js', color: 'from-teal-500 to-cyan-500' },
+                            { name: '3D Mechanics', level: '85%', tech: 'Three.js, GLSL, R3F', color: 'from-cyan-500 to-emerald-400' },
+                            { name: 'Growth Systems', level: '92%', tech: 'SEO, Conversion, SaaS Pipelines', color: 'from-emerald-400 to-teal-400' }
                         ].map((skill, i) => (
                             <motion.div
                                 key={i}
@@ -317,7 +355,7 @@ export default function HomeClient({ initialProjects }: { initialProjects: any[]
                                     <span className="text-4xl font-black text-white/10 group-hover:text-white/20 transition-colors uppercase italic tracking-tighter">0{i + 1}</span>
                                     <span className={`text-xs font-black tracking-widest bg-gradient-to-r ${skill.color} bg-clip-text text-transparent`}>{skill.level}</span>
                                 </div>
-                                <h4 className="text-3xl font-black text-white mb-4 uppercase italic tracking-tighter group-hover:text-purple-400 transition-colors">{skill.name}</h4>
+                                <h4 className="text-3xl font-black text-white mb-4 uppercase italic tracking-tighter group-hover:text-emerald-400 transition-colors">{skill.name}</h4>
                                 <p className="text-gray-500 text-[10px] font-bold uppercase tracking-widest leading-relaxed">
                                     {skill.tech}
                                 </p>
@@ -344,7 +382,7 @@ export default function HomeClient({ initialProjects }: { initialProjects: any[]
                             whileHover={{ y: -10, scale: 1.02 }}
                             className="md:col-span-2 glass-panel p-12 rounded-[2.5rem] flex flex-col justify-between h-[400px] group transition-all duration-500 hover:border-purple-500/50"
                         >
-                            <Cpu className="w-12 h-12 text-purple-500 mb-6 group-hover:rotate-12 transition-transform" />
+                            <Cpu className="w-12 h-12 text-emerald-500 mb-6 group-hover:rotate-12 transition-transform" />
                             <div>
                                 <h3 className="text-4xl font-black text-white mb-4 italic">Next-Gen Stack</h3>
                                 <p className="text-gray-500 text-lg">Next.js 15, React 19, TypeScript, Payload 3, and Tailwind 4. The bleeding edge of SaaS development.</p>
@@ -352,9 +390,9 @@ export default function HomeClient({ initialProjects }: { initialProjects: any[]
                         </motion.div>
                         <motion.div
                             whileHover={{ y: -10, scale: 1.02 }}
-                            className="glass-panel p-12 rounded-[2.5rem] bg-purple-600/10 border-purple-500/20 h-[400px] flex flex-col justify-between group transition-all duration-500 hover:border-blue-500/50"
+                            className="glass-panel p-12 rounded-[2.5rem] bg-emerald-600/10 border-emerald-500/20 h-[400px] flex flex-col justify-between group transition-all duration-500 hover:border-teal-500/50"
                         >
-                            <Zap className="w-12 h-12 text-blue-400 mb-6 group-hover:scale-125 transition-transform" />
+                            <Zap className="w-12 h-12 text-teal-400 mb-6 group-hover:scale-125 transition-transform" />
                             <div>
                                 <h3 className="text-4xl font-black text-white mb-4 italic">Speed.</h3>
                                 <p className="text-gray-500 text-lg font-medium">Core Web Vitals optimized out of the box. 100/100 performance scores aren't a goal—they're the baseline.</p>
@@ -372,18 +410,18 @@ export default function HomeClient({ initialProjects }: { initialProjects: any[]
                 <div className="relative z-10 text-center">
                     <div className="flex flex-wrap justify-center gap-12 mb-32 opacity-40 hover:opacity-100 transition-opacity duration-700">
                         <div className="flex flex-col items-center">
-                            <div className="text-[10px] font-black tracking-[0.4em] text-purple-500 mb-2 uppercase">ZHOVON_Flux</div>
+                            <div className="text-[10px] font-black tracking-[0.4em] text-emerald-500 mb-2 uppercase">ZHOVON_Flux</div>
                             <div className="text-3xl font-mono text-white flex items-center gap-2">
                                 <motion.span
                                     animate={{ opacity: [0.5, 1, 0.5] }}
                                     transition={{ repeat: Infinity, duration: 2 }}
-                                    className="w-2 h-2 rounded-full bg-purple-500 shadow-[0_0_10px_rgba(168,85,247,0.5)]"
+                                    className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]"
                                 />
                                 {mounted ? `${stats.core}%` : '--%'}
                             </div>
                         </div>
                         <div className="flex flex-col items-center">
-                            <div className="text-[10px] font-black tracking-[0.4em] text-blue-500 mb-2 uppercase">Active_Missions</div>
+                            <div className="text-[10px] font-black tracking-[0.4em] text-teal-500 mb-2 uppercase">Active_Missions</div>
                             <div className="text-3xl font-mono text-white">{mounted ? `0${stats.missions}` : '00'}</div>
                         </div>
                         <div className="flex flex-col items-center">
@@ -396,16 +434,26 @@ export default function HomeClient({ initialProjects }: { initialProjects: any[]
                         whileInView={{ scale: [0.9, 1.05, 1], opacity: [0, 1] }}
                         className="text-7xl md:text-[10vw] font-black tracking-tighter text-white mb-20"
                     >
-                        ACCESS <span className="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent italic">TERMINAL.</span>
+                        ACCESS <span className="bg-gradient-to-r from-teal-500 to-emerald-500 bg-clip-text text-transparent italic">TERMINAL.</span>
                     </motion.h2>
 
                     <div className="flex flex-wrap justify-center gap-10">
-                        {['GITHUB', 'LINKEDIN', 'TWITTER', 'EMAIL'].map((link) => (
-                            <Link key={link} href="#" className="group flex items-center gap-2">
-                                <span className="text-xs font-black tracking-[0.5em] text-gray-500 group-hover:text-white transition-colors">{link}</span>
-                                <ChevronRight className="w-4 h-4 text-purple-500 opacity-0 group-hover:opacity-100 transition-opacity" />
-                            </Link>
-                        ))}
+                        <Link href="https://github.com/Zhovon" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2">
+                            <span className="text-xs font-black tracking-[0.5em] text-gray-500 group-hover:text-white transition-colors">GITHUB</span>
+                            <ChevronRight className="w-4 h-4 text-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </Link>
+                        <Link href="https://www.linkedin.com/in/shahadat-hossain-b314601b2/" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2">
+                            <span className="text-xs font-black tracking-[0.5em] text-gray-500 group-hover:text-white transition-colors">LINKEDIN</span>
+                            <ChevronRight className="w-4 h-4 text-purple-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </Link>
+                        <Link href="https://www.facebook.com/shahadathossai.shovon" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2">
+                            <span className="text-xs font-black tracking-[0.5em] text-gray-500 group-hover:text-white transition-colors">FACEBOOK</span>
+                            <ChevronRight className="w-4 h-4 text-purple-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </Link>
+                        <Link href="mailto:admin@zhovon.com" className="group flex items-center gap-2">
+                            <span className="text-xs font-black tracking-[0.5em] text-gray-500 group-hover:text-white transition-colors">EMAIL</span>
+                            <ChevronRight className="w-4 h-4 text-purple-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </Link>
                     </div>
                 </div>
             </footer>

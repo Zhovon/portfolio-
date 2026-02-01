@@ -17,8 +17,26 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
     title: "ZHOVON | Lead SaaS Architect & Full-Stack Engineer",
-    description: "Personal portfolio of Zhovon, a senior SaaS architect specializing in high-performance React, Next.js, and immersive digital experiences.",
-    keywords: ["Zhovon", "SaaS Architect", "Full Stack Developer", "Next.js Expert", "React Developer", "Digital Portfolio"],
+    description: "Shahadat Hossain (Zhovon) - Senior SaaS architect specializing in Next.js, React, TypeScript, and Payload CMS. Building high-performance digital experiences with 99+ Lighthouse scores.",
+    keywords: ["Zhovon", "Shahadat Hossain", "SaaS Architect", "Full Stack Developer", "Next.js Expert", "React Developer", "TypeScript Pro", "Payload CMS", "Web Development", "Dhaka Bangladesh"],
+    authors: [{ name: "Shahadat Hossain (Zhovon)", url: "https://zhovon.com" }],
+    openGraph: {
+        type: "website",
+        locale: "en_US",
+        url: "https://zhovon.com",
+        title: "ZHOVON | Lead SaaS Architect & Full-Stack Engineer",
+        description: "Senior SaaS architect specializing in Next.js, React, TypeScript, and Payload CMS. Building high-performance digital experiences.",
+        siteName: "Zhovon Portfolio",
+    },
+    twitter: {
+        card: "summary_large_image",
+        title: "ZHOVON | Lead SaaS Architect & Full-Stack Engineer",
+        description: "Senior SaaS architect specializing in Next.js, React, TypeScript, and Payload CMS.",
+    },
+    robots: {
+        index: true,
+        follow: true,
+    },
 };
 
 export default function RootLayout({
@@ -29,15 +47,24 @@ export default function RootLayout({
     const jsonLd = {
         "@context": "https://schema.org",
         "@type": "Person",
-        "name": "Zhovon",
+        "name": "Shahadat Hossain",
+        "alternateName": "Zhovon",
         "url": "https://zhovon.com",
+        "email": "admin@zhovon.com",
         "jobTitle": "Lead SaaS Architect",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "71, Sayed Nagar, Dakshin Khan",
+            "addressLocality": "Dhaka",
+            "postalCode": "1230",
+            "addressCountry": "BD"
+        },
         "sameAs": [
-            "https://github.com/zhovon",
-            "https://twitter.com/zhovon",
-            "https://linkedin.com/in/zhovon"
+            "https://github.com/Zhovon",
+            "https://www.linkedin.com/in/shahadat-hossain-b314601b2/",
+            "https://www.facebook.com/shahadathossai.shovon"
         ],
-        "knowsAbout": ["React", "Next.js", "TypeScript", "SaaS Architecture", "Full-Stack Development"]
+        "knowsAbout": ["React", "Next.js", "TypeScript", "SaaS Architecture", "Full-Stack Development", "Payload CMS", "Node.js", "Three.js"]
     }
 
     return (
