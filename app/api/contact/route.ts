@@ -1,34 +1,55 @@
 import { Resend } from 'resend'
 import { NextRequest, NextResponse } from 'next/server'
 import { saveContactMessage } from '@/lib/supabase'
+import { z } from 'zod'
+
+// Schema Validation
+const contactSchema = z.object({
+    name: z.string().min(2, "Name is too short").max(50, "Name is too long"),
+    email: z.string().email("Invalid email address"),
+    subject: z.string().optional(),
+    message: z.string().min(10, "Message is too short").max(1000, "Message is too long")
+})
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
+// Simple in-memory rate limiting (Note: resets on server restart/cold start)
+// For production scale, use Redis (e.g., Upstash)
+const rateLimitMap = new Map<string, number>()
+const RATE_LIMIT_WINDOW = 60 * 1000 // 1 minute
+const MAX_REQUESTS = 3 // 3 requests per minute
+
 export async function POST(request: NextRequest) {
     try {
+        // Rate Limiting
+        const ip = request.headers.get('x-forwarded-for') || 'unknown'
+        const now = Date.now()
+        const lastRequestTime = rateLimitMap.get(ip)
+
+        if (lastRequestTime && now - lastRequestTime < RATE_LIMIT_WINDOW / MAX_REQUESTS) {
+            return NextResponse.json(
+                { error: 'Too many requests. Please slow down.' },
+                { status: 429 }
+            )
+        }
+        rateLimitMap.set(ip, now)
+
+        // Clean up old entries periodically could be done here, but map is small for this scope.
+
         const body = await request.json()
-        const { name, email, subject, message } = body
 
         // Validation
-        if (!name || !email || !message) {
+        const result = contactSchema.safeParse(body)
+        if (!result.success) {
             return NextResponse.json(
-                { error: 'Missing required fields' },
+                { error: result.error.issues[0].message },
                 { status: 400 }
             )
         }
 
-        // Email validation
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-        if (!emailRegex.test(email)) {
-            return NextResponse.json(
-                { error: 'Invalid email address' },
-                { status: 400 }
-            )
-        }
+        const { name, email, subject, message } = result.data
 
         console.log('📧 Attempting to send emails...')
-        console.log('From:', name, email)
-        console.log('Message:', message.substring(0, 100))
 
         // Save message to Supabase
         try {

@@ -1,10 +1,11 @@
 import { CaseStudyClient } from './CaseStudyClient'
 import { notFound } from 'next/navigation'
-import { getProjectBySlug, getNextProject, projects } from '@/data/projects'
+import { getProjectBySlug, getNextProject, FALLBACK_PROJECTS } from '@/data/projects'
 
 // Generate static params for all projects
+// Generate static params for all projects
 export function generateStaticParams() {
-    return projects.map((project) => ({
+    return FALLBACK_PROJECTS.map((project) => ({
         slug: project.slug,
     }))
 }
@@ -18,5 +19,5 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
         return notFound()
     }
 
-    return <CaseStudyClient project={project} nextProject={nextProject} />
+    return <CaseStudyClient project={project} nextProject={nextProject || undefined} />
 }

@@ -163,7 +163,13 @@ export function CaseStudyClient({ project, nextProject }: { project: Project, ne
             <Section index={1} progress={smoothProgress} range={[0.10, 0.3]}>
                 <div className="relative aspect-video w-full rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-emerald-900/20">
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10" />
-                    <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
+                    {project.image ? (
+                        <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
+                    ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-gray-900 to-black flex items-center justify-center">
+                            <Layers className="w-20 h-20 text-white/10" />
+                        </div>
+                    )}
 
                     <div className="absolute bottom-8 left-8 z-20 flex gap-4">
                         {project.liveUrl && (

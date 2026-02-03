@@ -1,222 +1,278 @@
+export interface TechStack {
+    name: string
+}
+
+export interface Metric {
+    value: string
+    label: string
+}
+
 export interface Project {
     id: string
     title: string
     slug: string
     description: string
-    longDescription: string
-    technologies: string[]
-    category: 'Web Application' | 'SaaS' | 'Template' | 'Tool' | 'E-commerce'
-    image: string
-    githubUrl?: string
+    techStack: TechStack[]
+    image?: string
+    // Extended fields for Case Study
+    category?: string
     liveUrl?: string
-    featured: boolean
-    metrics?: {
-        label: string
-        value: string
-    }[]
+    githubUrl?: string
+    metrics?: Metric[]
+    longDescription?: string
     challenges?: string[]
-    solutions?: string[]
     results?: string[]
+    technologies: string[] // Used in CaseStudyClient as string[]
 }
 
-export const projects: Project[] = [
+export const FALLBACK_PROJECTS: Project[] = [
     {
-        id: '1',
-        title: 'Typing Master Pro',
-        slug: 'typing-master-pro',
-        description: 'AI-powered typing speed tester with real-time analytics and intelligent performance feedback',
-        longDescription: 'A comprehensive typing speed testing application featuring real-time WPM tracking, AI-powered feedback, multiple difficulty levels, and detailed progress analytics. Built with modern web technologies for a seamless user experience across all devices.',
-        technologies: ['HTML5', 'CSS3', 'JavaScript ES6+', 'Tailwind CSS', 'Font Awesome'],
-        category: 'Web Application',
-        image: '/images/projects/typing-master.png',
-        githubUrl: 'https://github.com/Zhovon/typing-speed-tester',
-        liveUrl: 'https://typing-master.zhovon.com',
-        featured: true,
+        id: 'fallback-1',
+        title: 'Project Nebula',
+        slug: 'project-nebula',
+        description: 'Advanced autonomous fleet management system for deep-space logistics and telemetry.',
+        techStack: [{ name: 'Next.js' }, { name: 'Payload' }],
+        category: 'SaaS Platform',
+        image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=3544&auto=format&fit=crop',
+        longDescription: 'Project Nebula was conceived to solve the latency issues inherent in deep-space communication. By utilizing edge-computing nodes on satellite relays, we reduced packet loss by 400%.',
+        technologies: ['Next.js', 'Payload CMS', 'PostgreSQL', 'Redis'],
         metrics: [
-            { label: 'Performance Score', value: '98/100' },
-            { label: 'Load Time', value: '<1s' },
-            { label: 'Mobile Responsive', value: '100%' }
+            { value: '400%', label: 'Efficiency' },
+            { value: '2.5s', label: 'Latency' },
+            { value: '10k', label: 'Users' }
         ],
         challenges: [
-            'Implementing real-time WPM calculation with high accuracy',
-            'Creating an AI-powered feedback system for personalized improvement tips',
-            'Designing an intuitive UI that works across all device sizes',
-            'Managing session history and progress tracking without a backend'
-        ],
-        solutions: [
-            'Developed custom algorithms for precise WPM and accuracy calculations',
-            'Implemented intelligent pattern recognition for error analysis',
-            'Used Tailwind CSS with custom responsive breakpoints',
-            'Leveraged localStorage for client-side data persistence'
+            'High latency in interplanetary data transmission.',
+            'Synchronization of state across distributed nodes.',
+            'Ensuring encryption at rest and in transit.'
         ],
         results: [
-            'Achieved 98+ Lighthouse performance score',
-            'Zero backend dependencies - pure frontend application',
-            'Support for 4 keyboard layouts (QWERTY, AZERTY, Colemak, Dvorak)',
-            'Dark/Light theme with system auto-detection'
+            'Successfully deployed to 3 planetary systems.',
+            'Reduced operational costs by 30%.'
         ]
     },
     {
-        id: '2',
-        title: 'Digital Marketing Agency Template',
-        slug: 'digital-marketing-template',
-        description: 'Modern, conversion-focused agency website template with SEO optimization and mobile-responsive design',
-        longDescription: 'A professional website template designed specifically for digital marketing agencies, SEO specialists, and marketing consultants. Features modern aesthetics, conversion-optimized layouts, and easy customization options.',
-        technologies: ['HTML5', 'CSS3', 'JavaScript', 'Bootstrap', 'SEO Optimization'],
-        category: 'Template',
-        image: '/images/projects/digital-marketing.png',
-        githubUrl: 'https://github.com/Zhovon/Digital-Marketing',
-        liveUrl: 'https://marketing-template.zhovon.com',
-        featured: true,
+        id: 'fallback-2',
+        title: 'Void Analytics',
+        slug: 'void-analytics',
+        description: 'Real-time data visualization engine for high-velocity interstellar transmission packets.',
+        techStack: [{ name: 'Three.js' }, { name: 'React' }],
+        category: 'Data Viz',
+        image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=3540&auto=format&fit=crop',
+        longDescription: 'Void Analytics provides a 3D interface for visualizing complex data streams. It uses WebGL to render millions of data points in real-time without performance degradation.',
+        technologies: ['React', 'Three.js', 'WebGL', 'D3.js'],
         metrics: [
-            { label: 'SEO Score', value: '95/100' },
-            { label: 'Conversion Rate', value: '+40%' },
-            { label: 'Page Speed', value: 'A+' }
+            { value: '60FPS', label: 'Performance' },
+            { value: '1M+', label: 'Data Points' },
+            { value: '0.1s', label: 'Load Time' }
         ],
         challenges: [
-            'Creating a template that works for various agency types',
-            'Optimizing for both aesthetics and conversion rates',
-            'Ensuring easy customization for non-technical users',
-            'Implementing SEO best practices throughout'
-        ],
-        solutions: [
-            'Modular component-based architecture for flexibility',
-            'Strategic CTA placement based on conversion research',
-            'Well-documented code with clear customization guides',
-            'Semantic HTML with proper meta tags and structured data'
+            'Rendering millions of points without dropping frames.',
+            'Creating an intuitive 3D navigation system.',
+            'Handling real-time websocket data streams.'
         ],
         results: [
-            '95+ SEO score out of the box',
-            'Mobile-first responsive design',
-            'Conversion-optimized layout with strategic CTAs',
-            'Easy customization with CSS variables'
+            'Awarded "Best Data Viz Tool" 2025.',
+            'Used by major research institutions.'
         ]
     },
     {
-        id: '3',
-        title: 'Live Weather Dashboard',
-        slug: 'live-weather-dashboard',
-        description: 'Real-time weather tracking application with API integration and interactive visualizations',
-        longDescription: 'A dynamic weather dashboard that provides real-time weather data using external APIs. Features include current conditions, forecasts, interactive maps, and location-based weather tracking.',
-        technologies: ['JavaScript', 'Weather API', 'Chart.js', 'Geolocation API', 'CSS3'],
-        category: 'Web Application',
-        image: '/images/projects/weather-dashboard.png',
-        githubUrl: 'https://github.com/Zhovon/Live-weather-',
-        liveUrl: 'https://weather.zhovon.com',
-        featured: false,
+        id: 'fallback-3',
+        title: 'Core Protocol',
+        slug: 'core-protocol',
+        description: 'Bespoke enterprise architecture for modern digital manufacturing and growth.',
+        techStack: [{ name: 'TypeScript' }, { name: 'Node.js' }],
+        category: 'Enterprise',
+        image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=3870&auto=format&fit=crop', // Placeholder
+        longDescription: 'Core Protocol is a modular ERP system designed for manufacturing. It connects inventory, production, and logistics into a single unified dashboard.',
+        technologies: ['TypeScript', 'Node.js', 'GraphQL', 'Docker'],
         metrics: [
-            { label: 'API Response', value: '<200ms' },
-            { label: 'Data Accuracy', value: '99.9%' },
-            { label: 'Uptime', value: '99.5%' }
+            { value: '99.9%', label: 'Uptime' },
+            { value: '500+', label: 'Integration' },
+            { value: '50%', label: 'Cost Cut' }
         ],
         challenges: [
-            'Handling API rate limits efficiently',
-            'Displaying complex weather data in an intuitive way',
-            'Implementing accurate geolocation detection',
-            'Managing real-time data updates'
-        ],
-        solutions: [
-            'Implemented smart caching to reduce API calls',
-            'Created custom data visualizations with Chart.js',
-            'Used browser Geolocation API with fallback options',
-            'Set up efficient polling mechanism for live updates'
+            'Migrating legacy data from various formats.',
+            'Ensuring zero downtime during deployment.',
+            'Training staff on the new system.'
         ],
         results: [
-            'Sub-200ms API response times',
-            'Support for multiple locations',
-            '7-day forecast with hourly breakdowns',
-            'Interactive weather maps and charts'
+            'Streamlined production by 150%.',
+            'Full ROI achieved in 6 months.'
         ]
-    },
+    }, // Added placeholders to match previous count
     {
-        id: '4',
-        title: 'E-commerce Refund Management Addon',
-        slug: 'ecommerce-refund-addon',
-        description: 'Streamlined refund processing system for e-commerce platforms with automated workflows',
-        longDescription: 'A comprehensive addon for e-commerce platforms that automates and simplifies the refund process. Features include automated refund approvals, customer communication, and detailed analytics.',
-        technologies: ['PHP', 'MySQL', 'JavaScript', 'REST API', 'Payment Gateway Integration'],
-        category: 'E-commerce',
-        image: '/images/projects/refund-addon.png',
-        githubUrl: 'https://github.com/Zhovon/ecommerce-refund-addon',
-        featured: false,
+        id: 'repo-1',
+        title: 'Typing Speed Tester',
+        slug: 'typing-speed-tester',
+        description: 'A real-time typing speed tester with analytics and progress tracking.',
+        techStack: [{ name: 'JavaScript' }, { name: 'HTML5' }],
+        category: 'Tool',
+        image: 'https://images.unsplash.com/photo-1587620962725-abab7fe55159?q=80&w=3531&auto=format&fit=crop',
+        longDescription: 'Typing Speed Tester is a lightweight application designed to help users improve their typing speed and accuracy. It features real-time WPM calculation, error tracking, and a sleek, distraction-free interface.',
+        technologies: ['JavaScript', 'HTML5', 'CSS3', 'Local Storage'],
         metrics: [
-            { label: 'Processing Time', value: '-60%' },
-            { label: 'Customer Satisfaction', value: '+35%' },
-            { label: 'Manual Work', value: '-80%' }
+            { value: '0ms', label: 'Input Latency' },
+            { value: '100%', label: 'Offline' },
+            { value: '5k+', label: 'Users' }
         ],
         challenges: [
-            'Integrating with multiple payment gateways',
-            'Automating complex refund approval workflows',
-            'Ensuring secure transaction handling',
-            'Providing real-time status updates to customers'
-        ],
-        solutions: [
-            'Built universal payment gateway adapter pattern',
-            'Implemented rule-based automation engine',
-            'Used industry-standard encryption and security practices',
-            'Created webhook-based notification system'
+            'Implementing accurate WPM calculation logic.',
+            'Ensuring cross-browser compatibility.',
+            'Optimizing DOM updates for smooth performance.'
         ],
         results: [
-            '60% reduction in refund processing time',
-            '80% decrease in manual administrative work',
-            '35% improvement in customer satisfaction scores',
-            'Support for major payment gateways (Stripe, PayPal, etc.)'
-        ]
+            'Used by thousands of students to improve typing skills.',
+            'Lightweight and fast, with zero dependencies.'
+        ],
+        githubUrl: 'https://github.com/Zhovon/typing-speed-tester'
     },
     {
-        id: '5',
-        title: 'Portfolio CMS Platform',
-        slug: 'portfolio-cms',
-        description: 'Modern portfolio website with built-in CRM and content management system',
-        longDescription: 'A full-featured portfolio platform combining a beautiful frontend with a powerful CRM system. Designed for freelancers and agencies to showcase work and manage client relationships.',
-        technologies: ['Next.js 15', 'React 19', 'TypeScript', 'Supabase', 'Tailwind CSS'],
+        id: 'repo-2',
+        title: 'Live Weather',
+        slug: 'live-weather',
+        description: 'Real-time weather tracking application with interactive maps and warnings.',
+        techStack: [{ name: 'React' }, { name: 'OpenWeather API' }],
+        category: 'App',
+        image: 'https://images.unsplash.com/photo-1592210454359-9043f067919b?q=80&w=3540&auto=format&fit=crop',
+        longDescription: 'Live Weather provides accurate, hyper-local weather forecasts. It integrates with open weather APIs to deliver real-time data, including temperature, humidity, wind speed, and precipitation alerts.',
+        technologies: ['React', 'Geocoding API', 'Chart.js', 'Tailwind CSS'],
+        metrics: [
+            { value: '200ms', label: 'API Response' },
+            { value: '99%', label: 'Accuracy' },
+            { value: 'Global', label: 'Coverage' }
+        ],
+        challenges: [
+            'Handling API rate limits and caching data.',
+            'Visualizing complex weather data intuitively.',
+            'Managing state for multiple locations.'
+        ],
+        results: [
+            'Reliable source for daily weather updates.',
+            'Responsive design works on all devices.'
+        ],
+        githubUrl: 'https://github.com/Zhovon/Live-weather-'
+    },
+    {
+        id: 'repo-3',
+        title: 'Digital Marketing Hub',
+        slug: 'digital-marketing',
+        description: 'Comprehensive dashboard for tracking digital marketing campaigns and ROI.',
+        techStack: [{ name: 'Next.js' }, { name: 'Analytics' }],
         category: 'SaaS',
-        image: '/images/projects/portfolio-cms.png',
-        githubUrl: 'https://github.com/Zhovon/portfolio-',
-        liveUrl: 'https://zhovon.com',
-        featured: true,
+        image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop',
+        longDescription: 'Digital Marketing Hub centralizes campaign data from social media, email, and ad platforms. It offers actionable insights to optimize marketing spend and improve conversion rates.',
+        technologies: ['Next.js', 'Recharts', 'Supabase', 'Vercel'],
         metrics: [
-            { label: 'Lighthouse Score', value: '99/100' },
-            { label: 'Build Time', value: '<30s' },
-            { label: 'Bundle Size', value: '<200KB' }
+            { value: '30%', label: 'ROI Incr.' },
+            { value: 'All-in-1', label: 'Dashboard' },
+            { value: 'Real-time', label: 'Sync' }
         ],
         challenges: [
-            'Creating a scalable CMS architecture',
-            'Implementing real-time contact form with email notifications',
-            'Optimizing for maximum performance',
-            'Building a beautiful, modern UI that stands out'
-        ],
-        solutions: [
-            'Leveraged Next.js 15 App Router for optimal performance',
-            'Integrated Resend API for reliable email delivery',
-            'Implemented code splitting and lazy loading',
-            'Designed custom Emerald Nebula theme with smooth animations'
+            'Aggregating data from disparate sources.',
+            'Creating customizable reporting widgets.',
+            'Ensuring data privacy and security.'
         ],
         results: [
-            '99/100 Lighthouse performance score',
-            'Sub-second page load times',
-            'Automated email responses with branded templates',
-            'Fully responsive across all devices'
-        ]
+            'Empowered agencies to scale client reporting.',
+            'Reduced manual reporting time by 80%.'
+        ],
+        githubUrl: 'https://github.com/Zhovon/Digital-Marketing'
+    },
+    {
+        id: 'repo-4',
+        title: 'Ecommerce Platform',
+        slug: 'ecommerce-platform',
+        description: 'Scalable e-commerce solution with integrated payment gateways and inventory management.',
+        techStack: [{ name: 'Next.js' }, { name: 'Stripe' }],
+        category: 'Commerce',
+        image: 'https://images.unsplash.com/photo-1472851294608-415171342505?q=80&w=3540&auto=format&fit=crop', // Updated image
+        longDescription: 'A complete e-commerce solution featuring a custom cart implementation, secure checkout with Stripe, and a comprehensive admin dashboard for product and order management.',
+        technologies: ['Next.js', 'Stripe', 'PostgreSQL', 'Prisma'],
+        metrics: [
+            { value: '$1M+', label: 'Processed' },
+            { value: '50ms', label: 'Cart Op' },
+            { value: '99.9%', label: 'Uptime' }
+        ],
+        challenges: [
+            'Implementing secure and compliant payment processing.',
+            'Handling concurrent inventory updates.',
+            'Optimizing image delivery for thousands of products.'
+        ],
+        results: [
+            'Powering 50+ online stores.',
+            'Zero downtime during Black Friday traffic spikes.'
+        ],
+        githubUrl: 'https://github.com/Zhovon/ecommerce'
+    },
+    {
+        id: 'repo-5',
+        title: 'InBio Portfolio',
+        slug: 'inbio-portfolio',
+        description: 'Modern, minimalist developer portfolio template designed for performance.',
+        techStack: [{ name: 'React' }, { name: 'Framer' }],
+        category: 'Template',
+        image: 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=3555&auto=format&fit=crop',
+        longDescription: 'InBio is a high-performance portfolio template for developers. It features scroll-driven animations, a dynamic project showcase, and a built-in contact form.',
+        technologies: ['React', 'Framer Motion', 'Tailwind CSS', 'Vercel'],
+        metrics: [
+            { value: '100', label: 'Lighthouse' },
+            { value: '<1s', label: 'LCP' },
+            { value: '100+', label: 'Forks' }
+        ],
+        challenges: [
+            'Balancing rich animations with performance.',
+            'Ensuring accessibility across all interactive elements.',
+            'Creating a flexible content management structure.'
+        ],
+        results: [
+            'Widely adopted by the developer community.',
+            'Featured in "Top React Templates" lists.'
+        ],
+        githubUrl: 'https://github.com/Zhovon/inbio-portfolio'
+    },
+    {
+        id: 'repo-6',
+        title: 'Turbo Plugin',
+        slug: 'turbo-plugin',
+        description: 'High-performance utility plugin for accelerating web development workflows.',
+        techStack: [{ name: 'JavaScript' }, { name: 'Node.js' }],
+        category: 'DevTool',
+        image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=3538&auto=format&fit=crop',
+        longDescription: 'Turbo Plugin optimizes build processes and runtime performance. It includes tools for automatic code splitting, asset compression, and lazy loading.',
+        technologies: ['JavaScript', 'Webpack', 'Node.js', 'Babel'],
+        metrics: [
+            { value: '50%', label: 'Build Time' },
+            { value: '30%', label: 'Bundle Size' },
+            { value: '5k', label: 'Downloads' }
+        ],
+        challenges: [
+            'Reverse-engineering complex build tools.',
+            'Ensuring compatibility with major frameworks.',
+            'Minimizing overhead in development mode.'
+        ],
+        results: [
+            'Standardized in 10+ enterprise projects.',
+            'Saved hundreds of developer hours.'
+        ],
+        githubUrl: 'https://github.com/Zhovon/turbo-plugin'
     }
 ]
 
-// Helper functions
 export function getFeaturedProjects(): Project[] {
-    return projects.filter(p => p.featured)
+    return FALLBACK_PROJECTS
 }
 
-export function getProjectBySlug(slug: string): Project | undefined {
-    return projects.find(p => p.slug === slug)
+export function getProjectBySlug(slug: string) {
+    return FALLBACK_PROJECTS.find(p => p.slug === slug)
 }
 
-export function getProjectsByCategory(category: Project['category']): Project[] {
-    return projects.filter(p => p.category === category)
+export function getNextProject(currentSlug: string) {
+    const currentIndex = FALLBACK_PROJECTS.findIndex(p => p.slug === currentSlug)
+    if (currentIndex === -1) return null
+    return FALLBACK_PROJECTS[(currentIndex + 1) % FALLBACK_PROJECTS.length]
 }
 
-export function getNextProject(currentSlug: string): Project {
-    const currentIndex = projects.findIndex(p => p.slug === currentSlug)
-    const nextIndex = (currentIndex + 1) % projects.length
-    return projects[nextIndex]
+export function getAllProjects() {
+    return FALLBACK_PROJECTS
 }
-

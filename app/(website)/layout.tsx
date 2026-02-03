@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/react";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import StarsCanvas from "@/components/StarBackground";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { NexusNav } from "@/components/NexusNav";
+import { Analytics } from "@vercel/analytics/next"
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -107,6 +109,7 @@ export default function RootLayout({
                         {children}
                     </div>
                 </SmoothScroll>
+                <Analytics />
             </body>
         </html>
     );

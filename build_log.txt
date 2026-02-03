@@ -1,0 +1,6 @@
+.next/dev/types/validator.ts(98,39): error TS2307: Cannot find module '../../../app/api/check-env/route.js' or its corresponding type declarations.
+app/(website)/projects/[slug]/page.tsx(3,10): error TS2305: Module '"@/data/projects"' has no exported member 'getProjectBySlug'.
+app/(website)/projects/[slug]/page.tsx(3,28): error TS2305: Module '"@/data/projects"' has no exported member 'getNextProject'.
+app/(website)/projects/[slug]/page.tsx(3,44): error TS2724: '"@/data/projects"' has no exported member named 'projects'. Did you mean 'Project'?
+app/(website)/projects/[slug]/page.tsx(7,26): error TS7006: Parameter 'project' implicitly has an 'any' type.
+app/(website)/projects/page.tsx(2,10): error TS2724: '"@/data/projects"' has no exported member named 'projects'. Did you mean 'Project'?
