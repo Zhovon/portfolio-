@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import StarsCanvas from "@/components/StarBackground";
@@ -109,6 +110,7 @@ export default function RootLayout({
                     </div>
                 </SmoothScroll>
                 <Analytics />
+                <SpeedInsights />
             </body>
         </html>
     );
