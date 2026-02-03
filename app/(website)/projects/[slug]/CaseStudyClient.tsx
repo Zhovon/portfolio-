@@ -1,6 +1,7 @@
 'use client'
 
 import { motion, useScroll, useTransform, useSpring, MotionValue, AnimatePresence } from 'framer-motion'
+import { useLenis } from 'lenis/react'
 import { ArrowLeft, Github, Globe, Zap, Target, CheckCircle2, TrendingUp, Layers, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import { useRef, useEffect, useState } from 'react'
@@ -28,12 +29,12 @@ function Section({ children, index, progress, range, stayVisible = false }: { ch
 
 export function CaseStudyClient({ project, nextProject }: { project: Project, nextProject?: Project }) {
     const containerRef = useRef<HTMLDivElement>(null)
+    const lenis = useLenis()
+
     const { scrollYProgress } = useScroll({
         target: containerRef,
         offset: ["start start", "end end"]
     })
-
-
 
     const router = useRouter()
     const [warpTimer, setWarpTimer] = useState(0)
@@ -43,6 +44,10 @@ export function CaseStudyClient({ project, nextProject }: { project: Project, ne
     // Scroll to top on mount && Cooldown
     useEffect(() => {
         // Force scroll to top immediately
+        // We use both standard window.scrollTo and lenis.scrollTo to be sure
+        if (lenis) {
+            lenis.scrollTo(0, { immediate: true })
+        }
         window.scrollTo(0, 0)
 
         // Safety lock: Disable warp for 2 seconds after page load
@@ -51,7 +56,7 @@ export function CaseStudyClient({ project, nextProject }: { project: Project, ne
         }, 2000)
 
         return () => clearTimeout(timer)
-    }, [])
+    }, [lenis])
 
     useEffect(() => {
         let interval: NodeJS.Timeout
