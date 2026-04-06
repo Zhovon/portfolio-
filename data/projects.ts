@@ -27,6 +27,40 @@ export interface Project {
 
 export const FALLBACK_PROJECTS: Project[] = [
     {
+        id: 'repo-11',
+        title: 'Tailor SaaS',
+        slug: 'tailor-saas',
+        description: 'A comprehensive SaaS platform tailored for bespoke service management and high-availability operations.',
+        techStack: [{ name: 'React' }, { name: 'Render' }, { name: 'Node.js' }],
+        category: 'SaaS',
+        image: 'https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=3540&auto=format&fit=crop',
+        longDescription: 'Designed and deployed Tailor SaaS, a robust production platform hosted at tailor.zhovon.com. Features advanced authentication, dynamic email verification workflows, and environment-aware configurations built to scale gracefully on Render.',
+        technologies: ['React', 'Node.js', 'PostgreSQL', 'Render'],
+        liveUrl: 'https://tailor.zhovon.com',
+        metrics: [
+            { value: '99.9%', label: 'Uptime' },
+            { value: 'Robust', label: 'Auth Flow' }
+        ]
+    },
+    {
+        id: 'repo-7',
+        title: 'Rukaya AI',
+        slug: 'rukaya-ai',
+        description: 'A native-like mobile PWA Islamic companion with offline capabilities and AI guidance.',
+        techStack: [{ name: 'TypeScript' }, { name: 'PWA' }, { name: 'Next.js' }],
+        category: 'App',
+        image: 'https://images.unsplash.com/photo-1598371343717-9154f85e4933?q=80&w=3540&auto=format&fit=crop', // Updated image symbolizing Islamic architecture
+        longDescription: 'Transforming Rukaya AI into a resilient, native-like mobile experience. Built on a "True Offline" PWA architecture with Service Workers and IndexedDB, it ensures availability without an internet connection. Features include an offline-first AI chatbot, a haptic-feedback Tasbeeh counter linked to daily prayer times, and a frictionless native "Install App" flow.',
+        technologies: ['TypeScript', 'Next.js', 'Service Workers', 'IndexedDB', 'Tailwind CSS'],
+        liveUrl: 'https://rukaya.zhovon.com',
+        metrics: [
+            { value: '100%', label: 'Offline Ready' },
+            { value: 'Native', label: 'PWA Feel' },
+            { value: '<1s', label: 'Load Time' }
+        ],
+        githubUrl: 'https://github.com/Zhovon/Rukaya-Ai'
+    },
+    {
         id: 'fallback-1',
         title: 'Project Nebula',
         slug: 'project-nebula',
@@ -83,7 +117,7 @@ export const FALLBACK_PROJECTS: Project[] = [
         description: 'Bespoke enterprise architecture for modern digital manufacturing and growth.',
         techStack: [{ name: 'TypeScript' }, { name: 'Node.js' }],
         category: 'Enterprise',
-        image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=3870&auto=format&fit=crop', // Placeholder
+        image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=3870&auto=format&fit=crop',
         longDescription: 'Core Protocol is a modular ERP system designed for manufacturing. It connects inventory, production, and logistics into a single unified dashboard.',
         technologies: ['TypeScript', 'Node.js', 'GraphQL', 'Docker'],
         metrics: [
@@ -100,7 +134,7 @@ export const FALLBACK_PROJECTS: Project[] = [
             'Streamlined production by 150%.',
             'Full ROI achieved in 6 months.'
         ]
-    }, // Added placeholders to match previous count
+    },
     {
         id: 'repo-1',
         title: 'Typing Speed Tester',
@@ -186,7 +220,7 @@ export const FALLBACK_PROJECTS: Project[] = [
         description: 'Scalable e-commerce solution with integrated payment gateways and inventory management.',
         techStack: [{ name: 'Next.js' }, { name: 'Stripe' }],
         category: 'Commerce',
-        image: 'https://images.unsplash.com/photo-1472851294608-415171342505?q=80&w=3540&auto=format&fit=crop', // Updated image
+        image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=3540&auto=format&fit=crop',
         longDescription: 'A complete e-commerce solution featuring a custom cart implementation, secure checkout with Stripe, and a comprehensive admin dashboard for product and order management.',
         technologies: ['Next.js', 'Stripe', 'PostgreSQL', 'Prisma'],
         metrics: [
@@ -256,6 +290,36 @@ export const FALLBACK_PROJECTS: Project[] = [
             'Saved hundreds of developer hours.'
         ],
         githubUrl: 'https://github.com/Zhovon/turbo-plugin'
+    },
+    {
+        id: 'repo-8',
+        title: 'Foundation AI',
+        slug: 'foundation-ai',
+        description: 'AI-assisted donation guide writing platform.',
+        techStack: [{ name: 'JavaScript' }, { name: 'AI Generator' }],
+        category: 'AI',
+        image: 'https://images.unsplash.com/photo-1532629345422-7515f3d16bb0?q=80&w=3540&auto=format&fit=crop',
+        longDescription: 'An AI-powered tool built to help foundations and nonprofits generate compelling donation guides efficiently, streamlining the fundraising process.',
+        technologies: ['JavaScript', 'OpenAI API', 'React'],
+        metrics: [
+            { value: '10x', label: 'Faster Writing' }
+        ],
+        githubUrl: 'https://github.com/Zhovon/Foundation'
+    },
+    {
+        id: 'repo-9',
+        title: 'CRM Portfolio',
+        slug: 'crm-portfolio',
+        description: 'Modern portfolio ecosystem with a built-in CRM system for lead tracking.',
+        techStack: [{ name: 'TypeScript' }, { name: 'CRM' }],
+        category: 'SaaS',
+        image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=3540&auto=format&fit=crop',
+        longDescription: 'A versatile portfolio template that doubles as a business management tool, including a built-in CRM to track incoming leads directly from the site.',
+        technologies: ['TypeScript', 'Next.js', 'Database Integration'],
+        metrics: [
+            { value: 'All-in-1', label: 'Solution' }
+        ],
+        githubUrl: 'https://github.com/Zhovon/portfolio-'
     }
 ]
 

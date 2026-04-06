@@ -10,6 +10,8 @@ import { Skills } from '@/components/sections/Skills'
 import { Terminal } from '@/components/sections/Terminal'
 import { Project } from '@/data/projects'
 
+import { About } from '@/components/sections/About'
+
 export default function HomeClient({ initialProjects }: { initialProjects: Project[] }) {
     const { scrollYProgress } = useScroll()
 
@@ -21,6 +23,10 @@ export default function HomeClient({ initialProjects }: { initialProjects: Proje
                         <Link href="/" className="mix-blend-difference text-xl font-black tracking-tighter text-white">ZHOVON</Link>
                     </motion.div>
                     <div className="flex gap-4 pointer-events-auto">
+                        <Link href="/portfolio" className="glass-panel px-6 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/10 hover:border-emerald-500/70 transition-all flex items-center gap-2">
+                            <Layers className="w-3 h-3" />
+                            Portfolio
+                        </Link>
                         <Link href="/contact" className="glass-panel px-6 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest text-white hover:bg-white/10 transition-colors flex items-center gap-2">
                             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                             Contact Protocol
@@ -108,6 +114,8 @@ export default function HomeClient({ initialProjects }: { initialProjects: Proje
                 <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-emerald-400/60 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-teal-400/60 to-transparent" />
             </div>
+
+            <About />
 
             <section className="relative h-[300vh]" id="dive">
                 <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center">

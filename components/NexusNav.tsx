@@ -4,10 +4,12 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import { Rocket, Zap, Layers, Cpu, Command, Terminal } from 'lucide-react'
 import { usePathname } from 'next/navigation'
+import { useUISound } from '@/hooks/useUISound'
 
 const NAV_ITEMS = [
     { id: 'hero', label: 'Launch', icon: Rocket },
     { id: 'warp', label: 'Velocity', icon: Zap },
+    { id: 'about', label: 'Identity', icon: Cpu },
     { id: 'dive', label: 'Discovery', icon: Command },
     { id: 'works', label: 'Artifacts', icon: Layers },
     { id: 'meta', label: 'Competence', icon: Cpu },
@@ -16,6 +18,7 @@ const NAV_ITEMS = [
 ]
 
 export function NexusNav() {
+    const { playHover, playClick } = useUISound()
     const [activeSegment, setActiveSegment] = useState('hero')
     const [isHovered, setIsHovered] = useState<string | null>(null)
     const pathname = usePathname()
@@ -67,6 +70,7 @@ export function NexusNav() {
     }, [isVisible])
 
     const scrollTo = (id: string) => {
+        playClick()
         const el = document.getElementById(id)
         if (el) {
             el.scrollIntoView({ behavior: 'smooth' })
@@ -85,7 +89,10 @@ export function NexusNav() {
                     <div
                         key={item.id}
                         className="relative flex items-center justify-end group"
-                        onMouseEnter={() => setIsHovered(item.id)}
+                        onMouseEnter={() => {
+                            setIsHovered(item.id)
+                            playHover()
+                        }}
                         onMouseLeave={() => setIsHovered(null)}
                     >
                         <AnimatePresence>
