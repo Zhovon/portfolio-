@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import "../globals.css";
-import StarsCanvas from "@/components/StarBackground";
+import { StarBackgroundWrapper } from "@/components/StarBackgroundWrapper";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { NexusNav } from "@/components/NexusNav";
+import { CalComFloatingButton } from "@/components/CalComFloatingButton";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -104,7 +106,7 @@ export default function RootLayout({
             </head>
             <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black`}>
                 <SmoothScroll>
-                    <StarsCanvas />
+                    <StarBackgroundWrapper />
                     <NexusNav />
                     <div className="relative z-10 w-full min-h-screen">
                         {children}
@@ -112,6 +114,8 @@ export default function RootLayout({
                 </SmoothScroll>
                 <Analytics />
                 <SpeedInsights />
+                {/* Official Cal.com React Embed */}
+                <CalComFloatingButton />
             </body>
         </html>
     );

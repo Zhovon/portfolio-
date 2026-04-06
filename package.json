@@ -12,6 +12,7 @@
     "migrate": "tsx scripts/migrate.ts"
   },
   "dependencies": {
+    "@calcom/embed-react": "^1.5.3",
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.5.0",
     "@supabase/supabase-js": "^2.93.3",
