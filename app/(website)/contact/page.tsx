@@ -66,7 +66,7 @@ export default function ContactPage() {
                     <motion.div
                         initial={{ opacity: 0, x: 50 }}
                         animate={{ opacity: 1, x: 0 }}
-                        className="lg:pl-10"
+                        className="lg:pl-10 relative z-20"
                     >
                         <TerminalContact />
                     </motion.div>

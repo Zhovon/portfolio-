@@ -18,6 +18,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+    metadataBase: new URL('https://zhovon.com'),
     title: "ZHOVON | Lead SaaS Architect & Full-Stack Engineer",
     description: "Shahadat Hossain (Zhovon) - Senior SaaS architect specializing in Next.js, React, TypeScript, and Payload CMS. Building high-performance digital experiences with 99+ Lighthouse scores.",
     keywords: ["Zhovon", "Shahadat Hossain", "SaaS Architect", "Full Stack Developer", "Next.js Expert", "React Developer", "TypeScript Pro", "Payload CMS", "Web Development", "Dhaka Bangladesh"],

@@ -18,9 +18,11 @@ export function TerminalContact() {
     const [inputValue, setInputValue] = useState('')
     const [isTyping, setIsTyping] = useState(false)
     const [status, setStatus] = useState<'idle' | 'sending' | 'success'>('idle')
+    const [mounted, setMounted] = useState(false)
     const scrollRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
+        setMounted(true)
         if (scrollRef.current) {
             scrollRef.current.scrollTop = scrollRef.current.scrollHeight
         }
@@ -178,7 +180,7 @@ export function TerminalContact() {
                                 }`}>
                                 {msg.role === 'user' ? 'OPERATOR' : 'SYSTEM'}
                             </span>
-                            <span className="text-[8px] text-gray-700">{msg.timestamp}</span>
+                            <span className="text-[8px] text-gray-700">{mounted ? msg.timestamp : '--:--:--'}</span>
                         </div>
                         <div className={`max-w-[80%] px-4 py-2 rounded-2xl ${msg.role === 'user' ? 'bg-white/5 text-white border border-white/10' : 'text-gray-400'
                             }`}>
