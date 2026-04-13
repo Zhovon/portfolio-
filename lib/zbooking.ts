@@ -36,9 +36,9 @@ export interface ZBookingVerificationLog {
 }
 
 // Lazy initialization of Supabase client
-let supabaseAdmin: ReturnType<typeof createClient> | null = null
+let supabaseAdmin: any = null
 
-function getSupabaseAdmin() {
+function getSupabaseAdmin(): any {
     if (supabaseAdmin) {
         return supabaseAdmin
     }
@@ -50,7 +50,7 @@ function getSupabaseAdmin() {
         throw new Error('Missing Supabase environment variables')
     }
 
-    supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey)
+    supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey) as any
     return supabaseAdmin
 }
 
