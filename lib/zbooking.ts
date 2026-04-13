@@ -1,15 +1,24 @@
 import { createClient } from '@supabase/supabase-js'
 import { randomBytes } from 'crypto'
 
-// Supabase client with service role for server-side operations
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+// Lazy initialization of Supabase client
+let supabaseAdmin: ReturnType<typeof createClient> | null = null
 
-if (!supabaseUrl || !supabaseServiceKey) {
-    throw new Error('Missing Supabase environment variables')
+function getSupabaseAdmin() {
+    if (supabaseAdmin) {
+        return supabaseAdmin
+    }
+
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+
+    if (!supabaseUrl || !supabaseServiceKey) {
+        throw new Error('Missing Supabase environment variables')
+    }
+
+    supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey)
+    return supabaseAdmin
 }
-
-export const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey)
 
 /**
  * Generate a secure random token
@@ -45,7 +54,7 @@ export async function createLicenseKey(
         expiresAt = date.toISOString()
     }
 
-    const { data, error } = await supabaseAdmin
+    const { data, error } = await getSupabaseAdmin()
         .from('zbooking_license_keys')
         .insert([
             {
@@ -73,7 +82,7 @@ export async function createLicenseKey(
  * Get license key by token
  */
 export async function getLicenseByToken(token: string) {
-    const { data, error } = await supabaseAdmin
+    const { data, error } = await getSupabaseAdmin()
         .from('zbooking_license_keys')
         .select('*')
         .eq('token', token)
@@ -92,7 +101,7 @@ export async function getLicenseByToken(token: string) {
  * Get or create domain binding
  */
 export async function getDomainBinding(licenseId: number, domain: string) {
-    const { data, error } = await supabaseAdmin
+    const { data, error } = await getSupabaseAdmin()
         .from('zbooking_license_domain_bindings')
         .select('*')
         .eq('license_id', licenseId)
@@ -115,7 +124,7 @@ export async function createDomainBinding(
     domain: string
 ) {
     const now = new Date().toISOString()
-    const { data, error } = await supabaseAdmin
+    const { data, error } = await getSupabaseAdmin()
         .from('zbooking_license_domain_bindings')
         .insert([
             {
@@ -142,7 +151,7 @@ export async function updateDomainBinding(
     licenseId: number,
     domain: string
 ) {
-    const { data, error } = await supabaseAdmin
+    const { data, error } = await getSupabaseAdmin()
         .from('zbooking_license_domain_bindings')
         .update({ last_seen_at: new Date().toISOString() })
         .eq('license_id', licenseId)
@@ -161,7 +170,7 @@ export async function updateDomainBinding(
  * Count domains bound to a license
  */
 export async function countDomainBindings(licenseId: number) {
-    const { count, error } = await supabaseAdmin
+    const { count, error } = await getSupabaseAdmin()
         .from('zbooking_license_domain_bindings')
         .select('*', { count: 'exact', head: true })
         .eq('license_id', licenseId)
@@ -189,7 +198,7 @@ export async function logVerification(
         'unknown'
     const userAgent = request.headers.get('user-agent') || 'unknown'
 
-    const { error } = await supabaseAdmin
+    const { error } = await getSupabaseAdmin()
         .from('zbooking_license_verification_logs')
         .insert([
             {
