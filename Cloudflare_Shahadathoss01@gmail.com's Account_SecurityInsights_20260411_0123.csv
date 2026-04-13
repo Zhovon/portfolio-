@@ -1,0 +1,2 @@
+severity,issue_class,subject,issue_type,scan_performed_on,status,insight,detection_method,risk,recommended_action
+Moderate,Review and block AI bots from accessing your assets,zhovon.com,Configuration suggestion,2025-11-07T17:33:53.431839Z,Active,,,,"Enable the 'Block AI bots' toggle. "
