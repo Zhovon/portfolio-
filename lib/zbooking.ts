@@ -100,7 +100,7 @@ export async function createLicenseKey(
                 expires_at: expiresAt,
                 created_at: new Date().toISOString(),
                 updated_at: new Date().toISOString(),
-            },
+            } as any,
         ])
         .select()
 
@@ -166,7 +166,7 @@ export async function createDomainBinding(
                 domain,
                 first_seen_at: now,
                 last_seen_at: now,
-            },
+            } as any,
         ])
         .select()
 
@@ -187,7 +187,7 @@ export async function updateDomainBinding(
 ): Promise<ZBookingDomainBinding> {
     const { data, error } = await getSupabaseAdmin()
         .from('zbooking_license_domain_bindings')
-        .update({ last_seen_at: new Date().toISOString() })
+        .update({ last_seen_at: new Date().toISOString() } as any)
         .eq('license_id', licenseId)
         .eq('domain', domain)
         .select()
@@ -243,7 +243,7 @@ export async function logVerification(
                 ip,
                 user_agent: userAgent,
                 created_at: new Date().toISOString(),
-            },
+            } as any,
         ])
 
     if (error) {
