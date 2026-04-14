@@ -3,7 +3,7 @@ import { randomBytes } from 'crypto'
 
 // Type definitions
 export interface ZBookingLicense {
-    id: number
+    id: string
     token: string
     customer_email: string
     plan: string
@@ -17,8 +17,8 @@ export interface ZBookingLicense {
 }
 
 export interface ZBookingDomainBinding {
-    id: number
-    license_id: number
+    id: string
+    license_id: string
     domain: string
     first_seen_at: string
     last_seen_at: string
@@ -142,7 +142,7 @@ export async function getLicenseByToken(token: string): Promise<ZBookingLicense 
 /**
  * Get or create domain binding
  */
-export async function getDomainBinding(licenseId: number, domain: string): Promise<ZBookingDomainBinding | null> {
+export async function getDomainBinding(licenseId: string, domain: string): Promise<ZBookingDomainBinding | null> {
     const { data, error } = await getSupabaseAdmin()
         .from('zbooking_license_domain_bindings')
         .select('*')
@@ -162,7 +162,7 @@ export async function getDomainBinding(licenseId: number, domain: string): Promi
  * Create domain binding
  */
 export async function createDomainBinding(
-    licenseId: number,
+    licenseId: string,
     domain: string
 ): Promise<ZBookingDomainBinding> {
     const now = new Date().toISOString()
@@ -190,7 +190,7 @@ export async function createDomainBinding(
  * Update domain binding last_seen_at
  */
 export async function updateDomainBinding(
-    licenseId: number,
+    licenseId: string,
     domain: string
 ): Promise<ZBookingDomainBinding> {
     const { data, error } = await getSupabaseAdmin()
@@ -211,7 +211,7 @@ export async function updateDomainBinding(
 /**
  * Count domains bound to a license
  */
-export async function countDomainBindings(licenseId: number): Promise<number> {
+export async function countDomainBindings(licenseId: string): Promise<number> {
     const { count, error } = await getSupabaseAdmin()
         .from('zbooking_license_domain_bindings')
         .select('*', { count: 'exact', head: true })
