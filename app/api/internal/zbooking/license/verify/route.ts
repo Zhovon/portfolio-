@@ -10,19 +10,80 @@ import {
 
 const ZBOOKING_SHARED_SECRET = process.env.ZBOOKING_SHARED_SECRET || 'aspirine'
 
-export async function POST(request: NextRequest) {
+function normalizeDomain(input: string): string {
+    return input
+        .trim()
+        .toLowerCase()
+        .replace(/^https?:\/\//, '')
+        .replace(/^www\./, '')
+        .split('/')[0]
+}
+
+async function parseRequestBody(request: NextRequest): Promise<Record<string, any>> {
+    const contentType = (request.headers.get('content-type') || '').toLowerCase()
+
+    if (contentType.includes('application/json')) {
+        return await request.json()
+    }
+
+    if (contentType.includes('application/x-www-form-urlencoded')) {
+        const text = await request.text()
+        const params = new URLSearchParams(text)
+        return Object.fromEntries(params.entries())
+    }
+
+    if (contentType.includes('multipart/form-data')) {
+        const form = await request.formData()
+        const data: Record<string, any> = {}
+        for (const [key, value] of form.entries()) {
+            data[key] = typeof value === 'string' ? value : ''
+        }
+        return data
+    }
+
+    // WordPress clients sometimes omit content-type; attempt form parsing first.
+    const text = await request.text()
+    if (text.includes('=')) {
+        const params = new URLSearchParams(text)
+        return Object.fromEntries(params.entries())
+    }
+
     try {
-        const body = await request.json()
+        return JSON.parse(text)
+    } catch {
+        return {}
+    }
+}
+
+export async function POST(request: NextRequest) {
+    let incomingToken = 'unknown'
+    let incomingDomain = 'unknown'
+
+    try {
+        const body = await parseRequestBody(request)
         const {
             token,
             secret_key,
+            secret,
+            shared_secret,
             domain,
             plugin,
             plugin_ver,
         } = body
 
+        const normalizedToken = typeof token === 'string' ? token.trim() : ''
+        const normalizedDomain = typeof domain === 'string' ? normalizeDomain(domain) : ''
+        const providedSecret =
+            (typeof secret_key === 'string' && secret_key.trim()) ||
+            (typeof secret === 'string' && secret.trim()) ||
+            (typeof shared_secret === 'string' && shared_secret.trim()) ||
+            ''
+
+        incomingToken = normalizedToken || 'unknown'
+        incomingDomain = normalizedDomain || 'unknown'
+
         // Validate required fields
-        if (!token || !secret_key || !domain) {
+        if (!normalizedToken || !providedSecret || !normalizedDomain) {
             return NextResponse.json(
                 { valid: false, reason: 'missing_fields' },
                 { status: 400 }
@@ -30,8 +91,8 @@ export async function POST(request: NextRequest) {
         }
 
         // Verify shared secret
-        if (secret_key !== ZBOOKING_SHARED_SECRET) {
-            await logVerification(token, domain, false, 'bad_secret', request)
+        if (providedSecret !== ZBOOKING_SHARED_SECRET) {
+            await logVerification(normalizedToken, normalizedDomain, false, 'bad_secret', request)
             return NextResponse.json(
                 { valid: false, reason: 'bad_secret' },
                 { status: 401 }
@@ -39,10 +100,10 @@ export async function POST(request: NextRequest) {
         }
 
         // Get license from database
-        const license = await getLicenseByToken(token)
+        const license = await getLicenseByToken(normalizedToken)
 
         if (!license) {
-            await logVerification(token, domain, false, 'invalid_token', request)
+            await logVerification(normalizedToken, normalizedDomain, false, 'invalid_token', request)
             return NextResponse.json(
                 { valid: false, reason: 'invalid_token' },
                 { status: 200 }
@@ -52,8 +113,8 @@ export async function POST(request: NextRequest) {
         // Check status
         if (license.status !== 'active') {
             await logVerification(
-                token,
-                domain,
+                normalizedToken,
+                normalizedDomain,
                 false,
                 license.status === 'revoked' ? 'revoked' : 'invalid',
                 request
@@ -77,21 +138,21 @@ export async function POST(request: NextRequest) {
         }
 
         // Handle domain binding
-        const existingBinding = await getDomainBinding(license.id, domain)
+        const existingBinding = await getDomainBinding(license.id, normalizedDomain)
 
         let domainCount = 0
 
         if (existingBinding) {
             // Update last_seen_at
-            await updateDomainBinding(license.id, domain)
+            await updateDomainBinding(license.id, normalizedDomain)
         } else {
             // Check domain limit
             domainCount = await countDomainBindings(license.id)
 
             if (domainCount >= license.max_domains) {
                 await logVerification(
-                    token,
-                    domain,
+                    normalizedToken,
+                    normalizedDomain,
                     false,
                     'domain_limit',
                     request
@@ -103,11 +164,11 @@ export async function POST(request: NextRequest) {
             }
 
             // Create new binding
-            await createDomainBinding(license.id, domain)
+            await createDomainBinding(license.id, normalizedDomain)
         }
 
         // Log successful verification
-        await logVerification(token, domain, true, null, request)
+        await logVerification(normalizedToken, normalizedDomain, true, null, request)
 
         return NextResponse.json(
             {
@@ -120,20 +181,9 @@ export async function POST(request: NextRequest) {
         )
     } catch (error) {
         console.error('Token verification error:', error)
-        
+
         // Still attempt to log the error
-        try {
-            const body = await request.json()
-            await logVerification(
-                body.token || 'unknown',
-                body.domain || 'unknown',
-                false,
-                'error',
-                request
-            )
-        } catch {
-            // Silently fail - don't let logging prevent the response
-        }
+        await logVerification(incomingToken, incomingDomain, false, 'error', request)
 
         return NextResponse.json(
             { valid: false, reason: 'error' },
