@@ -14,11 +14,11 @@ import { Project } from '@/data/projects'
 
 import { About } from '@/components/sections/About'
 
-function BrandLogo({ icon: Icon, label, accentClass }: { icon: IconType; label: string; accentClass: string }) {
+function BrandLogo({ icon: Icon, label, accentClass, compact = false }: { icon: IconType; label: string; accentClass: string; compact?: boolean }) {
     return (
-        <div className="flex min-w-[170px] items-center gap-4 rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-white/80 shadow-[0_10px_30px_rgba(0,0,0,0.22)]">
-            <div className={`flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-black/50 ${accentClass} shadow-[0_0_24px_rgba(255,255,255,0.06)]`}>
-                <Icon className="h-6 w-6" />
+        <div className={`flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 text-white/80 shadow-[0_10px_30px_rgba(0,0,0,0.22)] ${compact ? 'min-w-0 px-3 py-3' : 'min-w-[170px] px-4 py-4'}`}>
+            <div className={`flex items-center justify-center rounded-full border border-white/10 bg-black/50 ${accentClass} shadow-[0_0_24px_rgba(255,255,255,0.06)] ${compact ? 'h-10 w-10' : 'h-12 w-12'}`}>
+                <Icon className={compact ? 'h-5 w-5' : 'h-6 w-6'} />
             </div>
             <div>
                 <span className="block text-[9px] font-black uppercase tracking-[0.35em] text-white/55">{label}</span>
@@ -122,17 +122,36 @@ export default function HomeClient({ initialProjects }: { initialProjects: Proje
                         <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-teal-400/40 to-transparent" />
 
                         <div className="relative space-y-8">
-                            <div className="flex items-center gap-4">
+                            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
                                 <div className="h-12 w-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/80 text-[11px] font-black tracking-[0.35em]">
                                     ZH
                                 </div>
-                                <div>
+                                <div className="space-y-1">
                                     <p className="text-[10px] font-black uppercase tracking-[0.5em] text-emerald-500">02.2 — Stack & Services</p>
                                     <p className="text-white text-lg font-bold tracking-tight">Real brand marks, not placeholders.</p>
                                 </div>
                             </div>
 
-                            <div className="overflow-hidden rounded-[1.6rem] border border-white/10 bg-black/20 py-5">
+                            <div className="grid grid-cols-2 gap-3 md:hidden">
+                                {[
+                                    { label: 'HTML5', icon: SiHtml5, accentClass: 'text-[#e34f26]' },
+                                    { label: 'Next.js', icon: SiNextdotjs, accentClass: 'text-white' },
+                                    { label: 'Shopify', icon: SiShopify, accentClass: 'text-[#95bf47]' },
+                                    { label: 'WordPress', icon: SiWordpress, accentClass: 'text-[#21759b]' },
+                                    { label: 'React', icon: SiReact, accentClass: 'text-[#61dafb]' },
+                                    { label: 'TypeScript', icon: SiTypescript, accentClass: 'text-[#3178c6]' },
+                                    { label: 'Payload CMS', icon: SiPayloadcms, accentClass: 'text-white' },
+                                    { label: 'HubSpot', icon: SiHubspot, accentClass: 'text-[#ff7a59]' },
+                                ].map((item, index) => {
+                                    const Icon = item.icon
+
+                                    return (
+                                        <BrandLogo key={`${item.label}-${index}`} icon={Icon} label={item.label} accentClass={item.accentClass} compact />
+                                    )
+                                })}
+                            </div>
+
+                            <div className="hidden md:block overflow-hidden rounded-[1.6rem] border border-white/10 bg-black/20 py-5">
                                 <motion.div
                                     animate={{ x: ['0%', '-50%'] }}
                                     transition={{ duration: 24, repeat: Infinity, ease: 'linear' }}
