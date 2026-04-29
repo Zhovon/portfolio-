@@ -14,6 +14,7 @@ const NAV_ITEMS = [
     { id: 'works', label: 'Artifacts', icon: Layers },
     { id: 'meta', label: 'Competence', icon: Cpu },
     { id: 'core', label: 'Engine', icon: Zap },
+    { id: 'pricing', label: 'Pricing', icon: Layers },
     { id: 'terminal', label: 'Terminal', icon: Terminal },
 ]
 

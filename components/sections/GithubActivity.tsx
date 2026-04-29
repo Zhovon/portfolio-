@@ -25,7 +25,11 @@ export function GithubActivity() {
         async function fetchActivity() {
             try {
                 const res = await fetch('/api/github')
-                if (!res.ok) throw new Error('Failed to fetch')
+                if (!res.ok) {
+                    console.warn('GitHub activity request returned non-OK status:', res.status)
+                    return
+                }
+
                 const data: GithubEvent[] = await res.json()
                 
                 // Find the latest PushEvent or meaningful activity
