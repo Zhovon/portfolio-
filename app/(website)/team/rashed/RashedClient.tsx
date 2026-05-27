@@ -11,6 +11,7 @@ import {
     Users,
     Briefcase,
     CreditCard,
+    Globe,
     Star,
     Layers,
     BarChart3,
