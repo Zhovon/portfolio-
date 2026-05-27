@@ -108,8 +108,8 @@ export function CardClient() {
                 >
                     {/* ──── FRONT FACE ──── */}
                     <div
-                        style={{ backfaceVisibility: 'hidden' }}
-                        className="relative w-full rounded-[2rem] overflow-hidden border border-amber-500/20 shadow-[0_0_60px_rgba(245,158,11,0.15),0_30px_60px_rgba(0,0,0,0.6)]"
+                        style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
+                        className="relative w-full rounded-[2rem] overflow-hidden border border-amber-500/20 shadow-[0_0_60px_rgba(245,158,11,0.15),0_30px_60px_rgba(0,0,0,0.6)] [backface-visibility:hidden]"
                     >
                         {/* Card gradient background */}
                         <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0b] via-[#0f0e0a] to-[#0a0805]" />
@@ -129,13 +129,17 @@ export function CardClient() {
                             {/* Avatar + Name */}
                             <div className="flex items-start gap-5 mb-8">
                                 <div className="relative flex-shrink-0">
-                                    <div className="w-20 h-20 rounded-2xl overflow-hidden border-2 border-amber-500/30 shadow-[0_0_24px_rgba(245,158,11,0.25)]">
+                                    <div className="w-20 h-20 rounded-2xl overflow-hidden border-2 border-amber-500/30 shadow-[0_0_24px_rgba(245,158,11,0.25)] bg-[#0d0b07] flex items-center justify-center">
                                         <Image
                                             src="/images/rashed-avatar.png"
                                             alt="Md Rashed Khan"
                                             width={80}
                                             height={80}
                                             className="object-cover w-full h-full"
+                                            onError={(e) => {
+                                                e.currentTarget.style.display = 'none';
+                                                e.currentTarget.parentElement!.innerHTML = '<span class="text-3xl font-black text-amber-500">MRK</span>';
+                                            }}
                                         />
                                     </div>
                                     {/* Online indicator */}
@@ -214,8 +218,8 @@ export function CardClient() {
 
                     {/* ──── BACK FACE ──── */}
                     <div
-                        style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
-                        className="absolute inset-0 w-full rounded-[2rem] overflow-hidden border border-amber-500/20 shadow-[0_0_60px_rgba(245,158,11,0.15),0_30px_60px_rgba(0,0,0,0.6)]"
+                        style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg) translateZ(1px)' }}
+                        className="absolute inset-0 w-full rounded-[2rem] overflow-hidden border border-amber-500/20 shadow-[0_0_60px_rgba(245,158,11,0.15),0_30px_60px_rgba(0,0,0,0.6)] [backface-visibility:hidden]"
                     >
                         <div className="absolute inset-0 bg-gradient-to-br from-[#0d0b07] via-[#0a0a0b] to-[#060608]" />
                         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(245,158,11,0.10),transparent_60%)]" />
