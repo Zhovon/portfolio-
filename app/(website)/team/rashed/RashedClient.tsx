@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 import Link from 'next/link'
 import {
     Mail,
@@ -169,25 +170,18 @@ export function RashedClient() {
                             transition={{ duration: 0.8, delay: 0.2 }}
                             className="flex flex-col items-center gap-8"
                         >
-                            {/* Avatar — initials until real photo is provided */}
+                            {/* Avatar */}
                             <div className="relative">
                                 <div className="absolute -inset-4 rounded-[2.5rem] bg-gradient-to-br from-amber-500/20 to-yellow-500/10 blur-xl" />
-                                <div className="relative w-72 h-72 lg:w-80 lg:h-80 rounded-[2.5rem] overflow-hidden border-2 border-amber-500/30 shadow-[0_0_60px_rgba(245,158,11,0.2)] bg-gradient-to-br from-[#0d0b07] via-[#111008] to-[#0a0a0b]">
-                                    {/* Decorative rings */}
-                                    <div className="absolute inset-0 flex items-center justify-center">
-                                        <div className="absolute w-56 h-56 rounded-full border border-amber-500/10" />
-                                        <div className="absolute w-40 h-40 rounded-full border border-amber-500/15" />
-                                        <div className="absolute w-24 h-24 rounded-full border border-amber-500/20" />
-                                    </div>
-                                    {/* Ambient glow */}
-                                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(245,158,11,0.12),transparent_65%)]" />
-                                    {/* Initials */}
-                                    <div className="absolute inset-0 flex flex-col items-center justify-center">
-                                        <span className="text-7xl font-black tracking-tighter bg-gradient-to-br from-amber-300 via-amber-400 to-yellow-500 bg-clip-text text-transparent leading-none mb-2">MRK</span>
-                                        <span className="text-[9px] font-black uppercase tracking-[0.4em] text-amber-500/60">Consultant</span>
-                                    </div>
-                                    {/* Bottom info bar */}
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                                <div className="relative w-72 h-72 lg:w-80 lg:h-80 rounded-[2.5rem] overflow-hidden border-2 border-amber-500/30 shadow-[0_0_60px_rgba(245,158,11,0.2)]">
+                                    <Image
+                                        src="/images/rashed-avatar.png"
+                                        alt="Md Rashed Khan — Business Consultant"
+                                        fill
+                                        className="object-cover"
+                                        priority
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                                     <div className="absolute bottom-4 left-4 right-4">
                                         <p className="text-[9px] font-black uppercase tracking-[0.4em] text-amber-400 mb-1">Strategic Consultant</p>
                                         <p className="text-white font-bold text-sm">Growth • Brand • Operations</p>

@@ -251,26 +251,37 @@ export function CardClient() {
 
                             <div>
                                 {/* Action buttons */}
-                                <div className="flex gap-2">
+                                <div className="flex flex-col gap-2">
                                     <a
                                         href="/rashed-contact.vcf"
                                         download="Rashed-Khan.vcf"
                                         onClick={e => e.stopPropagation()}
-                                        className="flex-1 flex items-center justify-center gap-2 rounded-full bg-amber-500 text-black px-4 py-3 text-[10px] font-black uppercase tracking-[0.3em] hover:bg-amber-400 transition-colors shadow-[0_0_20px_rgba(245,158,11,0.35)]"
+                                        className="w-full flex items-center justify-center gap-2 rounded-full bg-amber-500 text-black px-4 py-3 text-[10px] font-black uppercase tracking-[0.3em] hover:bg-amber-400 transition-colors shadow-[0_0_20px_rgba(245,158,11,0.35)]"
                                     >
                                         <Download className="w-3.5 h-3.5" />
                                         Save Contact
                                     </a>
-                                    <a
-                                        href={whatsappUrl}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        onClick={e => e.stopPropagation()}
-                                        className="flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/5 text-white px-4 py-3 text-[10px] font-black uppercase tracking-[0.3em] hover:border-green-500/50 hover:text-green-400 transition-all"
-                                    >
-                                        <MessageCircle className="w-3.5 h-3.5" />
-                                        WhatsApp
-                                    </a>
+                                    <div className="flex gap-2">
+                                        <a
+                                            href={whatsappUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            onClick={e => e.stopPropagation()}
+                                            className="flex-1 flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/5 text-white px-4 py-3 text-[10px] font-black uppercase tracking-[0.3em] hover:border-green-500/50 hover:text-green-400 transition-all"
+                                        >
+                                            <MessageCircle className="w-3.5 h-3.5" />
+                                            WhatsApp
+                                        </a>
+                                        <a
+                                            href="/rashed-card-print.pdf"
+                                            download="Rashed-Khan-Card-Print.pdf"
+                                            onClick={e => e.stopPropagation()}
+                                            className="flex-1 flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/5 text-white px-4 py-3 text-[10px] font-black uppercase tracking-[0.3em] hover:border-amber-500/50 hover:text-amber-400 transition-all"
+                                        >
+                                            <Download className="w-3.5 h-3.5" />
+                                            Print PDF
+                                        </a>
+                                    </div>
                                 </div>
 
                                 {/* Flip back hint */}
