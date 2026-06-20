@@ -1,24 +1,17 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import type { Transition } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ChevronRight, Code2, Zap, Globe, ArrowUpRight } from 'lucide-react'
 
-const floatVariant = {
-    initial: { y: 0 },
-    animate: { y: [-6, 6, -6], transition: { duration: 4, repeat: Infinity, ease: 'easeInOut' } }
-}
-
-const floatVariant2 = {
-    initial: { y: 0 },
-    animate: { y: [6, -6, 6], transition: { duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 } }
-}
-
-const floatVariant3 = {
-    initial: { y: 0 },
-    animate: { y: [-4, 4, -4], transition: { duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay: 1 } }
-}
+const floatTransition = (duration: number, delay = 0): Transition => ({
+    duration,
+    repeat: Infinity,
+    ease: 'easeInOut' as const,
+    delay,
+})
 
 export function Hero() {
     return (
@@ -156,9 +149,8 @@ export function Hero() {
 
                         {/* ── Floating badge: GitHub ── */}
                         <motion.div
-                            variants={floatVariant}
-                            initial="initial"
-                            animate="animate"
+                            animate={{ y: [-6, 6, -6] }}
+                            transition={floatTransition(4)}
                             className="absolute -left-6 top-12 sm:-left-10"
                         >
                             <div className="glass-panel rounded-2xl px-4 py-3 border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)] flex items-center gap-2.5">
@@ -174,9 +166,8 @@ export function Hero() {
 
                         {/* ── Floating badge: Experience ── */}
                         <motion.div
-                            variants={floatVariant2}
-                            initial="initial"
-                            animate="animate"
+                            animate={{ y: [6, -6, 6] }}
+                            transition={floatTransition(5, 0.5)}
                             className="absolute -right-4 top-1/4 sm:-right-8"
                         >
                             <div className="glass-panel rounded-2xl px-4 py-3 border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
@@ -188,9 +179,8 @@ export function Hero() {
 
                         {/* ── Floating badge: Stack ── */}
                         <motion.div
-                            variants={floatVariant3}
-                            initial="initial"
-                            animate="animate"
+                            animate={{ y: [-4, 4, -4] }}
+                            transition={floatTransition(3.5, 1)}
                             className="absolute -left-4 bottom-24 sm:-left-8"
                         >
                             <div className="glass-panel rounded-2xl px-4 py-3 border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
@@ -207,11 +197,9 @@ export function Hero() {
 
                         {/* ── Floating badge: Projects ── */}
                         <motion.div
-                            variants={floatVariant}
-                            initial="initial"
-                            animate="animate"
+                            animate={{ y: [-6, 6, -6] }}
+                            transition={floatTransition(4, 2)}
                             className="absolute -right-3 bottom-20 sm:-right-6"
-                            style={{ animationDelay: '2s' }}
                         >
                             <div className="glass-panel rounded-2xl px-4 py-3 border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
                                 <p className="text-[9px] font-black uppercase tracking-widest text-gray-500 mb-0.5">Projects</p>
