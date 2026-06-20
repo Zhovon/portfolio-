@@ -131,7 +131,7 @@ export function CardClient() {
                                 <div className="relative flex-shrink-0">
                                     <div className="w-20 h-20 rounded-2xl overflow-hidden border-2 border-amber-500/30 shadow-[0_0_24px_rgba(245,158,11,0.25)] bg-[#0d0b07] flex items-center justify-center">
                                         <Image
-                                            src="/images/rashed-avatar.png"
+                                            src="/images/rashed-card.png"
                                             alt="Md Rashed Khan"
                                             width={80}
                                             height={80}
