@@ -59,8 +59,8 @@ export function About() {
                             </p>
                         </div>
 
-                        <div className="mt-12 flex flex-col md:flex-row items-stretch gap-6">
-                            <div className="flex items-center gap-6 glass-panel p-6 border-emerald-500/20 rounded-2xl flex-1">
+                        <div className="mt-12 space-y-6">
+                            <div className="flex items-center gap-6 glass-panel p-6 border-emerald-500/20 rounded-2xl">
                                 <Terminal className="w-8 h-8 text-emerald-500 flex-shrink-0" />
                                 <div>
                                     <h4 className="text-white font-bold tracking-widest text-sm uppercase mb-1">Status: Operational</h4>
@@ -68,9 +68,7 @@ export function About() {
                                 </div>
                             </div>
                             
-                            <div className="flex-shrink-0 md:w-80">
-                                <GithubActivity />
-                            </div>
+                            <GithubActivity />
                         </div>
                     </motion.div>
 
