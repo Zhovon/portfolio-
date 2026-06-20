@@ -175,7 +175,7 @@ export function RashedClient() {
                                 <div className="absolute -inset-4 rounded-[2.5rem] bg-gradient-to-br from-amber-500/20 to-yellow-500/10 blur-xl" />
                                 <div className="relative w-72 h-72 lg:w-80 lg:h-80 rounded-[2.5rem] overflow-hidden border-2 border-amber-500/30 shadow-[0_0_60px_rgba(245,158,11,0.2)]">
                                     <Image
-                                        src="/images/rashed-avatar.png"
+                                        src="/images/rashed-card.png"
                                         alt="Md Rashed Khan — Business Consultant"
                                         fill
                                         className="object-cover"
