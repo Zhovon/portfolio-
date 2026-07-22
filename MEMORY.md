@@ -3,6 +3,7 @@
 Append-only. One dated line (or short block) per significant decision. Newest first. Keep entries to one line unless the "why" is non-obvious. Prune entries older than ~3 months if superseded.
 
 ## Decisions
+- 2026-07-22: Case study pages rebuilt as normal scrolling articles (hero + whileInView sections) — do NOT reintroduce fixed-overlay scroll sections; position:fixed panels break IntersectionObserver reveals and trap pointer events. Projects grid staggers by column (idx % 2), filters are keyword groups in ProjectsClient FILTERS.
 - 2026-07-22: Hardened /api/contact and /api/order — zod validation, HTML escaping (`lib/api-utils.ts`), rate limiting (Upstash sliding window if UPSTASH_REDIS_REST_URL/TOKEN set, else per-instance in-memory 5/min). Added replyTo so replies go to the sender.
 - 2026-07-22: `lib/zbooking.ts` admin client now REQUIRES SUPABASE_SERVICE_ROLE_KEY (no anon fallback); dropped SUPABASE_URL_PUBLIC env alias.
 - 2026-07-22: CSP tightened in proxy.ts — no unsafe-eval in prod, script/connect/frame-src limited to cal.com, Vercel analytics, Supabase. If a new third-party script is added, it must be allowlisted there.
