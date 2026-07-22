@@ -15,10 +15,10 @@ export function Skills() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
                     {[
-                        { name: 'Architecture', level: '95%', tech: 'Next.js, Payload, Microservices', color: 'from-emerald-500 to-teal-500', desc: 'Designing horizontal scaling systems that eliminate bottleneck downtime and 502 errors.' },
-                        { name: 'Core Logic', level: '90%', tech: 'TypeScript, React, Node.js', color: 'from-teal-500 to-cyan-500', desc: 'Writing strongly-typed, memory-safe data layers that prevent fatal runtime crashes.' },
-                        { name: '3D Mechanics', level: '85%', tech: 'Three.js, GLSL, R3F', color: 'from-cyan-500 to-emerald-400', desc: 'Optimizing heavy mathematical renders to maintain strict 60fps across all devices.' },
-                        { name: 'Growth Systems', level: '92%', tech: 'SEO, Conversion, SaaS Pipelines', color: 'from-emerald-400 to-teal-400', desc: 'Structurally driving organic traffic via programmatic SEO and micro-interaction UX.' }
+                        { name: 'Full-Stack Apps', level: '95%', tech: 'Next.js 16, React 19, Supabase Auth', color: 'from-emerald-500 to-teal-500', desc: 'Architecting scalable multi-role CRM portals, room scheduling dashboards, and reactive client interfaces.' },
+                        { name: 'Data Pipeline', level: '92%', tech: 'Python, PostgreSQL, SQLAlchemy', color: 'from-teal-500 to-cyan-500', desc: 'Engineering chronological UID re-indexing pipelines, sequence drift fixes, and automated CSV/Excel imports.' },
+                        { name: 'Storefront Integration', level: '90%', tech: 'Shopify Liquid, Embeds, Next.js CSP', color: 'from-cyan-500 to-emerald-400', desc: 'Building zero-leakage Shopify 2.0 booking overlays with secure cross-origin frame headers.' },
+                        { name: 'AI & Automation', level: '88%', tech: 'N8n, Ollama LLM, Webhooks, Git Actions', color: 'from-emerald-400 to-teal-400', desc: 'Connecting multi-channel messaging flows (WhatsApp/IG) with agentic memory skills and local AI.' }
                     ].map((skill, i) => (
                         <motion.div
                             key={i}
