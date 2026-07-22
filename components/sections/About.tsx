@@ -8,20 +8,20 @@ export function About() {
     const problemsSolved = [
         {
             id: '01',
-            title: 'Monolithic Decoupling',
-            description: 'Dismantled sluggish WordPress/legacy monoliths, decoupling the frontend to Next.js and headless CMS (Payload). Result: 300% faster payload delivery and perfect Core Web Vitals.',
+            title: 'PostgreSQL Sequence & Staff UID Drift',
+            description: 'Eliminated duplicate UID collisions across branch databases by engineering a chronological joining-date re-indexing engine in Python & SQLAlchemy.',
             icon: Layers
         },
         {
             id: '02',
-            title: 'State Synchronization Latency',
-            description: 'Engineered custom WebSocket caching layers over Redis and PostgreSQL to synchronize real-time location and chat data globally, dropping average latency from 2500ms to <150ms.',
+            title: 'Cross-Origin iFrame & CSP Security Headers',
+            description: 'Resolved X-Frame-Options blocking and frame-ancestors headers in Next.js to cleanly embed interactive booking widgets inside Shopify 2.0 storefronts.',
             icon: Cpu
         },
         {
             id: '03',
-            title: 'Render Blocking Anomalies',
-            description: 'Optimized complex Three.js/WebGL render pipelines using React server components and dynamic imports. Kept Lighthouse scores at 99+ despite rendering millions of particles.',
+            title: 'Real-Time Webhooks & Credential Isolation',
+            description: 'Architected Google Sheets sync webhooks to maintain real-time database visibility for management while isolating encrypted user credentials.',
             icon: Code2
         }
     ]

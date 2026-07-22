@@ -191,10 +191,11 @@ export default function HomeClient({ initialProjects }: { initialProjects: Proje
                                     <p className="text-[10px] font-black uppercase tracking-[0.5em] text-emerald-500 mb-4">Website services</p>
                                     <div className="space-y-3">
                                         {[
-                                            'Custom code websites',
-                                            'CRM integrations and automations',
-                                            'WordPress builds and redesigns',
-                                            'Migrations, landing pages, ecommerce',
+                                            'Enterprise CRM & Staff Ticketing Systems',
+                                            'Shopify 2.0 Service Booking & Liquid Embeds',
+                                            'PostgreSQL & Roster Data Migration Pipelines',
+                                            'Multi-Agent N8n & AI Workflow Automation',
+                                            'Custom Full-Stack Next.js & React Apps',
                                         ].map((item) => (
                                             <div key={item} className="flex items-center gap-3 rounded-2xl border border-white/5 bg-black/25 px-4 py-3 text-sm text-white/80">
                                                 <span className="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.75)]" />
@@ -307,7 +308,7 @@ export default function HomeClient({ initialProjects }: { initialProjects: Proje
                             <Cpu className="w-12 h-12 text-emerald-500 mb-6 group-hover:rotate-12 transition-transform" />
                             <div>
                                 <h3 className="text-4xl font-black text-white mb-4 italic">Next-Gen Stack</h3>
-                                <p className="text-gray-500 text-lg">Next.js 15, React 19, TypeScript, Payload 3, and Tailwind 4. The bleeding edge of SaaS development.</p>
+                                <p className="text-gray-500 text-lg">Next.js 16, React 19, TypeScript, PostgreSQL, Supabase Auth, N8n, and Python. The bleeding edge of full-stack & automation development.</p>
                             </div>
                         </motion.div>
                         <motion.div
