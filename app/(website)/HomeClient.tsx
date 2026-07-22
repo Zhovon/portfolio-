@@ -1,7 +1,7 @@
 'use client'
 
-import { motion, useScroll, useTransform } from 'framer-motion'
-import { Rocket, Zap, Layers, Cpu, Command, ArrowDownRight } from 'lucide-react'
+import { motion, MotionValue, useScroll, useTransform } from 'framer-motion'
+import { Zap, Layers, Cpu, Command } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useRef } from 'react'
 import type { IconType } from 'react-icons'
@@ -13,6 +13,42 @@ import { Terminal } from '@/components/sections/Terminal'
 import { Project } from '@/data/projects'
 
 import { About } from '@/components/sections/About'
+
+const BRAND_LOGOS: { label: string; icon: IconType; accentClass: string }[] = [
+    { label: 'HTML5', icon: SiHtml5, accentClass: 'text-[#e34f26]' },
+    { label: 'Next.js', icon: SiNextdotjs, accentClass: 'text-white' },
+    { label: 'Shopify', icon: SiShopify, accentClass: 'text-[#95bf47]' },
+    { label: 'WordPress', icon: SiWordpress, accentClass: 'text-[#21759b]' },
+    { label: 'React', icon: SiReact, accentClass: 'text-[#61dafb]' },
+    { label: 'TypeScript', icon: SiTypescript, accentClass: 'text-[#3178c6]' },
+    { label: 'Payload CMS', icon: SiPayloadcms, accentClass: 'text-white' },
+    { label: 'HubSpot', icon: SiHubspot, accentClass: 'text-[#ff7a59]' },
+    { label: 'Webflow', icon: SiWebflow, accentClass: 'text-[#4353ff]' },
+]
+
+function DiveModule({ index, progress }: { index: number; progress: MotionValue<number> }) {
+    const scale = useTransform(progress, [0.4 + index * 0.05, 0.9], [0, 4])
+    const opacity = useTransform(progress, [0.4 + index * 0.05, 0.6 + index * 0.05, 0.9], [0, 1, 0])
+
+    return (
+        <motion.div
+            style={{
+                x: (index % 2 === 0 ? 1 : -1) * (200 + index * 50),
+                y: (index < 3 ? 1 : -1) * (150 + index * 40),
+                scale,
+                opacity,
+            }}
+            className="absolute glass-panel p-6 rounded-2xl border-white/10 hidden md:block"
+        >
+            <div className="flex items-center gap-4">
+                <div className="w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center">
+                    <Command className="w-4 h-4 text-purple-400" />
+                </div>
+                <span className="text-[10px] font-black tracking-widest text-gray-400 uppercase">Module_0{index}</span>
+            </div>
+        </motion.div>
+    )
+}
 
 function BrandLogo({ icon: Icon, label, accentClass, compact = false }: { icon: IconType; label: string; accentClass: string; compact?: boolean }) {
     return (
@@ -103,7 +139,7 @@ export default function HomeClient({ initialProjects }: { initialProjects: Proje
                         MOVING AT THE VELOCITY OF <span className="text-emerald-500">INNOVATION.</span>
                     </motion.h2>
                     <p className="text-gray-400 text-xl font-medium leading-relaxed">
-                        I don"t just build websites. I engineer digital engines that drive growth, speed, and interstellar user experiences. WordPress was the launchpad. Next.js is the rocket.
+                        I don&apos;t just build websites. I engineer digital engines that drive growth, speed, and interstellar user experiences. WordPress was the launchpad. Next.js is the rocket.
                     </p>
                 </div>
             </section>
@@ -128,27 +164,14 @@ export default function HomeClient({ initialProjects }: { initialProjects: Proje
                                 </div>
                                 <div className="space-y-1">
                                     <p className="text-[10px] font-black uppercase tracking-[0.5em] text-emerald-500">02.2 — Stack & Services</p>
-                                    <p className="text-white text-lg font-bold tracking-tight">Real brand marks, not placeholders.</p>
+                                    <p className="text-white text-lg font-bold tracking-tight">The platforms I build and ship on.</p>
                                 </div>
                             </div>
 
                             <div className="grid grid-cols-2 gap-3 md:hidden">
-                                {[
-                                    { label: 'HTML5', icon: SiHtml5, accentClass: 'text-[#e34f26]' },
-                                    { label: 'Next.js', icon: SiNextdotjs, accentClass: 'text-white' },
-                                    { label: 'Shopify', icon: SiShopify, accentClass: 'text-[#95bf47]' },
-                                    { label: 'WordPress', icon: SiWordpress, accentClass: 'text-[#21759b]' },
-                                    { label: 'React', icon: SiReact, accentClass: 'text-[#61dafb]' },
-                                    { label: 'TypeScript', icon: SiTypescript, accentClass: 'text-[#3178c6]' },
-                                    { label: 'Payload CMS', icon: SiPayloadcms, accentClass: 'text-white' },
-                                    { label: 'HubSpot', icon: SiHubspot, accentClass: 'text-[#ff7a59]' },
-                                ].map((item, index) => {
-                                    const Icon = item.icon
-
-                                    return (
-                                        <BrandLogo key={`${item.label}-${index}`} icon={Icon} label={item.label} accentClass={item.accentClass} compact />
-                                    )
-                                })}
+                                {BRAND_LOGOS.slice(0, 8).map((item) => (
+                                    <BrandLogo key={item.label} icon={item.icon} label={item.label} accentClass={item.accentClass} compact />
+                                ))}
                             </div>
 
                             <div className="hidden md:block overflow-hidden rounded-[1.6rem] border border-white/10 bg-black/20 py-5">
@@ -157,32 +180,9 @@ export default function HomeClient({ initialProjects }: { initialProjects: Proje
                                     transition={{ duration: 24, repeat: Infinity, ease: 'linear' }}
                                     className="flex w-max items-center gap-4 whitespace-nowrap px-4"
                                 >
-                                    {[
-                                        { label: 'HTML5', icon: SiHtml5, accentClass: 'text-[#e34f26]' },
-                                        { label: 'Next.js', icon: SiNextdotjs, accentClass: 'text-white' },
-                                        { label: 'Shopify', icon: SiShopify, accentClass: 'text-[#95bf47]' },
-                                        { label: 'WordPress', icon: SiWordpress, accentClass: 'text-[#21759b]' },
-                                        { label: 'React', icon: SiReact, accentClass: 'text-[#61dafb]' },
-                                        { label: 'TypeScript', icon: SiTypescript, accentClass: 'text-[#3178c6]' },
-                                        { label: 'Payload CMS', icon: SiPayloadcms, accentClass: 'text-white' },
-                                        { label: 'HubSpot', icon: SiHubspot, accentClass: 'text-[#ff7a59]' },
-                                        { label: 'Webflow', icon: SiWebflow, accentClass: 'text-[#4353ff]' },
-                                        { label: 'HTML5', icon: SiHtml5, accentClass: 'text-[#e34f26]' },
-                                        { label: 'Next.js', icon: SiNextdotjs, accentClass: 'text-white' },
-                                        { label: 'Shopify', icon: SiShopify, accentClass: 'text-[#95bf47]' },
-                                        { label: 'WordPress', icon: SiWordpress, accentClass: 'text-[#21759b]' },
-                                        { label: 'React', icon: SiReact, accentClass: 'text-[#61dafb]' },
-                                        { label: 'TypeScript', icon: SiTypescript, accentClass: 'text-[#3178c6]' },
-                                        { label: 'Payload CMS', icon: SiPayloadcms, accentClass: 'text-white' },
-                                        { label: 'HubSpot', icon: SiHubspot, accentClass: 'text-[#ff7a59]' },
-                                        { label: 'Webflow', icon: SiWebflow, accentClass: 'text-[#4353ff]' },
-                                    ].map((item, index) => {
-                                        const Icon = item.icon
-
-                                        return (
-                                            <BrandLogo key={`${item.label}-${index}`} icon={Icon} label={item.label} accentClass={item.accentClass} />
-                                        )
-                                    })}
+                                    {[...BRAND_LOGOS, ...BRAND_LOGOS].map((item, index) => (
+                                        <BrandLogo key={`${item.label}-${index}`} icon={item.icon} label={item.label} accentClass={item.accentClass} />
+                                    ))}
                                 </motion.div>
                             </div>
 
@@ -208,9 +208,9 @@ export default function HomeClient({ initialProjects }: { initialProjects: Proje
                                 <div className="rounded-[1.5rem] border border-white/10 bg-black/25 p-5 flex flex-col justify-between">
                                     <div>
                                         <p className="text-[10px] font-black uppercase tracking-[0.5em] text-white/45 mb-3">What stays consistent</p>
-                                        <h4 className="text-2xl font-black text-white tracking-tight mb-3">Brand marks first, text second.</h4>
+                                        <h4 className="text-2xl font-black text-white tracking-tight mb-3">One stack, zero guesswork.</h4>
                                         <p className="text-sm text-gray-400 leading-relaxed">
-                                            The section now behaves like a real brand strip: official logos in motion, dark surfaces, and a service summary that fits the rest of the page.
+                                            From WordPress marketing sites to custom Next.js platforms, every project ships on tools I use daily — so there is no learning curve billed to your build.
                                         </p>
                                     </div>
 
@@ -220,9 +220,9 @@ export default function HomeClient({ initialProjects }: { initialProjects: Proje
                                             transition={{ duration: 18, repeat: Infinity, ease: 'linear' }}
                                             className="flex w-max items-center gap-4 whitespace-nowrap px-4"
                                         >
-                                            {['HTML5', 'Next.js', 'Shopify', 'WordPress', 'React', 'TypeScript', 'Payload', 'HubSpot', 'Webflow', 'HTML5', 'Next.js', 'Shopify', 'WordPress', 'React', 'TypeScript', 'Payload', 'HubSpot', 'Webflow'].map((item, index) => (
-                                                <span key={`${item}-${index}`} className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[10px] font-black uppercase tracking-[0.35em] text-white/70">
-                                                    {item}
+                                            {[...BRAND_LOGOS, ...BRAND_LOGOS].map((item, index) => (
+                                                <span key={`${item.label}-${index}`} className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[10px] font-black uppercase tracking-[0.35em] text-white/70">
+                                                    {item.label}
                                                 </span>
                                             ))}
                                         </motion.div>
@@ -256,29 +256,13 @@ export default function HomeClient({ initialProjects }: { initialProjects: Proje
                             className="text-center z-10 p-6"
                         >
                             <h3 className="text-4xl md:text-6xl font-black text-white italic tracking-tighter mb-4">
-                                DISCO-VERING <br /> THE VOID
+                                DISCOVERING <br /> THE VOID
                             </h3>
                             <p className="text-gray-500 text-lg uppercase tracking-[0.4em] font-bold">Scanning for intelligent patterns...</p>
                         </motion.div>
 
                         {[...Array(6)].map((_, i) => (
-                            <motion.div
-                                key={i}
-                                style={{
-                                    x: (i % 2 === 0 ? 1 : -1) * (200 + i * 50),
-                                    y: (i < 3 ? 1 : -1) * (150 + i * 40),
-                                    scale: useTransform(scrollYProgress, [0.4 + i * 0.05, 0.9], [0, 4]),
-                                    opacity: useTransform(scrollYProgress, [0.4 + i * 0.05, 0.6 + i * 0.05, 0.9], [0, 1, 0])
-                                }}
-                                className="absolute glass-panel p-6 rounded-2xl border-white/10 hidden md:block"
-                            >
-                                <div className="flex items-center gap-4">
-                                    <div className="w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center">
-                                        <Command className="w-4 h-4 text-purple-400" />
-                                    </div>
-                                    <span className="text-[10px] font-black tracking-widest text-gray-400 uppercase">Module_0{i}</span>
-                                </div>
-                            </motion.div>
+                            <DiveModule key={i} index={i} progress={scrollYProgress} />
                         ))}
 
                         <motion.div
@@ -318,7 +302,7 @@ export default function HomeClient({ initialProjects }: { initialProjects: Proje
                             <Zap className="w-12 h-12 text-teal-400 mb-6 group-hover:scale-125 transition-transform" />
                             <div>
                                 <h3 className="text-4xl font-black text-white mb-4 italic">Speed.</h3>
-                                <p className="text-gray-500 text-lg font-medium">Core Web Vitals optimized out of the box. 100/100 performance scores aren"t a goal—they"re the baseline.</p>
+                                <p className="text-gray-500 text-lg font-medium">Core Web Vitals optimized out of the box. 100/100 performance scores aren&apos;t a goal—they&apos;re the baseline.</p>
                             </div>
                         </motion.div>
                     </div>

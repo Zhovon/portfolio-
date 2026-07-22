@@ -2,12 +2,17 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 export function proxy(request: NextRequest) {
+    // 'unsafe-eval' is only needed by Next.js dev tooling (source maps/HMR)
+    const devScriptSrc = process.env.NODE_ENV === 'development' ? " 'unsafe-eval'" : ''
+
     const cspHeader = `
     default-src 'self';
-    script-src 'self' 'unsafe-eval' 'unsafe-inline' https: http:;
+    script-src 'self' 'unsafe-inline'${devScriptSrc} https://*.cal.com https://cal.com https://va.vercel-scripts.com https://vercel.live;
     style-src 'self' 'unsafe-inline';
     img-src 'self' blob: data: https:;
     font-src 'self' data:;
+    connect-src 'self' https://*.cal.com https://cal.com https://*.supabase.co https://vitals.vercel-insights.com;
+    frame-src https://*.cal.com https://cal.com;
     object-src 'none';
     base-uri 'self';
     form-action 'self';

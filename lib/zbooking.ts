@@ -1,4 +1,4 @@
-import { createClient } from '@supabase/supabase-js'
+import { createClient, SupabaseClient } from '@supabase/supabase-js'
 import { randomBytes } from 'crypto'
 
 // Type definitions
@@ -36,29 +36,32 @@ export interface ZBookingVerificationLog {
 }
 
 // Lazy initialization of Supabase client
-let supabaseAdmin: any = null
+let supabaseAdmin: SupabaseClient | null = null
 
-function getSupabaseAdmin(): any {
+function getSupabaseAdmin(): SupabaseClient {
     if (supabaseAdmin) {
         return supabaseAdmin
     }
 
     const supabaseUrl =
         process.env.SUPABASE_URL ||
-        process.env.NEXT_PUBLIC_SUPABASE_URL ||
-        process.env.SUPABASE_URL_PUBLIC
+        process.env.NEXT_PUBLIC_SUPABASE_URL
 
+    // Admin operations must never silently downgrade to the anon key —
+    // RLS would make writes fail in confusing ways or, worse, succeed
+    // with the wrong privileges.
     const supabaseServiceKey =
         process.env.SUPABASE_SERVICE_ROLE_KEY ||
-        process.env.SUPABASE_SERVICE_ROLE ||
-        process.env.SUPABASE_ANON_KEY ||
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+        process.env.SUPABASE_SERVICE_ROLE
 
-    if (!supabaseUrl || !supabaseServiceKey) {
-        throw new Error('Missing Supabase environment variables')
+    if (!supabaseUrl) {
+        throw new Error('Missing SUPABASE_URL (or NEXT_PUBLIC_SUPABASE_URL)')
+    }
+    if (!supabaseServiceKey) {
+        throw new Error('Missing SUPABASE_SERVICE_ROLE_KEY — refusing to run admin operations with the anon key')
     }
 
-    supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey) as any
+    supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey)
     return supabaseAdmin
 }
 
@@ -108,7 +111,7 @@ export async function createLicenseKey(
                 expires_at: expiresAt,
                 created_at: new Date().toISOString(),
                 updated_at: new Date().toISOString(),
-            } as any,
+            },
         ])
         .select()
 
@@ -174,7 +177,7 @@ export async function createDomainBinding(
                 domain,
                 first_seen_at: now,
                 last_seen_at: now,
-            } as any,
+            },
         ])
         .select()
 
@@ -195,7 +198,7 @@ export async function updateDomainBinding(
 ): Promise<ZBookingDomainBinding> {
     const { data, error } = await getSupabaseAdmin()
         .from('zbooking_license_domain_bindings')
-        .update({ last_seen_at: new Date().toISOString() } as any)
+        .update({ last_seen_at: new Date().toISOString() })
         .eq('license_id', licenseId)
         .eq('domain', domain)
         .select()
@@ -251,7 +254,7 @@ export async function logVerification(
                 ip,
                 user_agent: userAgent,
                 created_at: new Date().toISOString(),
-            } as any,
+            },
         ])
 
     if (error) {
