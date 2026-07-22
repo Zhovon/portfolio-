@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# zhovon.com
 
-## Getting Started
+Portfolio of Shahadat Hossain (Zhovon) — Lead SaaS Architect & Full-Stack Engineer — plus the ZBooking plugin license API.
 
-First, run the development server:
+Built with Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS v4, and Framer Motion. Deployed on Vercel.
+
+## Development
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev     # http://localhost:3000
+npm run build   # production build
+npm run lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Environment variables
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Variable | Used by |
+|---|---|
+| `RESEND_API_KEY`, `CONTACT_EMAIL` | Contact & order email routes |
+| `GITHUB_TOKEN` | GitHub activity section |
+| `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase client |
+| `SUPABASE_SERVICE_ROLE_KEY`, `ZBOOKING_ADMIN_KEY` | ZBooking license API (see `ZBOOKING_SETUP.md`) |
+| `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` | API rate limiting (optional; falls back to per-instance limiter) |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Project docs
 
-## Learn More
+- `CLAUDE.md` — repo conventions and structure (entry point for AI-assisted sessions)
+- `ARCHITECTURE.md` — route map, API endpoints, data flow
+- `MEMORY.md` — decision log and known debt
+- `ZBOOKING_SETUP.md` — license server setup
 
-To learn more about Next.js, take a look at the following resources:
+Portfolio content (projects, case studies) is hardcoded in `data/projects.ts` — no CMS.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Proprietary. See `LICENSE`.

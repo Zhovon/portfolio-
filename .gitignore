@@ -4,6 +4,12 @@
 /portfolio-/
 /portfolio-.zip
 
+# local artifacts / exports / personal notes (never commit)
+build_log.txt
+*.zip
+*.csv
+conversation_topics_dos_and_donts.md
+
 # dependencies
 /node_modules
 /.pnp
