@@ -15,7 +15,7 @@ Append-only. One dated line (or short block) per significant decision. Newest fi
 - ZBooking license verify endpoint accepts WordPress form-encoded payloads, not just JSON (1712361) — keep backward compatible.
 
 ## Known debt (delete lines as fixed)
-- Junk files still exist in old git history (only untracked going forward) — purge with `git filter-repo` if the repo is/goes public.
+- 2026-07-22 history was rewritten with git-filter-repo (zip/CSV/build_log/conversation notes purged) and force-pushed; backup bundle at `~/Documents/portfolio-backup-20260722.bundle`. Any OTHER clone of this repo must be re-cloned, not pulled.
 - Project "screenshots" in `data/projects.ts` are Unsplash stock photos; metrics read as invented. Replace with real screenshots of BIW CRM etc.
 - Verify Cal.com floating button and embeds still work after the CSP tightening (frame-src/connect-src) once deployed.
 - `lib/supabase.ts` (`saveContactMessage`) is unused by the contact route — either persist messages or delete the module.
