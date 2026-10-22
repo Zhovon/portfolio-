@@ -9,9 +9,9 @@ import { Project, FALLBACK_PROJECTS } from '@/data/projects'
 
 function ProjectCard({ project, i }: { project: Project, i: number }) {
     return (
-        <div className="w-[80vw] md:w-[60vw] lg:w-[40vw] flex-shrink-0 group relative">
+        <div className="w-[85vw] sm:w-[75vw] md:w-[60vw] lg:w-[40vw] flex-shrink-0 group relative">
             <Link href={`/projects/${project.slug}`}>
-                <div className="aspect-[16/10] rounded-[2rem] overflow-hidden relative glass-panel mb-8 border border-white/5 group-hover:border-purple-500/50 transition-colors duration-700">
+                <div className="aspect-[16/10] rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden relative glass-panel mb-5 sm:mb-8 border border-white/5 group-hover:border-purple-500/50 transition-colors duration-700">
                     <div className="absolute inset-0 bg-gradient-to-t from-[#020202] to-transparent opacity-60 group-hover:opacity-20 transition-opacity duration-700 z-10" />
 
                     {project.image ? (
@@ -20,35 +20,35 @@ function ProjectCard({ project, i }: { project: Project, i: number }) {
                             alt={project.title}
                             fill
                             className="object-cover opacity-50 group-hover:opacity-80 transition-opacity duration-700 group-hover:scale-105"
-                            sizes="(max-width: 768px) 80vw, (max-width: 1200px) 60vw, 40vw"
+                            sizes="(max-width: 640px) 85vw, (max-width: 768px) 75vw, (max-width: 1200px) 60vw, 40vw"
                         />
                     ) : (
                         <div className="absolute inset-0 flex items-center justify-center">
                             <motion.div
                                 whileHover={{ scale: 1.2, rotate: 10 }}
-                                className="w-24 h-24 rounded-full bg-white/5 backdrop-blur-3xl flex items-center justify-center border border-white/10 shadow-[0_0_30px_rgba(255,255,255,0.05)]"
+                                className="w-16 h-16 sm:w-24 sm:h-24 rounded-full bg-white/5 backdrop-blur-3xl flex items-center justify-center border border-white/10 shadow-[0_0_30px_rgba(255,255,255,0.05)]"
                             >
-                                <Layers className="w-10 h-10 text-white/20 group-hover:text-purple-500 transition-colors duration-500" />
+                                <Layers className="w-7 h-7 sm:w-10 sm:h-10 text-white/20 group-hover:text-purple-500 transition-colors duration-500" />
                             </motion.div>
                         </div>
                     )}
 
-                    <div className="absolute top-6 left-6 flex gap-2 z-20">
-                        <div className="px-3 py-1 rounded-full border border-white/10 bg-black/50 backdrop-blur-md text-[8px] uppercase tracking-widest text-gray-400">
+                    <div className="absolute top-4 left-4 sm:top-6 sm:left-6 flex gap-2 z-20">
+                        <div className="px-2 sm:px-3 py-1 rounded-full border border-white/10 bg-black/50 backdrop-blur-md text-[7px] sm:text-[8px] uppercase tracking-widest text-gray-400">
                             {project.technologies?.[0] || 'NEXUS_V.01'}
                         </div>
                     </div>
                 </div>
             </Link>
 
-            <div className="px-4">
-                <div className="flex justify-between items-start">
-                    <h3 className="text-4xl font-black text-white italic tracking-tighter group-hover:text-purple-400 transition-colors duration-500 uppercase">
+            <div className="px-2 sm:px-4">
+                <div className="flex justify-between items-start gap-2">
+                    <h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-white italic tracking-tighter group-hover:text-purple-400 transition-colors duration-500 uppercase leading-tight">
                         {project.title}
                     </h3>
-                    <ArrowDownRight className="w-6 h-6 text-gray-700 group-hover:text-purple-500 group-hover:rotate-45 transition-all duration-500" />
+                    <ArrowDownRight className="w-5 h-5 sm:w-6 sm:h-6 text-gray-700 group-hover:text-purple-500 group-hover:rotate-45 transition-all duration-500 flex-shrink-0 mt-1" />
                 </div>
-                <p className="text-gray-500 mt-4 text-lg font-medium leading-relaxed max-w-md line-clamp-2">
+                <p className="text-gray-500 mt-3 sm:mt-4 text-base sm:text-lg font-medium leading-relaxed max-w-md line-clamp-2">
                     {project.description}
                 </p>
             </div>
@@ -67,15 +67,31 @@ export function Projects({ projects }: { projects?: Project[] }) {
     const x = useTransform(scrollYProgressHorizontal, [0, 1], ["0%", `-${Math.max(0, (projectsToRender.length - 1) * 60)}%`])
 
     return (
-        <section ref={targetRef} id="works" className="relative h-[400vh] bg-black">
-            <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-center">
-                <div className="px-6 lg:px-20 mb-20 relative z-20">
+        <section ref={targetRef} id="works" className="relative h-auto lg:h-[400vh] bg-black">
+            {/* Mobile: normal vertical scroll */}
+            <div className="lg:hidden px-4 sm:px-6 py-16 sm:py-24">
+                <div className="mb-10">
+                    <h2 className="text-5xl sm:text-6xl font-black tracking-tighter text-white/10 uppercase leading-none mb-2">Artifacts</h2>
+                    <span className="text-xs font-mono text-emerald-500 animate-pulse">[ SCANNING_DATA... ]</span>
+                </div>
+                <div className="flex gap-6 overflow-x-auto pb-6 snap-x snap-mandatory -mx-4 sm:-mx-6 px-4 sm:px-6 scrollbar-hide">
+                    {projectsToRender.map((project, i) => (
+                        <div key={project.id} className="snap-start flex-shrink-0 w-[80vw] sm:w-[65vw]">
+                            <ProjectCard project={project} i={i} />
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {/* Desktop: sticky scroll-driven horizontal */}
+            <div className="hidden lg:block sticky top-0 h-screen w-full overflow-hidden flex-col justify-center">
+                <div className="px-20 mb-20 relative z-20 pt-8">
                     <div className="flex justify-between items-baseline overflow-hidden">
                         <motion.h2
                             initial={{ opacity: 0, x: -100 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                            className="text-8xl md:text-[12vw] font-black tracking-tighter text-white/5 uppercase leading-none"
+                            className="text-[12vw] font-black tracking-tighter text-white/5 uppercase leading-none"
                         >
                             Artifacts
                         </motion.h2>
@@ -83,7 +99,7 @@ export function Projects({ projects }: { projects?: Project[] }) {
                             initial={{ opacity: 0, x: 50 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             transition={{ duration: 1, delay: 0.5 }}
-                            className="text-xs font-mono text-emerald-500 animate-pulse hidden md:block"
+                            className="text-xs font-mono text-emerald-500 animate-pulse"
                         >
                             [ SCANNING_DATA... ]
                         </motion.span>
@@ -92,14 +108,14 @@ export function Projects({ projects }: { projects?: Project[] }) {
 
                 <motion.div
                     style={{ x }}
-                    className="flex gap-20 px-6 lg:px-20 relative z-10"
+                    className="flex gap-20 px-20 relative z-10"
                 >
                     {projectsToRender.map((project, i) => (
                         <ProjectCard key={project.id} project={project} i={i} />
                     ))}
                 </motion.div>
 
-                <div className="absolute bottom-20 left-6 lg:left-20 right-6 lg:right-20 h-[1px] bg-white/5">
+                <div className="absolute bottom-20 left-20 right-20 h-[1px] bg-white/5">
                     <motion.div
                         style={{ scaleX: scrollYProgressHorizontal }}
                         className="h-full bg-emerald-500 origin-left"

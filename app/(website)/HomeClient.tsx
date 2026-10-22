@@ -82,7 +82,7 @@ export default function HomeClient({ initialProjects }: { initialProjects: Proje
 
             <Hero />
 
-            <section id="warp" className="relative h-screen flex items-center justify-center overflow-hidden bg-white/5 backdrop-blur-sm">
+            <section id="warp" className="relative min-h-[70vh] sm:h-screen flex items-center justify-center overflow-hidden bg-white/5 backdrop-blur-sm py-20 sm:py-0">
                 <motion.div
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
@@ -98,11 +98,11 @@ export default function HomeClient({ initialProjects }: { initialProjects: Proje
                         initial={{ y: 100, opacity: 0 }}
                         whileInView={{ y: 0, opacity: 1 }}
                         transition={{ duration: 1, ease: "circOut" }}
-                        className="text-5xl md:text-7xl font-black text-white mb-10 tracking-tighter"
+                        className="text-3xl sm:text-5xl md:text-7xl font-black text-white mb-6 sm:mb-10 tracking-tighter"
                     >
                         MOVING AT THE VELOCITY OF <span className="text-emerald-500">INNOVATION.</span>
                     </motion.h2>
-                    <p className="text-gray-400 text-xl font-medium leading-relaxed">
+                    <p className="text-gray-400 text-base sm:text-xl font-medium leading-relaxed">
                         I don"t just build websites. I engineer digital engines that drive growth, speed, and interstellar user experiences. WordPress was the launchpad. Next.js is the rocket.
                     </p>
                 </div>
@@ -297,49 +297,49 @@ export default function HomeClient({ initialProjects }: { initialProjects: Proje
             <Projects projects={initialProjects} />
             <Skills />
 
-            <section id="core" className="relative py-40 px-6 lg:px-20 bg-gradient-to-b from-black via-purple-950/10 to-black">
+            <section id="core" className="relative py-16 sm:py-24 lg:py-40 px-4 sm:px-6 lg:px-20 bg-gradient-to-b from-black via-purple-950/10 to-black">
                 <div className="max-w-7xl mx-auto">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
                         <motion.div
                             whileHover={{ y: -10, scale: 1.02 }}
-                            className="md:col-span-2 glass-panel p-12 rounded-[2.5rem] flex flex-col justify-between h-[400px] group transition-all duration-500 hover:border-purple-500/50"
+                            className="md:col-span-2 glass-panel p-6 sm:p-10 lg:p-12 rounded-[1.5rem] sm:rounded-[2rem] lg:rounded-[2.5rem] flex flex-col justify-between min-h-[220px] sm:min-h-[320px] lg:h-[400px] group transition-all duration-500 hover:border-purple-500/50"
                         >
-                            <Cpu className="w-12 h-12 text-emerald-500 mb-6 group-hover:rotate-12 transition-transform" />
+                            <Cpu className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-emerald-500 mb-4 sm:mb-6 group-hover:rotate-12 transition-transform" />
                             <div>
-                                <h3 className="text-4xl font-black text-white mb-4 italic">Next-Gen Stack</h3>
-                                <p className="text-gray-500 text-lg">Next.js 15, React 19, TypeScript, Payload 3, and Tailwind 4. The bleeding edge of SaaS development.</p>
+                                <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white mb-3 sm:mb-4 italic">Next-Gen Stack</h3>
+                                <p className="text-gray-500 text-sm sm:text-base lg:text-lg">Next.js 15, React 19, TypeScript, Payload 3, and Tailwind 4. The bleeding edge of SaaS development.</p>
                             </div>
                         </motion.div>
                         <motion.div
                             whileHover={{ y: -10, scale: 1.02 }}
-                            className="glass-panel p-12 rounded-[2.5rem] bg-emerald-600/10 border-emerald-500/20 h-[400px] flex flex-col justify-between group transition-all duration-500 hover:border-teal-500/50"
+                            className="glass-panel p-6 sm:p-10 lg:p-12 rounded-[1.5rem] sm:rounded-[2rem] lg:rounded-[2.5rem] bg-emerald-600/10 border-emerald-500/20 min-h-[220px] sm:min-h-[320px] lg:h-[400px] flex flex-col justify-between group transition-all duration-500 hover:border-teal-500/50"
                         >
-                            <Zap className="w-12 h-12 text-teal-400 mb-6 group-hover:scale-125 transition-transform" />
+                            <Zap className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-teal-400 mb-4 sm:mb-6 group-hover:scale-125 transition-transform" />
                             <div>
-                                <h3 className="text-4xl font-black text-white mb-4 italic">Speed.</h3>
-                                <p className="text-gray-500 text-lg font-medium">Core Web Vitals optimized out of the box. 100/100 performance scores aren"t a goal—they"re the baseline.</p>
+                                <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white mb-3 sm:mb-4 italic">Speed.</h3>
+                                <p className="text-gray-500 text-sm sm:text-base lg:text-lg font-medium">Core Web Vitals optimized out of the box. 100/100 performance scores aren&apos;t a goal—they&apos;re the baseline.</p>
                             </div>
                         </motion.div>
                     </div>
                 </div>
             </section>
 
-            <section id="pricing" className="relative py-40 px-6 lg:px-20 overflow-hidden">
+            <section id="pricing" className="relative py-16 sm:py-24 lg:py-40 px-4 sm:px-6 lg:px-20 overflow-hidden">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(16,185,129,0.08),transparent_45%),radial-gradient(circle_at_bottom_right,rgba(124,58,237,0.10),transparent_40%)]" />
 
                 <div className="max-w-7xl mx-auto relative z-10">
-                    <div className="max-w-3xl mb-14">
-                        <h2 className="text-xs font-black uppercase tracking-[0.5em] text-emerald-500 mb-4">04 — Pricing</h2>
-                        <h3 className="text-5xl md:text-7xl font-black text-white italic tracking-tighter uppercase leading-none mb-6">
+                    <div className="max-w-3xl mb-8 sm:mb-14">
+                        <h2 className="text-xs font-black uppercase tracking-[0.4em] sm:tracking-[0.5em] text-emerald-500 mb-3 sm:mb-4">04 — Pricing</h2>
+                        <h3 className="text-3xl sm:text-5xl md:text-7xl font-black text-white italic tracking-tighter uppercase leading-none mb-4 sm:mb-6">
                             Choose the <span className="text-gray-800">build</span>
                         </h3>
-                        <p className="text-gray-400 text-lg leading-relaxed max-w-2xl">
+                        <p className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-2xl">
                             Pricing is structured around the kind of system you need: a focused launch page, a business site with CRM, or a full custom platform.
                         </p>
                     </div>
 
-                    <div ref={pricingStripRef} className="overflow-x-auto pb-4 -mx-6 px-6 lg:-mx-20 lg:px-20 snap-x snap-mandatory touch-pan-y">
-                        <div className="flex flex-col md:flex-row gap-6 md:min-w-max">
+                    <div ref={pricingStripRef} className="overflow-x-auto pb-4 -mx-4 sm:-mx-6 lg:-mx-20 px-4 sm:px-6 lg:px-20 snap-x snap-mandatory touch-pan-x">
+                        <div className="flex flex-row gap-4 sm:gap-6 min-w-max">
                         {[
                             {
                                 name: 'Custom Website',
@@ -376,34 +376,34 @@ export default function HomeClient({ initialProjects }: { initialProjects: Proje
                                 initial={{ opacity: 0, y: 24 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.6 }}
-                                className={`snap-start shrink-0 w-full md:w-[28rem] lg:w-[30rem] glass-panel relative overflow-hidden rounded-[2rem] p-8 border ${plan.featured ? 'border-emerald-500/30 bg-white/5' : 'border-white/10'}`}
+                                className={`snap-start shrink-0 w-[80vw] sm:w-[72vw] md:w-[28rem] lg:w-[30rem] glass-panel relative overflow-hidden rounded-[1.5rem] sm:rounded-[2rem] p-5 sm:p-8 border ${plan.featured ? 'border-emerald-500/30 bg-white/5' : 'border-white/10'}`}
                             >
                                 <div className={`absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r ${plan.accent} opacity-80`} />
-                                <div className="flex items-start justify-between gap-4 mb-8">
-                                    <div>
-                                        <p className="text-[10px] font-black uppercase tracking-[0.5em] text-emerald-500 mb-3">Package</p>
-                                        <h4 className="text-3xl font-black text-white italic tracking-tight uppercase">{plan.name}</h4>
-                                        <p className="text-gray-400 mt-3 text-sm leading-relaxed max-w-xs">{plan.summary}</p>
+                                <div className="flex items-start justify-between gap-3 mb-5 sm:mb-8">
+                                    <div className="min-w-0">
+                                        <p className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.4em] sm:tracking-[0.5em] text-emerald-500 mb-2 sm:mb-3">Package</p>
+                                        <h4 className="text-xl sm:text-2xl lg:text-3xl font-black text-white italic tracking-tight uppercase leading-tight">{plan.name}</h4>
+                                        <p className="text-gray-400 mt-2 sm:mt-3 text-xs sm:text-sm leading-relaxed">{plan.summary}</p>
                                     </div>
-                                    <div className={`px-4 py-2 rounded-full border border-white/10 bg-black/30 text-xs font-black uppercase tracking-[0.35em] text-white bg-gradient-to-r ${plan.accent} bg-clip-text text-transparent`}>
+                                    <div className={`flex-shrink-0 px-3 py-1.5 rounded-full border border-white/10 bg-black/30 text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] sm:tracking-[0.35em] bg-gradient-to-r ${plan.accent} bg-clip-text text-transparent`}>
                                         {plan.price}
                                     </div>
                                 </div>
 
-                                <div className="space-y-3 mb-8">
+                                <div className="space-y-2 sm:space-y-3 mb-5 sm:mb-8">
                                     {plan.features.map((feature) => (
-                                        <div key={feature} className="flex items-center gap-3 rounded-2xl border border-white/5 bg-black/20 px-4 py-3 text-sm text-white/80">
-                                            <span className="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.75)]" />
+                                        <div key={feature} className="flex items-center gap-3 rounded-xl sm:rounded-2xl border border-white/5 bg-black/20 px-3 sm:px-4 py-2.5 sm:py-3 text-xs sm:text-sm text-white/80">
+                                            <span className="h-1.5 w-1.5 sm:h-2 sm:w-2 flex-shrink-0 rounded-full bg-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.75)]" />
                                             {feature}
                                         </div>
                                     ))}
                                 </div>
 
-                                <div className="flex gap-3">
-                                    <Link href="/order" className="flex-1 rounded-full bg-white text-black px-5 py-3 text-[10px] font-black uppercase tracking-[0.35em] text-center hover:scale-[1.02] transition-transform">
+                                <div className="flex gap-2 sm:gap-3">
+                                    <Link href="/order" className="flex-1 rounded-full bg-white text-black px-3 sm:px-5 py-2.5 sm:py-3 text-[9px] sm:text-[10px] font-black uppercase tracking-[0.25em] sm:tracking-[0.35em] text-center hover:scale-[1.02] transition-transform">
                                         Order Now
                                     </Link>
-                                    <Link href="/contact" className="flex-1 rounded-full border border-white/10 bg-black/20 px-5 py-3 text-[10px] font-black uppercase tracking-[0.35em] text-white text-center hover:border-white/30 transition-colors">
+                                    <Link href="/contact" className="flex-1 rounded-full border border-white/10 bg-black/20 px-3 sm:px-5 py-2.5 sm:py-3 text-[9px] sm:text-[10px] font-black uppercase tracking-[0.25em] sm:tracking-[0.35em] text-white text-center hover:border-white/30 transition-colors">
                                         Ask First
                                     </Link>
                                 </div>
