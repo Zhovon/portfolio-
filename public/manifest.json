@@ -1,0 +1,35 @@
+{
+  "short_name": "Zhovon Portfolio",
+  "name": "ZHOVON Portfolio 2.0",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/manifest-icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/manifest-icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/portfolio?homescreen=1",
+  "display": "standalone",
+  "theme_color": "#7c3aed",
+  "background_color": "#020202",
+  "orientation": "any",
+  "display_override": ["window-controls-overlay"],
+  "precomposed": true,
+  "related_applications": [],
+  "protocols": []
+}

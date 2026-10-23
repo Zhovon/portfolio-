@@ -49,7 +49,7 @@ export const FALLBACK_PROJECTS: Project[] = [
         description: 'A native-like mobile PWA Islamic companion with offline capabilities and AI guidance.',
         techStack: [{ name: 'TypeScript' }, { name: 'PWA' }, { name: 'Next.js' }],
         category: 'App',
-        image: 'https://images.unsplash.com/photo-1598371343717-9154f85e4933?q=80&w=3540&auto=format&fit=crop', // Updated image symbolizing Islamic architecture
+        image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1200&auto=format&fit=crop',
         longDescription: 'Transforming Rukaya AI into a resilient, native-like mobile experience. Built on a "True Offline" PWA architecture with Service Workers and IndexedDB, it ensures availability without an internet connection. Features include an offline-first AI chatbot, a haptic-feedback Tasbeeh counter linked to daily prayer times, and a frictionless native "Install App" flow.',
         technologies: ['TypeScript', 'Next.js', 'Service Workers', 'IndexedDB', 'Tailwind CSS'],
         liveUrl: 'https://rukaya.zhovon.com',
@@ -298,7 +298,7 @@ export const FALLBACK_PROJECTS: Project[] = [
         description: 'AI-assisted donation guide writing platform.',
         techStack: [{ name: 'JavaScript' }, { name: 'AI Generator' }],
         category: 'AI',
-        image: 'https://images.unsplash.com/photo-1532629345422-7515f3d16bb0?q=80&w=3540&auto=format&fit=crop',
+        image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop',
         longDescription: 'An AI-powered tool built to help foundations and nonprofits generate compelling donation guides efficiently, streamlining the fundraising process.',
         technologies: ['JavaScript', 'OpenAI API', 'React'],
         metrics: [

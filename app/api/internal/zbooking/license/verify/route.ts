@@ -8,7 +8,7 @@ import {
     logVerification,
 } from '@/lib/zbooking'
 
-const ZBOOKING_SHARED_SECRET = process.env.ZBOOKING_SHARED_SECRET || 'aspirine'
+const ZBOOKING_SHARED_SECRET = process.env.ZBOOKING_SHARED_SECRET
 
 function normalizeDomain(input: string): string {
     return input
@@ -91,7 +91,7 @@ export async function POST(request: NextRequest) {
         }
 
         // Verify shared secret
-        if (providedSecret !== ZBOOKING_SHARED_SECRET) {
+        if (!ZBOOKING_SHARED_SECRET || providedSecret !== ZBOOKING_SHARED_SECRET) {
             await logVerification(normalizedToken, normalizedDomain, false, 'bad_secret', request)
             return NextResponse.json(
                 { valid: false, reason: 'bad_secret' },

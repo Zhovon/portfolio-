@@ -33,10 +33,10 @@ export function About() {
 
                     {/* Left Column: Identity */}
                     <motion.div
-                        initial={{ opacity: 0, x: -50 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8 }}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.1 }}
+                        transition={{ duration: 0.6 }}
                     >
                         <div className="flex items-center gap-4 mb-6 sm:mb-8">
                             <h2 className="text-xs font-black uppercase tracking-[0.4em] sm:tracking-[0.5em] text-emerald-500 whitespace-nowrap">01.1 — Directive</h2>
@@ -91,10 +91,10 @@ export function About() {
                             {problemsSolved.map((problem, i) => (
                                 <motion.div
                                     key={problem.id}
-                                    initial={{ opacity: 0, x: 50 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ duration: 0.6, delay: 0.3 + (i * 0.1) }}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true, amount: 0.1 }}
+                                    transition={{ duration: 0.5, delay: 0.1 * i }}
                                     className="group glass-panel p-5 sm:p-8 rounded-[1.5rem] sm:rounded-[2rem] border-white/5 hover:border-emerald-500/30 transition-all cursor-crosshair relative overflow-hidden"
                                 >
                                     <div className="absolute top-0 right-0 p-6 sm:p-8 opacity-5 group-hover:opacity-10 transition-opacity duration-500 group-hover:scale-125 transform">

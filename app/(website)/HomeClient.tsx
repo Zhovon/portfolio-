@@ -16,13 +16,13 @@ import { About } from '@/components/sections/About'
 
 function BrandLogo({ icon: Icon, label, accentClass, compact = false }: { icon: IconType; label: string; accentClass: string; compact?: boolean }) {
     return (
-        <div className={`flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 text-white/80 shadow-[0_10px_30px_rgba(0,0,0,0.22)] ${compact ? 'min-w-0 px-3 py-3' : 'min-w-[170px] px-4 py-4'}`}>
-            <div className={`flex items-center justify-center rounded-full border border-white/10 bg-black/50 ${accentClass} shadow-[0_0_24px_rgba(255,255,255,0.06)] ${compact ? 'h-10 w-10' : 'h-12 w-12'}`}>
-                <Icon className={compact ? 'h-5 w-5' : 'h-6 w-6'} />
+        <div className={`flex items-center gap-2.5 sm:gap-3 rounded-2xl border border-white/10 bg-white/5 text-white/80 shadow-[0_10px_30px_rgba(0,0,0,0.22)] ${compact ? 'min-w-0 p-2.5 overflow-hidden' : 'min-w-[170px] px-4 py-4'}`}>
+            <div className={`flex items-center justify-center rounded-full border border-white/10 bg-black/50 ${accentClass} shadow-[0_0_24px_rgba(255,255,255,0.06)] shrink-0 ${compact ? 'h-8 w-8 sm:h-9 sm:w-9' : 'h-12 w-12'}`}>
+                <Icon className={compact ? 'h-4 w-4' : 'h-6 w-6'} />
             </div>
-            <div>
-                <span className="block text-[9px] font-black uppercase tracking-[0.35em] text-white/55">{label}</span>
-                <span className="mt-1 block text-[10px] uppercase tracking-[0.28em] text-white/35">official mark</span>
+            <div className="min-w-0 flex-1 overflow-hidden">
+                <span className="block text-[10px] sm:text-xs font-black uppercase tracking-wider text-white/85 truncate">{label}</span>
+                <span className="block text-[8px] uppercase tracking-wider text-white/40 truncate">official mark</span>
             </div>
         </div>
     )
@@ -111,28 +111,29 @@ export default function HomeClient({ initialProjects }: { initialProjects: Proje
             <div className="relative py-20 overflow-hidden z-20">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(124,58,237,0.12),transparent_50%),radial-gradient(circle_at_bottom,rgba(16,185,129,0.10),transparent_45%)]" />
 
-                <div className="relative max-w-7xl mx-auto px-6 lg:px-10">
+                <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
                     <motion.div
-                        initial={{ opacity: 0, y: 24 }}
+                        initial={{ opacity: 0, y: 16 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, ease: 'easeOut' }}
-                        className="glass-panel relative overflow-hidden rounded-[2rem] p-6 md:p-8"
+                        viewport={{ once: true, amount: 0.1 }}
+                        transition={{ duration: 0.6, ease: 'easeOut' }}
+                        className="glass-panel relative overflow-hidden rounded-[1.75rem] sm:rounded-[2rem] p-4 sm:p-6 md:p-8"
                     >
                         <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-emerald-400/40 to-transparent" />
                         <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-teal-400/40 to-transparent" />
 
-                        <div className="relative space-y-8">
+                        <div className="relative space-y-6 sm:space-y-8">
                             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
-                                <div className="h-12 w-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/80 text-[11px] font-black tracking-[0.35em]">
+                                <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/80 text-[10px] sm:text-[11px] font-black tracking-widest shrink-0">
                                     ZH
                                 </div>
-                                <div className="space-y-1">
-                                    <p className="text-[10px] font-black uppercase tracking-[0.5em] text-emerald-500">02.2 — Stack & Services</p>
-                                    <p className="text-white text-lg font-bold tracking-tight">Real brand marks, not placeholders.</p>
+                                <div className="space-y-0.5 sm:space-y-1">
+                                    <p className="text-[10px] font-black uppercase tracking-widest text-emerald-400">02.2 — Stack & Services</p>
+                                    <p className="text-white text-base sm:text-lg font-bold tracking-tight">Real brand marks, not placeholders.</p>
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-2 gap-3 md:hidden">
+                            <div className="grid grid-cols-2 gap-2.5 sm:gap-3 md:hidden">
                                 {[
                                     { label: 'HTML5', icon: SiHtml5, accentClass: 'text-[#e34f26]' },
                                     { label: 'Next.js', icon: SiNextdotjs, accentClass: 'text-white' },
@@ -186,41 +187,41 @@ export default function HomeClient({ initialProjects }: { initialProjects: Proje
                                 </motion.div>
                             </div>
 
-                            <div className="grid gap-4 md:grid-cols-2">
-                                <div className="rounded-[1.5rem] border border-white/10 bg-white/5 p-5">
-                                    <p className="text-[10px] font-black uppercase tracking-[0.5em] text-emerald-500 mb-4">Website services</p>
-                                    <div className="space-y-3">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full min-w-0">
+                                <div className="w-full min-w-0 rounded-2xl sm:rounded-[1.5rem] border border-white/10 bg-white/5 p-4 sm:p-6">
+                                    <p className="text-[10px] font-black uppercase tracking-wider text-emerald-400 mb-3 sm:mb-4">Website services</p>
+                                    <div className="space-y-2.5 sm:space-y-3">
                                         {[
                                             'Custom code websites',
                                             'CRM integrations and automations',
                                             'WordPress builds and redesigns',
                                             'Migrations, landing pages, ecommerce',
                                         ].map((item) => (
-                                            <div key={item} className="flex items-center gap-3 rounded-2xl border border-white/5 bg-black/25 px-4 py-3 text-sm text-white/80">
-                                                <span className="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.75)]" />
-                                                {item}
+                                            <div key={item} className="flex items-center gap-3 rounded-xl border border-white/5 bg-black/30 px-3.5 py-2.5 sm:px-4 sm:py-3 text-xs sm:text-sm text-white/90">
+                                                <span className="h-2 w-2 rounded-full bg-emerald-500 shrink-0 shadow-[0_0_10px_rgba(16,185,129,0.8)]" />
+                                                <span className="font-medium leading-snug break-words min-w-0 flex-1">{item}</span>
                                             </div>
                                         ))}
                                     </div>
                                 </div>
 
-                                <div className="rounded-[1.5rem] border border-white/10 bg-black/25 p-5 flex flex-col justify-between">
-                                    <div>
-                                        <p className="text-[10px] font-black uppercase tracking-[0.5em] text-white/45 mb-3">What stays consistent</p>
-                                        <h4 className="text-2xl font-black text-white tracking-tight mb-3">Brand marks first, text second.</h4>
-                                        <p className="text-sm text-gray-400 leading-relaxed">
+                                <div className="w-full min-w-0 max-w-full rounded-2xl sm:rounded-[1.5rem] border border-white/10 bg-black/30 p-4 sm:p-6 flex flex-col justify-between gap-5">
+                                    <div className="w-full min-w-0">
+                                        <p className="text-[10px] font-black uppercase tracking-wider text-white/45 mb-2">What stays consistent</p>
+                                        <h4 className="text-xl sm:text-2xl font-black text-white tracking-tight mb-2 leading-tight break-words">Brand marks first, text second.</h4>
+                                        <p className="text-xs sm:text-sm text-gray-400 leading-relaxed break-words">
                                             The section now behaves like a real brand strip: official logos in motion, dark surfaces, and a service summary that fits the rest of the page.
                                         </p>
                                     </div>
 
-                                    <div className="mt-5 overflow-hidden rounded-full border border-white/10 bg-black/30 py-3">
+                                    <div className="w-full min-w-0 max-w-full overflow-hidden rounded-full border border-white/10 bg-black/40 py-2 sm:py-2.5">
                                         <motion.div
                                             animate={{ x: ['0%', '-50%'] }}
                                             transition={{ duration: 18, repeat: Infinity, ease: 'linear' }}
-                                            className="flex w-max items-center gap-4 whitespace-nowrap px-4"
+                                            className="flex w-max items-center gap-2.5 sm:gap-3 whitespace-nowrap px-3"
                                         >
                                             {['HTML5', 'Next.js', 'Shopify', 'WordPress', 'React', 'TypeScript', 'Payload', 'HubSpot', 'Webflow', 'HTML5', 'Next.js', 'Shopify', 'WordPress', 'React', 'TypeScript', 'Payload', 'HubSpot', 'Webflow'].map((item, index) => (
-                                                <span key={`${item}-${index}`} className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[10px] font-black uppercase tracking-[0.35em] text-white/70">
+                                                <span key={`${item}-${index}`} className="shrink-0 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[10px] sm:text-[11px] font-bold tracking-wider text-white/80">
                                                     {item}
                                                 </span>
                                             ))}

@@ -1,0 +1,2 @@
+-- Supabase Migration: Create Directory Structure
+-- This file marks the foundation setup for Phase 1
