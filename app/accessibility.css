@@ -1,0 +1,60 @@
+/*!
+  * Zhovon Portfolio 2.0 - Accessibility Enhancements
+  * Critical for WCAG 2.1 AA compliance
+*/
+
+/* Focus-visible styles */
+:focus-visible {
+  outline: 2px solid oklch(0.645 0.237 165.47);
+  outline-offset: 2px;
+}
+
+/* Focus on interactive elements */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid oklch(0.645 0.237 165.47);
+  outline-offset: 2px;
+}
+
+/* Skip link for keyboard navigation */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  background: oklch(0.645 0.237 165.47);
+  color: white;
+  padding: 8px;
+  z-index: 9999;
+  transition: top 0.3s;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0s !important;
+    animation-duration: 0s !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* High contrast mode */
+@media (forced-colors: active) {
+  .glass-panel {
+    background: ButtonFace;
+    color: ButtonText;
+  }
+  
+  .outline-none:focus {
+    outline: 2px solid CanvasText !important;
+    outline-offset: 2px !important;
+  }
+}

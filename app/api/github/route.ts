@@ -49,7 +49,7 @@ export async function GET() {
         // Fetch public events (up to 30)
         const eventsRes = await fetch(
             `https://api.github.com/users/${username}/events/public?per_page=30`,
-            { headers }
+            { headers, signal: AbortSignal.timeout(5000) }
         )
 
         if (!eventsRes.ok) {
@@ -100,7 +100,10 @@ export async function GET() {
         await Promise.allSettled(
             activeRepos.map(async (repo) => {
                 try {
-                    const repoRes = await fetch(`https://api.github.com/repos/${repo.fullName}`, { headers })
+                    const repoRes = await fetch(`https://api.github.com/repos/${repo.fullName}`, {
+                        headers,
+                        signal: AbortSignal.timeout(3000),
+                    })
                     if (repoRes.ok) {
                         const repoData = await repoRes.json()
                         repo.language = repoData.language

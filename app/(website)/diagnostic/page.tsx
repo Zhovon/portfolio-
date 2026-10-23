@@ -1,8 +1,21 @@
-import { headers } from 'next/headers'
+import { notFound } from 'next/navigation'
 
 export const dynamic = 'force-dynamic'
 
-export default async function DiagnosticPage() {
+export default async function DiagnosticPage({
+    searchParams,
+}: {
+    searchParams: Promise<{ secret?: string }>
+}) {
+    const params = await searchParams
+    const authorizedSecret = process.env.DIAGNOSTIC_SECRET || process.env.ZBOOKING_ADMIN_SECRET
+
+    // In production, require valid administrative secret, otherwise 404
+    if (process.env.NODE_ENV === 'production') {
+        if (!authorizedSecret || params.secret !== authorizedSecret) {
+            notFound()
+        }
+    }
     // Check all possible Vercel Postgres variable names
     const envVars = {
         // Postgres variables

@@ -7,6 +7,20 @@ import {
 
 export async function POST(request: NextRequest) {
     try {
+        // Enforce administrative authorization
+        const authHeader = request.headers.get('authorization') || ''
+        const customAdminKey = request.headers.get('x-admin-key') || ''
+        const tokenFromBearer = authHeader.startsWith('Bearer ') ? authHeader.slice(7).trim() : ''
+        const providedKey = customAdminKey || tokenFromBearer
+        const expectedSecret = process.env.ZBOOKING_ADMIN_SECRET || process.env.CRON_SECRET
+
+        if (!expectedSecret || !providedKey || providedKey !== expectedSecret) {
+            return NextResponse.json(
+                { success: false, error: 'Unauthorized: Valid administrative key required' },
+                { status: 401 }
+            )
+        }
+
         const body = await request.json()
         const { email, plan = 'pro' } = body
 

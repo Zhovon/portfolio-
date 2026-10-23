@@ -110,9 +110,9 @@ export function PortfolioClient({ projects }: { projects: Project[] }) {
                                     {/* Hover Actions */}
                                     <div className="absolute bottom-4 right-4 z-20 flex gap-2 opacity-0 -translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 delay-100">
                                         {project.githubUrl && (
-                                            <Link href={project.githubUrl} target="_blank" className="p-2 bg-black/80 hover:bg-emerald-600 rounded-full text-white backdrop-blur-md border border-white/10 transition-colors">
+                                            <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="p-2 bg-black/80 hover:bg-emerald-600 rounded-full text-white backdrop-blur-md border border-white/10 transition-colors">
                                                 <Github className="w-4 h-4" />
-                                            </Link>
+                                            </a>
                                         )}
                                         <Link href={`/projects/${project.slug}`} className="p-2 bg-emerald-500 hover:bg-emerald-400 rounded-full text-black shadow-[0_0_20px_rgba(16,185,129,0.4)] transition-colors">
                                             <ExternalLink className="w-4 h-4" />

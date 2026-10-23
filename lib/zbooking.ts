@@ -50,12 +50,10 @@ function getSupabaseAdmin(): any {
 
     const supabaseServiceKey =
         process.env.SUPABASE_SERVICE_ROLE_KEY ||
-        process.env.SUPABASE_SERVICE_ROLE ||
-        process.env.SUPABASE_ANON_KEY ||
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+        process.env.SUPABASE_SERVICE_ROLE
 
     if (!supabaseUrl || !supabaseServiceKey) {
-        throw new Error('Missing Supabase environment variables')
+        throw new Error('Missing Supabase Service Role Key for administrative operations')
     }
 
     supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey) as any
