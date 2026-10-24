@@ -28,6 +28,15 @@
 .DS_Store
 *.pem
 
+# Sensitive exported reports - never commit
+Cloudflare_*.csv
+*.SecurityInsights*.csv
+
+# Build artifacts
+build_log.txt
+*.zip
+REDEPLOY.md
+
 # debug
 npm-debug.log*
 yarn-debug.log*
