@@ -7,7 +7,9 @@ export function proxy(request: NextRequest) {
     script-src 'self' 'unsafe-eval' 'unsafe-inline' https: http:;
     style-src 'self' 'unsafe-inline';
     img-src 'self' blob: data: https:;
-    font-src 'self' data:;
+    font-src 'self' data: https:;
+    connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://*.google.com https://*.supabase.co https://vitals.vercel-insights.com https://va.vercel-scripts.com https://api.github.com https://cal.com https://app.cal.com;
+    frame-src 'self' https://cal.com https://app.cal.com;
     object-src 'none';
     base-uri 'self';
     form-action 'self';
@@ -28,7 +30,7 @@ export function proxy(request: NextRequest) {
         'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload',
         'X-Frame-Options': 'DENY',
         'X-Content-Type-Options': 'nosniff',
-        'Referrer-Policy': 'origin-when-cross-origin',
+        'Referrer-Policy': 'strict-origin-when-cross-origin',
         'Content-Security-Policy': cspHeader.replace(/\s{2,}/g, ' ').trim()
     }
 
