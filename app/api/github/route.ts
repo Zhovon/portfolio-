@@ -61,19 +61,23 @@ export async function GET() {
 
         const events: GitHubEvent[] = await eventsRes.json()
 
-        // Build active repos map — group push events by repo
+        // Build active repos map — group push and pull request events by repo
         const repoMap = new Map<string, RepoActivity>()
-        const pushEvents = events.filter(e => e.type === 'PushEvent' || e.type === 'CreateEvent')
+        const pushEvents = events.filter(e => e.type === 'PushEvent' || e.type === 'CreateEvent' || e.type === 'PullRequestEvent')
 
         for (const event of pushEvents) {
             const fullName = event.repo.name
             const repoName = fullName.split('/').pop() || fullName
             const existing = repoMap.get(fullName)
             const commits = event.payload.commits || []
-            const latestMsg = commits[0]?.message || (event.type === 'CreateEvent' ? `Created ${event.payload.ref_type || 'repo'}` : 'Activity')
+            const latestMsg = commits[0]?.message || (
+                event.type === 'CreateEvent' ? `Created ${event.payload.ref_type || 'repo'}` :
+                event.type === 'PullRequestEvent' ? `${event.payload.action === 'closed' ? 'Merged' : (event.payload.action || 'Updated')} PR` :
+                'Recent activity'
+            )
 
             if (existing) {
-                existing.commitCount += commits.length
+                existing.commitCount += commits.length || 1
                 // Keep most recent
                 if (new Date(event.created_at) > new Date(existing.lastActive)) {
                     existing.latestCommit = latestMsg

@@ -2,39 +2,35 @@
 
 import { useCallback, useRef, useEffect } from 'react'
 
-// A tiny, synthesized high-tech "tick" sound encoded in base64 (very small payload)
-// Generated from a super short sine wave burst
-const TICK_SOUND = 'data:audio/mp3;base64,//NExAAAAANIAAAAAExBTUUzLjEwMKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq//NExEAAANIAAAAAExBTUUzLjEwMKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq'
-
-// Let's use standard web audio API directly to synthesize a high-tech interface click 
-// without needing any external assets, ensuring perfect zero-latency performance.
-
 export function useUISound() {
     const audioCtxRef = useRef<AudioContext | null>(null)
 
-    useEffect(() => {
-        // Initialize AudioContext only on user interaction if needed or just prepare it
-        const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext
-        if (AudioContextClass && !audioCtxRef.current) {
-            audioCtxRef.current = new AudioContextClass()
+    const getAudioContext = useCallback(() => {
+        if (typeof window === 'undefined') return null
+        if (!audioCtxRef.current) {
+            const AudioContextClass = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext
+            if (AudioContextClass) {
+                audioCtxRef.current = new AudioContextClass()
+            }
         }
-        
+        if (audioCtxRef.current?.state === 'suspended') {
+            audioCtxRef.current.resume().catch(() => {})
+        }
+        return audioCtxRef.current
+    }, [])
+
+    useEffect(() => {
         return () => {
-            if (audioCtxRef.current?.state !== 'closed') {
-                audioCtxRef.current?.close()
+            if (audioCtxRef.current && audioCtxRef.current.state !== 'closed') {
+                audioCtxRef.current.close().catch(() => {})
             }
         }
     }, [])
 
     const playHover = useCallback(() => {
-        if (!audioCtxRef.current) return
-        
-        // Resume context if suspended (browser autoplay policies)
-        if (audioCtxRef.current.state === 'suspended') {
-            audioCtxRef.current.resume()
-        }
+        const ctx = getAudioContext()
+        if (!ctx) return
 
-        const ctx = audioCtxRef.current
         const osc = ctx.createOscillator()
         const gainNode = ctx.createGain()
         
@@ -54,13 +50,9 @@ export function useUISound() {
     }, [])
 
     const playClick = useCallback(() => {
-        if (!audioCtxRef.current) return
-        
-        if (audioCtxRef.current.state === 'suspended') {
-            audioCtxRef.current.resume()
-        }
+        const ctx = getAudioContext()
+        if (!ctx) return
 
-        const ctx = audioCtxRef.current
         const osc = ctx.createOscillator()
         const gainNode = ctx.createGain()
         
