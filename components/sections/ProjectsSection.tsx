@@ -31,11 +31,11 @@ export function ProjectsSection() {
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {data.map((project: any) => (
+          {data.map((project: any, index: number) => (
             <motion.div
               key={project.id}
               className="group relative w-full rounded-2xl overflow-hidden border-white/5 backdrop-blur"
-              style={{ transitionDelay: `${Math.random() * 0.2}s` }}
+              style={{ transitionDelay: `${(index % 5) * 0.05}s` }}
               whileHover={{
                 y: -10,
                 rotate: 5,
