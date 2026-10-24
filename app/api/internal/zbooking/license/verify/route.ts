@@ -8,6 +8,39 @@ import {
     logVerification,
 } from '@/lib/zbooking'
 
+// ---------------------------------------------------------------------------
+// Rate limiting — Upstash Redis (sliding window, 20 req/min per IP)
+// Falls back gracefully if UPSTASH_REDIS_REST_URL is not configured.
+// ---------------------------------------------------------------------------
+let rateLimiter: { limit: (id: string) => Promise<{ success: boolean }> } | null = null
+
+async function getRateLimiter() {
+    if (rateLimiter) return rateLimiter
+
+    const url = process.env.UPSTASH_REDIS_REST_URL
+    const token = process.env.UPSTASH_REDIS_REST_TOKEN
+
+    if (!url || !token) return null
+
+    try {
+        const { Ratelimit } = await import('@upstash/ratelimit')
+        const { Redis } = await import('@upstash/redis')
+
+        const redis = new Redis({ url, token })
+        rateLimiter = new Ratelimit({
+            redis,
+            limiter: Ratelimit.slidingWindow(20, '1 m'),
+            analytics: true,
+            prefix: 'zbooking:verify',
+        })
+        return rateLimiter
+    } catch {
+        return null
+    }
+}
+
+// ---------------------------------------------------------------------------
+
 const ZBOOKING_SHARED_SECRET = process.env.ZBOOKING_SHARED_SECRET
 
 function normalizeDomain(input: string): string {
@@ -58,6 +91,25 @@ async function parseRequestBody(request: NextRequest): Promise<Record<string, an
 export async function POST(request: NextRequest) {
     let incomingToken = 'unknown'
     let incomingDomain = 'unknown'
+
+    // --- Rate limit check ---
+    const limiter = await getRateLimiter()
+    if (limiter) {
+        const ip =
+            request.headers.get('x-forwarded-for')?.split(',')[0].trim() ||
+            request.headers.get('x-real-ip') ||
+            'anonymous'
+        const { success } = await limiter.limit(ip)
+        if (!success) {
+            return NextResponse.json(
+                { valid: false, reason: 'rate_limited' },
+                {
+                    status: 429,
+                    headers: { 'Retry-After': '60' },
+                }
+            )
+        }
+    }
 
     try {
         const body = await parseRequestBody(request)
@@ -129,7 +181,8 @@ export async function POST(request: NextRequest) {
         if (license.expires_at) {
             const expiryDate = new Date(license.expires_at)
             if (new Date() > expiryDate) {
-                await logVerification(token, domain, false, 'expired', request)
+                // Fix: use normalized vars, not raw destructured ones
+                await logVerification(normalizedToken, normalizedDomain, false, 'expired', request)
                 return NextResponse.json(
                     { valid: false, reason: 'expired' },
                     { status: 200 }
