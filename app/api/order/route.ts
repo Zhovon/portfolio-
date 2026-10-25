@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { Resend } from 'resend'
 import { createClient } from '@supabase/supabase-js'
+import { checkRateLimit, getClientIp } from '@/lib/rate-limit'
 
 function escapeHtml(str: string): string {
     return String(str).replace(/[&<>"']/g, (m) => ({
@@ -21,6 +22,15 @@ function getSupabaseClient() {
 
 export async function POST(req: Request) {
     try {
+        const ip = getClientIp(req)
+        const rateCheck = checkRateLimit(`order:${ip}`, 5, 60 * 1000)
+        if (!rateCheck.success) {
+            return NextResponse.json(
+                { error: 'Rate limit exceeded. Please wait a minute before submitting another order.' },
+                { status: 429 }
+            )
+        }
+
         const { name, email, packageType, budget, details } = await req.json()
 
         if (!name || !email || !packageType || !details) {
@@ -32,6 +42,15 @@ export async function POST(req: Request) {
         const trimmedPackage = String(packageType).trim()
         const trimmedBudget = budget ? String(budget).trim() : 'Not specified'
         const trimmedDetails = String(details).trim()
+
+        if (trimmedName.length > 100 || trimmedEmail.length > 255 || trimmedDetails.length > 5000) {
+            return NextResponse.json({ error: 'Payload exceeds maximum allowed length' }, { status: 400 })
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        if (!emailRegex.test(trimmedEmail)) {
+            return NextResponse.json({ error: 'Invalid email address format' }, { status: 400 })
+        }
 
         // 1. Enforce Denominator Rule: Persist order submission to Supabase first
         let submissionId: string | null = null
@@ -60,8 +79,8 @@ export async function POST(req: Request) {
 
         // 2. Dispatch notification email if Resend is configured
         const resendApiKey = process.env.RESEND_API_KEY
-        const toEmail = process.env.CONTACT_EMAIL || 'shahadathossain1932@gmail.com'
-        const fromEmail = process.env.MAIL_FROM || 'Zhovon Orders <onboarding@resend.dev>'
+        const toEmail = process.env.CONTACT_EMAIL || 'admin@zhovon.com'
+        const fromEmail = process.env.MAIL_FROM || 'Zhovon Orders <admin@zhovon.com>'
 
         if (resendApiKey) {
             const resend = new Resend(resendApiKey)
@@ -74,6 +93,7 @@ export async function POST(req: Request) {
             const emailPromise = resend.emails.send({
                 from: fromEmail,
                 to: [toEmail],
+                replyTo: trimmedEmail,
                 subject: `[ZHOVON_SYS] New Order Request - ${safePackage}`,
                 html: `
                     <div style="font-family: monospace; background-color: #050505; color: #e5e7eb; padding: 40px; border-radius: 8px;">
