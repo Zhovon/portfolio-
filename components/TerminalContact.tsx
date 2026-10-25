@@ -142,30 +142,30 @@ export function TerminalContact() {
     }
 
     return (
-        <div className="w-full max-w-4xl mx-auto glass-panel rounded-3xl overflow-hidden border-white/5 shadow-2xl bg-black/40 backdrop-blur-3xl">
+        <div className="w-full max-w-4xl mx-auto glass-panel rounded-2xl sm:rounded-3xl overflow-hidden border-white/5 shadow-2xl bg-black/40 backdrop-blur-3xl">
             {/* Header Bar */}
-            <div className="bg-white/5 px-6 py-4 border-b border-white/5 flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                    <div className="flex gap-1.5">
-                        <div className="w-3 h-3 rounded-full bg-red-500/20 border border-red-500/50" />
-                        <div className="w-3 h-3 rounded-full bg-yellow-500/20 border border-yellow-500/50" />
-                        <div className="w-3 h-3 rounded-full bg-green-500/20 border border-green-500/50" />
+            <div className="bg-white/5 px-4 sm:px-6 py-3 sm:py-4 border-b border-white/5 flex items-center justify-between">
+                <div className="flex items-center gap-2 sm:gap-4 min-w-0">
+                    <div className="flex gap-1.5 flex-shrink-0">
+                        <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-red-500/20 border border-red-500/50" />
+                        <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-yellow-500/20 border border-yellow-500/50" />
+                        <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-green-500/20 border border-green-500/50" />
                     </div>
-                    <div className="flex items-center gap-2 ml-4">
-                        <TerminalIcon className="w-4 h-4 text-gray-500" />
-                        <span className="text-[10px] font-mono text-gray-500 tracking-[0.2em] uppercase mt-0.5">ZHOVON Terminal v4.0.2</span>
+                    <div className="flex items-center gap-2 ml-2 sm:ml-4 min-w-0 truncate">
+                        <TerminalIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-500 flex-shrink-0" />
+                        <span className="text-[9px] sm:text-[10px] font-mono text-gray-400 tracking-[0.15em] sm:tracking-[0.2em] uppercase truncate">ZHOVON Terminal v4.0.2</span>
                     </div>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-shrink-0">
                     <div className="w-2 h-2 rounded-full bg-purple-500 animate-pulse" />
-                    <span className="text-[8px] font-mono text-purple-500 uppercase tracking-widest">Linked</span>
+                    <span className="text-[8px] font-mono text-purple-400 uppercase tracking-widest">Linked</span>
                 </div>
             </div>
 
             {/* Message Output Area */}
             <div
                 ref={scrollRef}
-                className="h-[400px] overflow-y-auto p-8 font-mono text-sm leading-relaxed space-y-6 scrollbar-hide"
+                className="h-[280px] xs:h-[320px] sm:h-[380px] md:h-[420px] overflow-y-auto p-4 sm:p-6 md:p-8 font-mono text-xs sm:text-sm leading-relaxed space-y-4 sm:space-y-6 scrollbar-hide"
             >
                 {messages.map((msg, i) => (
                     <motion.div
@@ -174,22 +174,22 @@ export function TerminalContact() {
                         key={i}
                         className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'}`}
                     >
-                        <div className="flex items-center gap-3 mb-1 opactiy-50">
-                            <span className={`text-[10px] uppercase tracking-widest font-black ${msg.role === 'system' ? 'text-blue-500' :
-                                msg.role === 'assistant' ? 'text-purple-500' : 'text-cyan-400'
+                        <div className="flex items-center gap-2 sm:gap-3 mb-1 opacity-70">
+                            <span className={`text-[9px] sm:text-[10px] uppercase tracking-widest font-black ${msg.role === 'system' ? 'text-blue-400' :
+                                msg.role === 'assistant' ? 'text-purple-400' : 'text-cyan-400'
                                 }`}>
                                 {msg.role === 'user' ? 'OPERATOR' : 'SYSTEM'}
                             </span>
-                            <span className="text-[8px] text-gray-700">{mounted ? msg.timestamp : '--:--:--'}</span>
+                            <span className="text-[8px] text-gray-500">{mounted ? msg.timestamp : '--:--:--'}</span>
                         </div>
-                        <div className={`max-w-[80%] px-4 py-2 rounded-2xl ${msg.role === 'user' ? 'bg-white/5 text-white border border-white/10' : 'text-gray-400'
+                        <div className={`max-w-[92%] sm:max-w-[85%] px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl sm:rounded-2xl break-words text-xs sm:text-sm ${msg.role === 'user' ? 'bg-white/10 text-white border border-white/10' : 'text-gray-300 bg-white/[0.02]'
                             }`}>
                             {msg.content}
                         </div>
                     </motion.div>
                 ))}
                 {isTyping && (
-                    <div className="flex gap-1">
+                    <div className="flex gap-1.5 py-2">
                         <motion.div animate={{ opacity: [0.2, 1, 0.2] }} transition={{ repeat: Infinity, duration: 1 }} className="w-1.5 h-1.5 bg-purple-500 rounded-full" />
                         <motion.div animate={{ opacity: [0.2, 1, 0.2] }} transition={{ repeat: Infinity, duration: 1, delay: 0.2 }} className="w-1.5 h-1.5 bg-purple-500 rounded-full" />
                         <motion.div animate={{ opacity: [0.2, 1, 0.2] }} transition={{ repeat: Infinity, duration: 1, delay: 0.4 }} className="w-1.5 h-1.5 bg-purple-500 rounded-full" />
@@ -198,45 +198,45 @@ export function TerminalContact() {
             </div>
 
             {/* Input Field */}
-            <div className="p-6 bg-white/5 border-t border-white/5">
-                <form onSubmit={handleCommand} className="flex gap-4">
+            <div className="p-4 sm:p-6 bg-white/5 border-t border-white/5">
+                <form onSubmit={handleCommand} className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                     <div className="flex-1 relative">
-                        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-purple-500 font-mono text-lg">{'>'}</div>
+                        <div className="absolute left-3.5 sm:left-4 top-1/2 -translate-y-1/2 text-purple-400 font-mono text-base sm:text-lg">{'>'}</div>
                         <input
                             type="text"
                             value={inputValue}
                             onChange={(e) => setInputValue(e.target.value)}
                             placeholder="Enter command or message..."
-                            className="w-full bg-black/40 border border-white/10 rounded-xl px-10 py-4 text-white font-mono placeholder:text-gray-800 focus:outline-none focus:border-purple-500 transition-colors"
+                            className="w-full bg-black/50 border border-white/10 rounded-xl pl-8 sm:pl-10 pr-4 py-3 sm:py-4 text-white font-mono text-base sm:text-sm placeholder:text-gray-600 focus:outline-none focus:border-purple-500 transition-colors"
                         />
                     </div>
                     <button
                         type="button"
                         onClick={launchMission}
                         disabled={status !== 'idle'}
-                        className="px-8 py-4 bg-white text-black font-black uppercase tracking-[0.2em] text-[10px] rounded-xl hover:scale-105 transition-all disabled:opacity-50 disabled:scale-100 flex items-center gap-3"
+                        className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 bg-white text-black font-black uppercase tracking-[0.2em] text-[10px] rounded-xl hover:scale-105 active:scale-95 transition-all disabled:opacity-50 disabled:scale-100 flex items-center justify-center gap-2.5 sm:gap-3 flex-shrink-0 cursor-pointer"
                     >
                         {status === 'idle' ? (
                             <>
-                                <Send className="w-4 h-4" />
+                                <Send className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                                 Transmit Mission
                             </>
                         ) : status === 'sending' ? (
                             <>
-                                <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: 'linear' }} className="w-4 h-4 border-2 border-black border-t-transparent rounded-full" />
+                                <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: 'linear' }} className="w-3.5 h-3.5 sm:w-4 sm:h-4 border-2 border-black border-t-transparent rounded-full" />
                                 Sending...
                             </>
                         ) : (
                             <>
-                                <Sparkles className="w-4 h-4 text-green-600" />
+                                <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-green-600" />
                                 Mission Logged
                             </>
                         )}
                     </button>
                 </form>
-                <div className="mt-4 flex gap-4 text-[8px] font-mono text-gray-700 uppercase tracking-[0.2em]">
+                <div className="mt-3 sm:mt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1.5 sm:gap-4 text-[8px] font-mono text-gray-500 uppercase tracking-[0.15em] sm:tracking-[0.2em]">
                     <span>Commands: [clear] [projects] [help]</span>
-                    <span className="ml-auto underline decoration-purple-500/30">End-to-end encrypted connection</span>
+                    <span className="underline decoration-purple-500/30">End-to-end encrypted connection</span>
                 </div>
             </div>
         </div>

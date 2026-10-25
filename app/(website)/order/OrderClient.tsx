@@ -93,7 +93,7 @@ export function OrderClient() {
                     <span className="text-xs uppercase tracking-widest font-bold">Back to Orbit</span>
                 </Link>
 
-                <div className="grid lg:grid-cols-[0.9fr,1.1fr] gap-10 lg:gap-16 items-start">
+                <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-10 lg:gap-16 items-start">
                     <motion.div
                         initial={{ opacity: 0, y: 24 }}
                         animate={{ opacity: 1, y: 0 }}

@@ -35,7 +35,14 @@ export interface GithubData {
     username: string
 }
 
-export async function GET() {
+export async function GET(request: Request) {
+    // Prevent direct browser URL navigation from displaying raw JSON in window
+    const acceptHeader = request.headers.get('accept') || ''
+    const secFetchDest = request.headers.get('sec-fetch-dest') || ''
+    if (secFetchDest === 'document' || (acceptHeader.includes('text/html') && !acceptHeader.includes('application/json'))) {
+        return NextResponse.redirect(new URL('/', request.url))
+    }
+
     try {
         const githubToken = process.env.GITHUB_TOKEN || process.env.GH_TOKEN || process.env.GITHUB_PAT
         const username = 'Zhovon'
