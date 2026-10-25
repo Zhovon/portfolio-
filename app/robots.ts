@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
             {
                 userAgent: '*',
                 allow: '/',
-                disallow: ['/api/internal/', '/diagnostic'],
+                disallow: ['/api/', '/diagnostic'],
             },
         ],
         sitemap: 'https://zhovon.com/sitemap.xml',
