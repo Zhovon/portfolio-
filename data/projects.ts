@@ -7,6 +7,13 @@ export interface Metric {
     label: string
 }
 
+export interface ArchitectureSpec {
+    stateManagement: string
+    cachingCdn: string
+    databaseIngestion: string
+    securityAuth: string
+}
+
 export interface Project {
     id: string
     title: string
@@ -23,6 +30,7 @@ export interface Project {
     challenges?: string[]
     results?: string[]
     technologies: string[] // Used in CaseStudyClient as string[]
+    architectureSpec?: ArchitectureSpec
 }
 
 export const FALLBACK_PROJECTS: Project[] = [
@@ -50,7 +58,13 @@ export const FALLBACK_PROJECTS: Project[] = [
         results: [
             'Live in production at tailor.zhovon.com, streamlining custom garment ordering end-to-end.',
             'Eliminated paper-based tracking errors, accelerating order turnaround by 40%.'
-        ]
+        ],
+        architectureSpec: {
+            stateManagement: 'React 18 Concurrent Roots + Zustand client store with optimistic mutations',
+            cachingCdn: 'Render Edge Caching + Redis cache for tenant session states',
+            databaseIngestion: 'PostgreSQL with connection pooling (PgBouncer) & transactional commit locks',
+            securityAuth: 'JWT HTTP-only cookies, Bcrypt password hashing & RBAC tier verification'
+        }
     },
     {
         id: 'repo-7',
@@ -77,7 +91,13 @@ export const FALLBACK_PROJECTS: Project[] = [
         results: [
             'Deployed live at rukaya.zhovon.com with full offline installation capability.',
             'Achieved sub-second cold boot load times and zero network runtime dependencies.'
-        ]
+        ],
+        architectureSpec: {
+            stateManagement: 'IndexedDB offline persistent store + React 19 Client hooks',
+            cachingCdn: 'Service Worker Cache API (Stale-While-Revalidate) + Zero-network fallback',
+            databaseIngestion: 'Client-side IndexedDB with async schema migrations & solar mathematical computations',
+            securityAuth: 'Zero-tracking architecture, localized cryptographic storage & CSP strict sandboxing'
+        }
     },
     {
         id: 'fallback-1',
@@ -102,7 +122,13 @@ export const FALLBACK_PROJECTS: Project[] = [
         results: [
             'Validated over 250,000 licensing verification handshakes with zero security breaches.',
             'Reduced edge validation overhead from 140ms down to 12ms using optimized in-memory caching.'
-        ]
+        ],
+        architectureSpec: {
+            stateManagement: 'Stateless Next.js Edge Runtime microservice nodes',
+            cachingCdn: 'Upstash Redis sliding-window distributed token buckets & nonce deduplication',
+            databaseIngestion: 'PostgreSQL schema-per-tenant isolation with read-replicas',
+            securityAuth: 'Ed25519 asymmetric signature validation + SHA-256 HMAC payload verification'
+        }
     },
     {
         id: 'fallback-2',
@@ -127,7 +153,13 @@ export const FALLBACK_PROJECTS: Project[] = [
         results: [
             'Maintained steady 60 FPS under intensive simulated telemetry streams without dropping frames.',
             'Reduced client memory footprint by 65% by employing typed array buffers and instanced geometries.'
-        ]
+        ],
+        architectureSpec: {
+            stateManagement: 'Dedicated Web Workers with SharedArrayBuffer & typed Float32Arrays',
+            cachingCdn: 'WebSocket binary streaming buffer + Cloudflare Edge CDN for static assets',
+            databaseIngestion: 'Time-series telemetry ingestion queue with sub-25ms bucket aggregations',
+            securityAuth: 'WSS token handshake with signed ephemeral access tokens'
+        }
     },
     {
         id: 'fallback-3',
@@ -152,7 +184,13 @@ export const FALLBACK_PROJECTS: Project[] = [
         results: [
             'Cut complex multi-table reporting query times from 1.8s down to 45ms.',
             'Zero financial discrepancies across 50,000+ audited transaction batches.'
-        ]
+        ],
+        architectureSpec: {
+            stateManagement: 'Apollo Client Normalized GraphQL Cache + React Server Components',
+            cachingCdn: 'Redis distributed L2 cache with tag-based cache invalidation',
+            databaseIngestion: 'PostgreSQL multi-schema partitions with Prisma ORM & two-phase commit locks',
+            securityAuth: 'Granular Role-Based Access Control (RBAC), OAuth 2.0 & Immutable SQL audit logs'
+        }
     },
     {
         id: 'repo-4',
@@ -178,7 +216,13 @@ export const FALLBACK_PROJECTS: Project[] = [
         results: [
             'Tested under simulated 500 concurrent checkout sessions with zero inventory discrepancies.',
             'Achieved sub-50ms cart interactions with optimistic state management.'
-        ]
+        ],
+        architectureSpec: {
+            stateManagement: 'Optimistic client cart state + Next.js Server Actions',
+            cachingCdn: 'Vercel Edge Network + ISR (Incremental Static Regeneration) for product catalog',
+            databaseIngestion: 'PostgreSQL with row-level locks on stock counters during checkout',
+            securityAuth: 'Stripe webhook signature validation + PCI-DSS compliant tokenization'
+        }
     },
     {
         id: 'repo-3',
@@ -204,7 +248,13 @@ export const FALLBACK_PROJECTS: Project[] = [
         results: [
             'Reduced manual agency reporting workflows by 80%.',
             'Provided real-time visibility into customer acquisition costs across active campaigns.'
-        ]
+        ],
+        architectureSpec: {
+            stateManagement: 'React Query / TanStack Query with real-time background refetching',
+            cachingCdn: 'Next.js dynamic Data Cache with tag-based revalidation',
+            databaseIngestion: 'Supabase Realtime PostgreSQL CDC (Change Data Capture) feeds',
+            securityAuth: 'Row Level Security (RLS) policies scoped per agency workspace'
+        }
     },
     {
         id: 'repo-8',
@@ -230,7 +280,13 @@ export const FALLBACK_PROJECTS: Project[] = [
         results: [
             'Empowered non-profit teams to draft comprehensive grant documents in under 5 minutes.',
             'Open-sourced on GitHub with clean modular React architecture.'
-        ]
+        ],
+        architectureSpec: {
+            stateManagement: 'Streaming token accumulator with custom virtual text renderer',
+            cachingCdn: 'Edge functions with localized prompt template caching',
+            databaseIngestion: 'Supabase PostgreSQL for prompt history and draft versioning',
+            securityAuth: 'Server-side OpenAI API key encapsulation with token quota enforcement'
+        }
     },
     {
         id: 'repo-9',
@@ -256,7 +312,13 @@ export const FALLBACK_PROJECTS: Project[] = [
         results: [
             'Direct 100/100 Lighthouse benchmark across performance, accessibility, best practices, and SEO.',
             'Zero external third-party CRM dependencies or monthly SaaS subscription costs.'
-        ]
+        ],
+        architectureSpec: {
+            stateManagement: 'Framer Motion state machine + Server Component hydration',
+            cachingCdn: 'Next.js Turbopack Edge CDN + Cloudflare DNS level caching',
+            databaseIngestion: 'Supabase serverless PostgreSQL with direct REST/JSON interface',
+            securityAuth: 'TLS 1.3 encryption, input sanitization, rate-limited edge endpoints'
+        }
     },
     {
         id: 'repo-5',
@@ -282,7 +344,13 @@ export const FALLBACK_PROJECTS: Project[] = [
         results: [
             'Starred and adopted across the developer community as an open-source standard.',
             'Achieved sub-second largest contentful paint (LCP).'
-        ]
+        ],
+        architectureSpec: {
+            stateManagement: 'React 19 Context + Framer Motion spring physics controller',
+            cachingCdn: 'Immutable static asset CDN distribution via Vercel Edge',
+            databaseIngestion: 'Static headless JSON schema compilation',
+            securityAuth: 'Strict Content Security Policy (CSP) & sanitized markdown rendering'
+        }
     },
     {
         id: 'repo-6',
@@ -308,7 +376,13 @@ export const FALLBACK_PROJECTS: Project[] = [
         results: [
             'Standardized across multiple production projects to streamline CI/CD pipeline runtimes.',
             'Cut developer compilation wait times nearly in half.'
-        ]
+        ],
+        architectureSpec: {
+            stateManagement: 'In-memory AST graph node cache and module dependency trees',
+            cachingCdn: 'Local filesystem persistent cache directory with hash invalidation',
+            databaseIngestion: 'Direct filesystem I/O with memory-mapped buffers',
+            securityAuth: 'Zero-dependency sandbox execution & automated checksum validation'
+        }
     },
     {
         id: 'repo-1',
@@ -334,7 +408,13 @@ export const FALLBACK_PROJECTS: Project[] = [
         results: [
             'Zero dependencies with ultra-lightweight 15KB bundle footprint.',
             'Utilized by thousands of learners to benchmark and elevate typing speeds.'
-        ]
+        ],
+        architectureSpec: {
+            stateManagement: 'High-frequency requestAnimationFrame event loop with rolling timestamp arrays',
+            cachingCdn: 'Zero-dependency single-bundle static distribution',
+            databaseIngestion: 'Local Storage serialized performance logs',
+            securityAuth: 'Client-side isolated execution with no external telemetry or network calls'
+        }
     },
     {
         id: 'repo-2',
@@ -360,7 +440,13 @@ export const FALLBACK_PROJECTS: Project[] = [
         results: [
             'Provides instant meteorological updates with zero layout shift.',
             'Fully responsive across smartphones, tablets, and desktop displays.'
-        ]
+        ],
+        architectureSpec: {
+            stateManagement: 'React state with debounced geographic search query dispatch',
+            cachingCdn: 'Browser sessionStorage cache with 15-minute TTL per coordinates',
+            databaseIngestion: 'OpenWeather API JSON ingestion with client-side normalization',
+            securityAuth: 'Proxy server API key protection & rate limit throttling'
+        }
     }
 ]
 

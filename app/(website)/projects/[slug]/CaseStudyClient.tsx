@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useTransform, useSpring, type MotionValue } from 'framer-motion'
 import { useLenis } from 'lenis/react'
-import { ArrowLeft, Github, Globe, Zap, Target, Layers, ArrowRight, ExternalLink } from 'lucide-react'
+import { ArrowLeft, Github, Globe, Zap, Target, Layers, ArrowRight, Cpu, Database, ShieldCheck, Server } from 'lucide-react'
 import Link from 'next/link'
 import { useRef, useEffect } from 'react'
 import type { Project } from '@/data/projects'
@@ -129,7 +129,7 @@ export function CaseStudyClient({ project, nextProject }: { project: Project; ne
                 </div>
             </nav>
 
-            {/* Section 1: Hero */}
+            {/* Section 1: Overview & Live Links */}
             <Section index={0} progress={smoothProgress} range={[0, 0.18]}>
                 <div className="text-center px-4">
                     <motion.div
@@ -153,7 +153,7 @@ export function CaseStudyClient({ project, nextProject }: { project: Project; ne
                 </div>
             </Section>
 
-            {/* Section 2: Image Window */}
+            {/* Section 2: Visual Interface Window */}
             <Section index={1} progress={smoothProgress} range={[0.16, 0.36]}>
                 <div className="relative aspect-video max-h-[62vh] w-full rounded-2xl sm:rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-emerald-950/30">
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10" />
@@ -186,11 +186,11 @@ export function CaseStudyClient({ project, nextProject }: { project: Project; ne
                 </div>
             </Section>
 
-            {/* Section 3: Metrics Grid */}
+            {/* Section 3: Production Metrics & KPIs */}
             <Section index={2} progress={smoothProgress} range={[0.34, 0.54]}>
                 <div className="text-center mb-8">
-                    <h2 className="text-xs font-black uppercase tracking-[0.4em] text-emerald-400 mb-2">Quantified Benchmarks</h2>
-                    <p className="text-xs text-gray-400 uppercase tracking-widest font-mono">Production Telemetry & Impact</p>
+                    <h2 className="text-xs font-black uppercase tracking-[0.4em] text-emerald-400 mb-2">Production Metrics & KPIs</h2>
+                    <p className="text-xs text-gray-400 uppercase tracking-widest font-mono">Validated System Telemetry</p>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
                     {project.metrics && project.metrics.length > 0 ? (
@@ -208,23 +208,23 @@ export function CaseStudyClient({ project, nextProject }: { project: Project; ne
                 </div>
             </Section>
 
-            {/* Section 4: Problem Statement & Engineering Challenges */}
+            {/* Section 4: Problem Statement & Technical Challenges */}
             <Section index={3} progress={smoothProgress} range={[0.52, 0.72]}>
                 <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-start">
                     <div>
-                        <h2 className="text-xs font-black uppercase tracking-[0.5em] text-emerald-400 mb-3">Architecture Brief</h2>
-                        <h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-white mb-4 leading-tight">Problem & Scope</h3>
+                        <h2 className="text-xs font-black uppercase tracking-[0.5em] text-emerald-400 mb-3">Problem Statement & Scope</h2>
+                        <h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-white mb-4 leading-tight">The Architectural Vector</h3>
                         <p className="text-sm sm:text-base text-gray-300 leading-relaxed font-light">
                             {project.longDescription || project.description}
                         </p>
                     </div>
                     <div className="space-y-3 sm:space-y-4">
-                        <h4 className="text-xs font-black uppercase tracking-[0.4em] text-cyan-400 mb-2">Technical Vectors Overcome</h4>
+                        <h4 className="text-xs font-black uppercase tracking-[0.4em] text-cyan-400 mb-2">3 Deep Technical Challenges Overcome</h4>
                         {project.challenges && project.challenges.length > 0 ? (
                             project.challenges.map((c, i) => (
                                 <div key={i} className="p-4 sm:p-5 rounded-xl border border-white/5 bg-white/5 hover:border-cyan-500/30 hover:bg-white/10 transition-colors">
                                     <div className="flex gap-3 sm:gap-4 items-start">
-                                        <span className="text-cyan-400 font-mono text-xs sm:text-sm font-bold flex-shrink-0">VECTOR 0{i + 1}</span>
+                                        <span className="text-cyan-400 font-mono text-xs sm:text-sm font-bold flex-shrink-0">CHALLENGE 0{i + 1}</span>
                                         <p className="text-xs sm:text-sm text-gray-300 leading-relaxed">{c}</p>
                                     </div>
                                 </div>
@@ -238,23 +238,75 @@ export function CaseStudyClient({ project, nextProject }: { project: Project; ne
                 </div>
             </Section>
 
-            {/* Section 5: Tech Stack & Outcomes */}
+            {/* Section 5: Architecture & System Design Breakdown */}
             <Section index={4} progress={smoothProgress} range={[0.70, 0.88]}>
-                <div className="text-center max-w-4xl mx-auto">
-                    <h2 className="text-xs font-black uppercase tracking-[0.5em] text-cyan-400 mb-4 sm:mb-6">System Architecture Stack</h2>
-                    <div className="flex flex-wrap justify-center gap-2.5 sm:gap-3.5 mb-8 sm:mb-10">
-                        {project.technologies.map((tech, i) => (
-                            <div key={i} className="px-4 py-2 sm:px-5 sm:py-2.5 rounded-full border border-cyan-500/20 bg-cyan-950/20 text-cyan-300 text-xs font-bold uppercase tracking-wider backdrop-blur-sm">
-                                {tech}
-                            </div>
-                        ))}
+                <div className="max-w-5xl mx-auto space-y-6 sm:space-y-8">
+                    <div className="text-center">
+                        <h2 className="text-xs font-black uppercase tracking-[0.5em] text-cyan-400 mb-2">System Design Breakdown</h2>
+                        <p className="text-xs text-gray-400 uppercase tracking-widest font-mono">Architecture Specifications & Hardware Primitives</p>
                     </div>
+
+                    {/* Architecture Spec Grid */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div className="p-5 sm:p-6 glass-panel rounded-2xl border border-white/10 bg-white/[0.02] hover:border-cyan-500/30 transition-colors">
+                            <div className="flex items-center gap-3 mb-2 text-cyan-400">
+                                <Cpu className="w-4 h-4 flex-shrink-0" />
+                                <span className="text-xs font-bold uppercase tracking-wider">State Management & Rendering</span>
+                            </div>
+                            <p className="text-xs sm:text-sm text-gray-300 leading-relaxed">
+                                {project.architectureSpec?.stateManagement || 'React Server Components + Client Hydration with optimistic UI updates.'}
+                            </p>
+                        </div>
+
+                        <div className="p-5 sm:p-6 glass-panel rounded-2xl border border-white/10 bg-white/[0.02] hover:border-emerald-500/30 transition-colors">
+                            <div className="flex items-center gap-3 mb-2 text-emerald-400">
+                                <Server className="w-4 h-4 flex-shrink-0" />
+                                <span className="text-xs font-bold uppercase tracking-wider">Caching & CDN Layer</span>
+                            </div>
+                            <p className="text-xs sm:text-sm text-gray-300 leading-relaxed">
+                                {project.architectureSpec?.cachingCdn || 'Edge CDN with Stale-While-Revalidate caching and localized key invalidation.'}
+                            </p>
+                        </div>
+
+                        <div className="p-5 sm:p-6 glass-panel rounded-2xl border border-white/10 bg-white/[0.02] hover:border-purple-500/30 transition-colors">
+                            <div className="flex items-center gap-3 mb-2 text-purple-400">
+                                <Database className="w-4 h-4 flex-shrink-0" />
+                                <span className="text-xs font-bold uppercase tracking-wider">Database & Ingestion Layer</span>
+                            </div>
+                            <p className="text-xs sm:text-sm text-gray-300 leading-relaxed">
+                                {project.architectureSpec?.databaseIngestion || 'PostgreSQL with connection pooling and transactional row-level commit locks.'}
+                            </p>
+                        </div>
+
+                        <div className="p-5 sm:p-6 glass-panel rounded-2xl border border-white/10 bg-white/[0.02] hover:border-blue-500/30 transition-colors">
+                            <div className="flex items-center gap-3 mb-2 text-blue-400">
+                                <ShieldCheck className="w-4 h-4 flex-shrink-0" />
+                                <span className="text-xs font-bold uppercase tracking-wider">Security & Authentication Protocol</span>
+                            </div>
+                            <p className="text-xs sm:text-sm text-gray-300 leading-relaxed">
+                                {project.architectureSpec?.securityAuth || 'TLS 1.3 encryption, CSP compliance, and scoped RBAC verification.'}
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* Tech Pills */}
+                    <div className="text-center pt-2">
+                        <div className="flex flex-wrap justify-center gap-2 sm:gap-2.5">
+                            {project.technologies.map((tech, i) => (
+                                <div key={i} className="px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full border border-cyan-500/20 bg-cyan-950/20 text-cyan-300 text-xs font-bold uppercase tracking-wider backdrop-blur-sm">
+                                    {tech}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Measurable Outcomes */}
                     {project.results && project.results.length > 0 && (
-                        <div className="grid sm:grid-cols-2 gap-4 text-left">
+                        <div className="grid sm:grid-cols-2 gap-3 sm:gap-4 pt-2 text-left">
                             {project.results.map((res, i) => (
-                                <div key={i} className="p-5 sm:p-6 glass-panel rounded-2xl border border-emerald-500/20 bg-emerald-950/10">
-                                    <div className="flex items-center gap-2.5 mb-2 text-emerald-400">
-                                        <Target className="w-4 h-4 flex-shrink-0" />
+                                <div key={i} className="p-4 sm:p-5 glass-panel rounded-2xl border border-emerald-500/20 bg-emerald-950/10">
+                                    <div className="flex items-center gap-2 mb-1.5 text-emerald-400">
+                                        <Target className="w-3.5 h-3.5 flex-shrink-0" />
                                         <span className="text-[10px] sm:text-xs uppercase tracking-widest font-bold">Production Outcome 0{i + 1}</span>
                                     </div>
                                     <p className="text-xs sm:text-sm text-gray-300 leading-relaxed">{res}</p>
@@ -273,8 +325,8 @@ export function CaseStudyClient({ project, nextProject }: { project: Project; ne
                         transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
                         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[500px] h-[350px] sm:h-[500px] bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 rounded-full blur-[90px] -z-10"
                     />
-                    <h2 className="text-4xl xs:text-5xl sm:text-7xl md:text-9xl font-black text-white leading-none tracking-tighter opacity-80 uppercase mb-8">
-                        MISSION<br />COMPLETE
+                    <h2 className="text-3xl xs:text-4xl sm:text-6xl md:text-8xl font-black text-white leading-none tracking-tighter opacity-80 uppercase mb-8">
+                        ARCHITECTURE<br />REVIEW
                     </h2>
 
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-6">
