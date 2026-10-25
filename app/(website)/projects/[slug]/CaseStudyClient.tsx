@@ -27,6 +27,21 @@ function Section({ children, index, progress, range, stayVisible = false }: { ch
     )
 }
 
+function NavDot({ i, sectionHeight, smoothProgress }: { i: number; sectionHeight: number; smoothProgress: MotionValue<number> }) {
+    const backgroundColor = useTransform(
+        smoothProgress,
+        [i * sectionHeight / 100, (i * sectionHeight / 100) + 0.05],
+        ["rgba(255,255,255,0.2)", "#10B981"]
+    )
+
+    return (
+        <motion.div
+            className="w-2 h-2 rounded-full bg-white/20"
+            style={{ backgroundColor }}
+        />
+    )
+}
+
 export function CaseStudyClient({ project, nextProject }: { project: Project, nextProject?: Project }) {
     const containerRef = useRef<HTMLDivElement>(null)
     const lenis = useLenis()
@@ -99,6 +114,8 @@ export function CaseStudyClient({ project, nextProject }: { project: Project, ne
     }, [scrollYProgress, nextProject, router, isNavigating, canWarp])
 
     const smoothProgress = useSpring(scrollYProgress, { damping: 20, stiffness: 100 })
+    const ambientScale = useTransform(smoothProgress, [0, 1], [1, 3])
+    const ambientOpacity = useTransform(smoothProgress, [0, 0.8, 1], [0.3, 0.5, 0])
 
     if (!project) return <div>Project not found.</div>
 
@@ -113,8 +130,8 @@ export function CaseStudyClient({ project, nextProject }: { project: Project, ne
             <div className="fixed inset-0 overflow-hidden pointer-events-none">
                 <motion.div
                     style={{
-                        scale: useTransform(smoothProgress, [0, 1], [1, 3]),
-                        opacity: useTransform(smoothProgress, [0, 0.8, 1], [0.3, 0.5, 0])
+                        scale: ambientScale,
+                        opacity: ambientOpacity,
                     }}
                     className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,255,150,0.05)_1px,transparent_1px)] bg-[length:40px_40px]"
                 />
@@ -129,16 +146,11 @@ export function CaseStudyClient({ project, nextProject }: { project: Project, ne
                 </Link>
                 <div className="flex gap-2">
                     {[...Array(totalSections)].map((_, i) => (
-                        <motion.div
+                        <NavDot
                             key={i}
-                            className="w-2 h-2 rounded-full bg-white/20"
-                            style={{
-                                backgroundColor: useTransform(
-                                    smoothProgress,
-                                    [i * sectionHeight / 100, (i * sectionHeight / 100) + 0.05],
-                                    ["rgba(255,255,255,0.2)", "#10B981"]
-                                )
-                            }}
+                            i={i}
+                            sectionHeight={sectionHeight}
+                            smoothProgress={smoothProgress}
                         />
                     ))}
                 </div>

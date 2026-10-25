@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useTransform, type MotionValue } from 'framer-motion'
 import { Rocket, Zap, Layers, Cpu, Command, ArrowDownRight } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useRef } from 'react'
@@ -28,8 +28,39 @@ function BrandLogo({ icon: Icon, label, accentClass, compact = false }: { icon: 
     )
 }
 
+function VoidModuleCard({ i, scrollYProgress }: { i: number; scrollYProgress: MotionValue<number> }) {
+    const scale = useTransform(scrollYProgress, [0.4 + i * 0.05, 0.9], [0, 4])
+    const opacity = useTransform(scrollYProgress, [0.4 + i * 0.05, 0.6 + i * 0.05, 0.9], [0, 1, 0])
+
+    return (
+        <motion.div
+            style={{
+                x: (i % 2 === 0 ? 1 : -1) * (200 + i * 50),
+                y: (i < 3 ? 1 : -1) * (150 + i * 40),
+                scale,
+                opacity,
+            }}
+            className="absolute glass-panel p-6 rounded-2xl border-white/10 hidden md:block"
+        >
+            <div className="flex items-center gap-4">
+                <div className="w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center">
+                    <Command className="w-4 h-4 text-purple-400" />
+                </div>
+                <span className="text-[10px] font-black tracking-widest text-gray-400 uppercase">Module_0{i}</span>
+            </div>
+        </motion.div>
+    )
+}
+
 export default function HomeClient({ initialProjects }: { initialProjects: Project[] }) {
     const { scrollYProgress } = useScroll()
+    const voidScale1 = useTransform(scrollYProgress, [0, 0.5], [1, 15])
+    const voidOpacity1 = useTransform(scrollYProgress, [0, 0.4], [0.2, 0])
+    const voidScale2 = useTransform(scrollYProgress, [0.3, 0.7], [0.5, 2])
+    const voidOpacity2 = useTransform(scrollYProgress, [0.3, 0.5, 0.7], [0, 1, 0])
+    const voidY2 = useTransform(scrollYProgress, [0.3, 0.7], [100, -100])
+    const voidScale3 = useTransform(scrollYProgress, [0.8, 1], [0.8, 1])
+    const voidOpacity3 = useTransform(scrollYProgress, [0.85, 1], [0, 1])
     const pricingStripRef = useRef<HTMLDivElement | null>(null)
 
     useEffect(() => {
@@ -241,17 +272,17 @@ export default function HomeClient({ initialProjects }: { initialProjects: Proje
                     <div className="relative w-full h-full flex items-center justify-center">
                         <motion.div
                             style={{
-                                scale: useTransform(scrollYProgress, [0, 0.5], [1, 15]),
-                                opacity: useTransform(scrollYProgress, [0, 0.4], [0.2, 0])
+                                scale: voidScale1,
+                                opacity: voidOpacity1,
                             }}
                             className="absolute w-[150%] h-[150%] bg-[radial-gradient(circle_at_center,rgba(124,58,237,0.2)_0%,transparent_70%)] blur-[100px]"
                         />
 
                         <motion.div
                             style={{
-                                scale: useTransform(scrollYProgress, [0.3, 0.7], [0.5, 2]),
-                                opacity: useTransform(scrollYProgress, [0.3, 0.5, 0.7], [0, 1, 0]),
-                                y: useTransform(scrollYProgress, [0.3, 0.7], [100, -100])
+                                scale: voidScale2,
+                                opacity: voidOpacity2,
+                                y: voidY2,
                             }}
                             className="text-center z-10 p-6"
                         >
@@ -262,29 +293,13 @@ export default function HomeClient({ initialProjects }: { initialProjects: Proje
                         </motion.div>
 
                         {[...Array(6)].map((_, i) => (
-                            <motion.div
-                                key={i}
-                                style={{
-                                    x: (i % 2 === 0 ? 1 : -1) * (200 + i * 50),
-                                    y: (i < 3 ? 1 : -1) * (150 + i * 40),
-                                    scale: useTransform(scrollYProgress, [0.4 + i * 0.05, 0.9], [0, 4]),
-                                    opacity: useTransform(scrollYProgress, [0.4 + i * 0.05, 0.6 + i * 0.05, 0.9], [0, 1, 0])
-                                }}
-                                className="absolute glass-panel p-6 rounded-2xl border-white/10 hidden md:block"
-                            >
-                                <div className="flex items-center gap-4">
-                                    <div className="w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center">
-                                        <Command className="w-4 h-4 text-purple-400" />
-                                    </div>
-                                    <span className="text-[10px] font-black tracking-widest text-gray-400 uppercase">Module_0{i}</span>
-                                </div>
-                            </motion.div>
+                            <VoidModuleCard key={i} i={i} scrollYProgress={scrollYProgress} />
                         ))}
 
                         <motion.div
                             style={{
-                                scale: useTransform(scrollYProgress, [0.8, 1], [0.8, 1]),
-                                opacity: useTransform(scrollYProgress, [0.85, 1], [0, 1])
+                                scale: voidScale3,
+                                opacity: voidOpacity3,
                             }}
                             className="absolute text-5xl md:text-8xl font-black text-center text-white px-4"
                         >
