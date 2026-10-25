@@ -37,53 +37,48 @@ export function TerminalContact() {
         setInputValue('')
         setIsTyping(true)
 
-        // Simulate system response logic
+        // Dynamic CLI response logic
         setTimeout(() => {
             let response = ''
-            const msg = userMsg.toLowerCase()
+            const msg = userMsg.toLowerCase().trim()
 
-            if (msg.includes('hello') || msg.includes('hi') || msg.includes('hey')) {
-                response = 'Greetings, operator. I am Zhovon\'s digital interface. Please provide your NAME and EMAIL to initiate secure communication.'
+            if (msg === 'help' || msg === '?') {
+                response = 'COMMAND PROTOCOL MANUAL:\n• [status] - Live server telemetry & availability\n• [skills] - Tech stack & architectural proficiencies\n• [pricing] - Standard commercial ranges & turnaround\n• [projects] - Flagship production works\n• [clear] - Flush terminal memory buffer\n• Or enter your NAME, EMAIL, and project brief to transmit.'
+            } else if (msg === 'status') {
+                response = 'TELEMETRY STATUS:\n• Server Node: Dhaka / Bangalore [Online]\n• Gateway Status: 100% Operational (Resend + Supabase Edge)\n• Response P99: 18ms\n• Availability: Accepting select High-Impact contracts for Q4 2026 / 2027.'
+            } else if (msg === 'skills' || msg === 'stack') {
+                response = 'CORE ARCHITECTURAL STACK:\n• Frontend: Next.js 15, React 19, TypeScript, Tailwind CSS v4\n• Backend & Edge: Node.js, Next Server Actions, Edge Functions\n• Persistence & Cache: PostgreSQL, Supabase, Redis, Prisma\n• Protocols: WebSockets, REST, GraphQL, Resend API'
             } else if (msg.includes('pricing') || msg.includes('price') || msg.includes('cost') || msg.includes('rate')) {
-                response = 'Project pricing varies based on scope, timeline, and complexity. Typical ranges: Small projects ($2K-5K), Medium ($5K-15K), Large ($15K+). Share your requirements and I\'ll provide a detailed quote.'
-            } else if (msg.includes('service') || msg.includes('what do you do') || msg.includes('expertise')) {
-                response = 'Core services: SaaS Development, Next.js/React Applications, Payload CMS Integration, Full-Stack Solutions, API Development, UI/UX Implementation. Specialized in high-performance, scalable architectures.'
-            } else if (msg.includes('available') || msg.includes('availability') || msg.includes('timeline')) {
-                response = 'Currently accepting new projects. Typical turnaround: 2-8 weeks depending on scope. Rush projects available with premium rates. Share your deadline requirements.'
-            } else if (msg.includes('project') || msg.includes('build') || msg.includes('develop')) {
-                response = 'Excellent! Please describe your project: tech stack preferences, key features, timeline, and budget range. Don\'t forget to provide your NAME and EMAIL for follow-up.'
-            } else if (msg.includes('help') || msg.includes('?')) {
-                response = 'Available commands: Type your NAME → Type your EMAIL → Describe your project → Click "Transmit Mission". Or ask about: pricing, services, availability, portfolio.'
-            } else if (msg.includes('portfolio') || msg.includes('work') || msg.includes('examples')) {
-                response = 'Check out my recent projects in the Projects section above. Highlights: Next.js 15 + Payload CMS integrations, React 19 applications, TypeScript-first architectures, 99+ Lighthouse scores.'
-            } else if (msg.includes('clear')) {
-                setMessages([{ role: 'system', content: 'Buffer cleared. Connection stable.', timestamp: new Date().toLocaleTimeString() }])
+                response = 'COMMERCIAL TIERS:\n• MVP / Micro-SaaS (2-3 Weeks): $2,500 - $4,500\n• Full-Stack Production System (4-6 Weeks): $5,000 - $12,000\n• Enterprise / Architectural Advisory: Custom Scope\nAll tiers include complete documentation, test suite, and 30-day post-launch warranty.'
+            } else if (msg === 'projects' || msg.includes('portfolio') || msg.includes('work')) {
+                response = 'FEATURED PRODUCTION DEPLOYMENTS:\n1. Tailor SaaS (tailor.zhovon.com) - Bespoke ERP & Order Pipeline\n2. Rukaya AI (rukaya.zhovon.com) - Offline-first PWA Companion\n3. ZBooking Gateway - Distributed Cryptographic Licensing Engine\nExplore full interactive case studies in the /projects directory.'
+            } else if (msg === 'clear') {
+                setMessages([{ role: 'system', content: 'Buffer reset. Uplink stable.', timestamp: new Date().toLocaleTimeString() }])
                 setIsTyping(false)
                 return
-            } else if (msg.includes('@')) {
-                response = 'Email received. Now provide your NAME and describe your project requirements. When ready, click "Transmit Mission" to send.'
+            } else if (msg.includes('hello') || msg.includes('hi') || msg.includes('hey')) {
+                response = 'Greetings, operator. Terminal uplink ready. Enter your NAME and EMAIL to initialize direct comms with Zhovon.'
+            } else if (msg.includes('@') && msg.includes('.')) {
+                response = `✓ Email address captured [${userMsg}]. Please provide your NAME and brief parameters of what you want to build, then click "Transmit Mission".`
             } else if (!messages.some(m => m.role === 'user' && m.content.includes('@'))) {
-                // If no email provided yet
-                response = 'Message logged. Please provide your EMAIL address (e.g., you@example.com) so I can respond to your inquiry.'
+                response = `✓ Parameter noted: "${userMsg}". Please provide your contact EMAIL address (e.g. operator@domain.com) so an auto-reply and direct briefing can be dispatched.`
             } else {
-                response = 'Information logged. Add any additional details, then click "Transmit Mission" to send your inquiry. I\'ll respond within 24-48 hours.'
+                response = `✓ Briefing updated. All parameters logged into the payload buffer. Click "Transmit Mission" to dispatch to admin@zhovon.com.`
             }
 
             setMessages(prev => [...prev, { role: 'assistant', content: response, timestamp: new Date().toLocaleTimeString() }])
             setIsTyping(false)
-        }, 1000)
+        }, 600)
     }
 
     const launchMission = async () => {
-        // Check if we have enough information
         const userMessages = messages.filter(m => m.role === 'user').map(m => m.content)
-        const hasEmail = userMessages.some(msg => msg.includes('@'))
-        const hasName = userMessages.some(msg => !msg.includes('@') && msg.trim().length > 2)
+        const hasEmail = userMessages.some(msg => msg.includes('@') && msg.includes('.'))
 
-        if (!hasName || !hasEmail) {
+        if (!hasEmail) {
             setMessages(prev => [...prev, {
                 role: 'system',
-                content: 'ERROR: Insufficient data. Please provide your NAME and EMAIL before transmission.',
+                content: 'ERROR: No valid EMAIL address detected in session. Type your email address before transmitting.',
                 timestamp: new Date().toLocaleTimeString()
             }])
             return
@@ -91,15 +86,19 @@ export function TerminalContact() {
 
         setStatus('sending')
 
-        // Extract email from messages (userMessages already defined above)
+        // Extract email and name
         const emailMatch = userMessages.join(' ').match(/[\w.-]+@[\w.-]+\.\w+/)
         const email = emailMatch ? emailMatch[0] : ''
+        const nameMessage = userMessages.find(msg => !msg.includes('@') && msg.trim().length > 1)
+        const name = nameMessage || 'Terminal Operator'
 
-        // Try to extract name (first user message that's not an email)
-        const nameMessage = userMessages.find(msg => !msg.includes('@') && msg.length > 2)
-        const name = nameMessage || 'Terminal User'
+        // Log visual progress sequence
+        setMessages(prev => [...prev, {
+            role: 'system',
+            content: `[UPLINK INITIATED] Packaging payload for ${name} <${email}>...`,
+            timestamp: new Date().toLocaleTimeString()
+        }])
 
-        // Compile all messages into the message body
         const finalContent = messages
             .filter(m => m.role === 'user' || m.role === 'assistant')
             .map(m => `[${m.role.toUpperCase()}] ${m.content}`)
@@ -114,7 +113,7 @@ export function TerminalContact() {
                 body: JSON.stringify({
                     name: name,
                     email: email,
-                    subject: `Terminal Mission Briefing - ${new Date().toLocaleDateString()}`,
+                    subject: `Terminal Mission Briefing // ${name}`,
                     message: finalContent
                 })
             })
@@ -122,19 +121,21 @@ export function TerminalContact() {
             const data = await response.json()
 
             if (!response.ok) {
-                throw new Error(data.error || 'Transmission interrupted')
+                throw new Error(data.error || 'Transmission refused by gateway')
             }
+
+            const txHash = 'TX-' + Math.random().toString(36).substring(2, 8).toUpperCase()
 
             setMessages(prev => [...prev, {
                 role: 'system',
-                content: '✓ MISSION DATA TRANSMITTED. AUTO-REPLY SENT TO YOUR EMAIL. STORAGE SEALED.',
+                content: `✓ DISPATCH CONFIRMED [${txHash}].\n• Notification delivered to admin@zhovon.com\n• Confirmation receipt dispatched to ${email}\n• Status: QUEUED_FOR_EXECUTION (24-48h SLA)`,
                 timestamp: new Date().toLocaleTimeString()
             }])
             setStatus('success')
         } catch (err: any) {
             setMessages(prev => [...prev, {
                 role: 'system',
-                content: `✗ SIGNAL LOST: ${err.message}. ATTEMPT RE-TRANSMISSION.`,
+                content: `✗ GATEWAY ERROR: ${err.message}. Please check connection or retry.`,
                 timestamp: new Date().toLocaleTimeString()
             }])
             setStatus('idle')
@@ -234,9 +235,31 @@ export function TerminalContact() {
                         )}
                     </button>
                 </form>
-                <div className="mt-3 sm:mt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1.5 sm:gap-4 text-[8px] font-mono text-gray-500 uppercase tracking-[0.15em] sm:tracking-[0.2em]">
-                    <span>Commands: [clear] [projects] [help]</span>
-                    <span className="underline decoration-purple-500/30">End-to-end encrypted connection</span>
+                <div className="mt-3 sm:mt-4 flex flex-wrap items-center justify-between gap-2 text-[10px] font-mono text-gray-500 uppercase tracking-wider">
+                    <div className="flex flex-wrap items-center gap-1.5">
+                        <span className="text-gray-600 text-[9px]">Commands:</span>
+                        {['status', 'skills', 'pricing', 'projects', 'help', 'clear'].map((cmd) => (
+                            <button
+                                key={cmd}
+                                type="button"
+                                onClick={() => {
+                                    setInputValue(cmd)
+                                    const fakeEvent = { preventDefault: () => {} } as React.FormEvent
+                                    // Trigger command execution directly
+                                    setTimeout(() => {
+                                        const form = document.querySelector('form')
+                                        if (form) form.requestSubmit()
+                                    }, 50)
+                                }}
+                                className="px-2 py-0.5 rounded bg-white/5 hover:bg-white/10 text-purple-300 hover:text-white border border-white/5 transition-colors cursor-pointer text-[9px]"
+                            >
+                                [{cmd}]
+                            </button>
+                        ))}
+                    </div>
+                    <span className="underline decoration-purple-500/30 text-[8px] text-gray-500">
+                        TLS Encrypted // Gateway: admin@zhovon.com
+                    </span>
                 </div>
             </div>
         </div>

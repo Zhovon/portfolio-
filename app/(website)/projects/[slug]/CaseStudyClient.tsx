@@ -136,16 +136,20 @@ export function CaseStudyClient({ project, nextProject }: { project: Project; ne
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         transition={{ delay: 0.1 }}
-                        className="inline-block mb-4 sm:mb-6 px-4 py-1 rounded-full border border-emerald-500/30 bg-emerald-500/10"
+                        className="inline-block mb-4 sm:mb-6 px-4 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 backdrop-blur-sm"
                     >
-                        <span className="text-emerald-400 text-[10px] font-black uppercase tracking-[0.3em]">{project.category || 'Architecture'}</span>
+                        <span className="text-emerald-400 text-[10px] sm:text-xs font-black uppercase tracking-[0.3em]">{project.category || 'Architecture'}</span>
                     </motion.div>
-                    <h1 className="text-4xl xs:text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black text-white mb-6 sm:mb-8 tracking-tighter leading-none uppercase break-words">
+                    <h1 className="text-3xl xs:text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white mb-6 sm:mb-8 tracking-tighter leading-none uppercase break-words">
                         {project.title}
                     </h1>
-                    <p className="text-base sm:text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto font-light leading-relaxed">
+                    <p className="text-sm sm:text-lg md:text-xl text-gray-300 max-w-3xl mx-auto font-light leading-relaxed mb-8">
                         {project.description}
                     </p>
+                    <div className="inline-flex items-center gap-2 text-[10px] sm:text-xs font-mono text-gray-500 uppercase tracking-widest animate-bounce">
+                        <span>Scroll To Explore Case Study</span>
+                        <span>↓</span>
+                    </div>
                 </div>
             </Section>
 
@@ -164,9 +168,9 @@ export function CaseStudyClient({ project, nextProject }: { project: Project; ne
                     <div className="absolute bottom-4 sm:bottom-8 left-4 sm:left-8 z-20 flex flex-wrap gap-3 sm:gap-4">
                         {project.liveUrl && (
                             <MagneticButton href={project.liveUrl}>
-                                <div className="px-5 sm:px-6 py-2.5 sm:py-3 bg-white text-black text-[10px] sm:text-xs font-black uppercase tracking-widest rounded-full hover:scale-105 transition-transform flex items-center gap-2">
+                                <div className="px-5 sm:px-6 py-2.5 sm:py-3 bg-white text-black text-[10px] sm:text-xs font-black uppercase tracking-widest rounded-full hover:scale-105 transition-transform flex items-center gap-2 shadow-lg">
                                     <Globe className="w-3.5 h-3.5" />
-                                    Launch Site
+                                    Launch Production
                                 </div>
                             </MagneticButton>
                         )}
@@ -174,7 +178,7 @@ export function CaseStudyClient({ project, nextProject }: { project: Project; ne
                             <MagneticButton href={project.githubUrl}>
                                 <div className="px-5 sm:px-6 py-2.5 sm:py-3 bg-black/60 backdrop-blur-md border border-white/20 text-white text-[10px] sm:text-xs font-black uppercase tracking-widest rounded-full hover:bg-white/10 transition-colors flex items-center gap-2">
                                     <Github className="w-3.5 h-3.5" />
-                                    Source Code
+                                    Inspect Codebase
                                 </div>
                             </MagneticButton>
                         )}
@@ -185,12 +189,13 @@ export function CaseStudyClient({ project, nextProject }: { project: Project; ne
             {/* Section 3: Metrics Grid */}
             <Section index={2} progress={smoothProgress} range={[0.34, 0.54]}>
                 <div className="text-center mb-8">
-                    <h2 className="text-xs font-black uppercase tracking-[0.4em] text-emerald-400 mb-2">Quantified Impact</h2>
+                    <h2 className="text-xs font-black uppercase tracking-[0.4em] text-emerald-400 mb-2">Quantified Benchmarks</h2>
+                    <p className="text-xs text-gray-400 uppercase tracking-widest font-mono">Production Telemetry & Impact</p>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
                     {project.metrics && project.metrics.length > 0 ? (
                         project.metrics.map((metric, i) => (
-                            <div key={i} className="glass-panel p-6 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl border border-white/10 text-center flex flex-col items-center justify-center min-h-[160px] sm:min-h-[200px]">
+                            <div key={i} className="glass-panel p-6 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl border border-white/10 text-center flex flex-col items-center justify-center min-h-[160px] sm:min-h-[200px] hover:border-emerald-500/30 transition-colors">
                                 <span className="text-4xl sm:text-6xl md:text-7xl font-black text-white mb-2 bg-gradient-to-b from-white to-gray-400 bg-clip-text text-transparent">{metric.value}</span>
                                 <span className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] text-emerald-400">{metric.label}</span>
                             </div>
@@ -203,22 +208,23 @@ export function CaseStudyClient({ project, nextProject }: { project: Project; ne
                 </div>
             </Section>
 
-            {/* Section 4: The Challenge */}
+            {/* Section 4: Problem Statement & Engineering Challenges */}
             <Section index={3} progress={smoothProgress} range={[0.52, 0.72]}>
-                <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+                <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-start">
                     <div>
-                        <h2 className="text-xs font-black uppercase tracking-[0.5em] text-red-400 mb-4 sm:mb-6">Core Challenge</h2>
-                        <h3 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 sm:mb-6 leading-tight">The Vector</h3>
-                        <p className="text-sm sm:text-base md:text-lg text-gray-300 leading-relaxed">
+                        <h2 className="text-xs font-black uppercase tracking-[0.5em] text-emerald-400 mb-3">Architecture Brief</h2>
+                        <h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-white mb-4 leading-tight">Problem & Scope</h3>
+                        <p className="text-sm sm:text-base text-gray-300 leading-relaxed font-light">
                             {project.longDescription || project.description}
                         </p>
                     </div>
                     <div className="space-y-3 sm:space-y-4">
+                        <h4 className="text-xs font-black uppercase tracking-[0.4em] text-cyan-400 mb-2">Technical Vectors Overcome</h4>
                         {project.challenges && project.challenges.length > 0 ? (
                             project.challenges.map((c, i) => (
-                                <div key={i} className="p-4 sm:p-6 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition-colors">
+                                <div key={i} className="p-4 sm:p-5 rounded-xl border border-white/5 bg-white/5 hover:border-cyan-500/30 hover:bg-white/10 transition-colors">
                                     <div className="flex gap-3 sm:gap-4 items-start">
-                                        <span className="text-red-400 font-mono text-sm sm:text-base font-bold">0{i + 1}</span>
+                                        <span className="text-cyan-400 font-mono text-xs sm:text-sm font-bold flex-shrink-0">VECTOR 0{i + 1}</span>
                                         <p className="text-xs sm:text-sm text-gray-300 leading-relaxed">{c}</p>
                                     </div>
                                 </div>
@@ -232,24 +238,28 @@ export function CaseStudyClient({ project, nextProject }: { project: Project; ne
                 </div>
             </Section>
 
-            {/* Section 5: Tech Stack */}
+            {/* Section 5: Tech Stack & Outcomes */}
             <Section index={4} progress={smoothProgress} range={[0.70, 0.88]}>
-                <div className="text-center">
-                    <h2 className="text-xs font-black uppercase tracking-[0.5em] text-cyan-400 mb-8 sm:mb-12">System Architecture</h2>
-                    <div className="flex flex-wrap justify-center gap-2.5 sm:gap-4 max-w-4xl mx-auto mb-8 sm:mb-12">
+                <div className="text-center max-w-4xl mx-auto">
+                    <h2 className="text-xs font-black uppercase tracking-[0.5em] text-cyan-400 mb-4 sm:mb-6">System Architecture Stack</h2>
+                    <div className="flex flex-wrap justify-center gap-2.5 sm:gap-3.5 mb-8 sm:mb-10">
                         {project.technologies.map((tech, i) => (
-                            <div key={i} className="px-4 py-2 sm:px-6 sm:py-3 rounded-full border border-cyan-500/20 bg-cyan-950/20 text-cyan-300 text-xs sm:text-sm font-bold uppercase tracking-wider backdrop-blur-sm">
+                            <div key={i} className="px-4 py-2 sm:px-5 sm:py-2.5 rounded-full border border-cyan-500/20 bg-cyan-950/20 text-cyan-300 text-xs font-bold uppercase tracking-wider backdrop-blur-sm">
                                 {tech}
                             </div>
                         ))}
                     </div>
-                    {project.results?.[0] && (
-                        <div className="p-6 sm:p-8 glass-panel rounded-2xl sm:rounded-3xl border border-white/10 inline-block max-w-2xl text-left">
-                            <div className="flex items-center gap-3 mb-2 text-emerald-400">
-                                <Target className="w-5 h-5 flex-shrink-0" />
-                                <span className="text-xs uppercase tracking-widest font-bold">Outcome</span>
-                            </div>
-                            <p className="text-xs sm:text-sm text-gray-300 leading-relaxed">{project.results[0]}</p>
+                    {project.results && project.results.length > 0 && (
+                        <div className="grid sm:grid-cols-2 gap-4 text-left">
+                            {project.results.map((res, i) => (
+                                <div key={i} className="p-5 sm:p-6 glass-panel rounded-2xl border border-emerald-500/20 bg-emerald-950/10">
+                                    <div className="flex items-center gap-2.5 mb-2 text-emerald-400">
+                                        <Target className="w-4 h-4 flex-shrink-0" />
+                                        <span className="text-[10px] sm:text-xs uppercase tracking-widest font-bold">Production Outcome 0{i + 1}</span>
+                                    </div>
+                                    <p className="text-xs sm:text-sm text-gray-300 leading-relaxed">{res}</p>
+                                </div>
+                            ))}
                         </div>
                     )}
                 </div>
